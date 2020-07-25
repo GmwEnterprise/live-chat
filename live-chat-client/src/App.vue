@@ -1,36 +1,50 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <div>
-      <p>
-        If Element is successfully added to this project, you'll see an
-        <code v-text="'<el-button>'"></code>
-        below
-      </p>
-      <el-button>el-button</el-button>
+    <div id="global-left">
+      <router-link class="router-link" :to="`/friends`">
+        <i class="el-icon-s-custom"></i>
+      </router-link>
+      <router-link class="router-link" :to="`/settings`">
+        <i class="el-icon-s-tools"></i>
+      </router-link>
     </div>
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div id="global-right">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
   name: 'app',
-  components: {
-    HelloWorld
-  }
 }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style scoped>
+div#app {
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+div#global-left {
+  background-color: #363636;
+  width: 50px;
+}
+div#global-right {
+  width: 100%;
+}
+a.router-link {
+  color: white;
+  display: flex;
+  width: 50px;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+  background-color: inherit;
+  font-size: 1.3em;
+  margin-top: 10px;
 }
 </style>

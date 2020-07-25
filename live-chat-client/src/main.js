@@ -1,3 +1,5 @@
+import '@/assets/css/css-init.css'
+
 import Vue from 'vue'
 import './plugins/axios'
 import App from './App.vue'
