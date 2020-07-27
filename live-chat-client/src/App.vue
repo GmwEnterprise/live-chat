@@ -79,7 +79,8 @@ div#global-left {
   width: 50px;
 }
 div#global-right {
-  width: 100%;
+  width: calc(100vw - 50px);
+  height: 100vh;
 }
 a.router-link {
   color: white;
