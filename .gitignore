@@ -1,6 +1,10 @@
 .DS_Store
 node_modules
-/dist
+dist
+
+target
+*.iml
+out
 
 # local env files
 .env.local
