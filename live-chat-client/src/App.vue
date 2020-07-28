@@ -1,8 +1,44 @@
 <template>
   <div id="app">
+    <el-popover
+      ref="popoverAboutMe"
+      placement="right"
+      width="300"
+      trigger="manual"
+      v-model="popoverAboutMeVisible"
+      :visible-arrow="false"
+    >
+      <div id="id-card">
+        <div style="width:100%;display:flex;justify:space-between;">
+          <div style="width:calc(100% - 70px);">
+            <h3 style="font-size:1.2em;color:#333">
+              {{ currentUser.username }}
+              <i
+                class="el-icon-s-custom"
+                :style="`color:${currentUser.gender === 1 ? '#00a1ff' : '#ff95a8'};`"
+              ></i>
+            </h3>
+            <p style="margin-top:8px;color:#888">ID: {{ currentUser.id }}</p>
+          </div>
+          <div style="width:70px;height:70px;" class="can-click" @click="modifyAvatar">
+            <el-avatar :src="currentUser.avatarUrl" shape="square" :size="70"></el-avatar>
+          </div>
+        </div>
+        <div
+          style="font-size:.9em;color:#848484;border-top:1px solid #ececec;margin-top:10px;padding-top:10px;"
+        >
+          <span class="can-click hover-color-black" @click="modifyMsg">修改个人信息</span>
+        </div>
+      </div>
+    </el-popover>
     <div id="global-left">
-      <div id="me" class="can-click" @click="clickMe">
-        <img src="@/assets/男孩头像.png" alt srcset />
+      <div
+        id="me"
+        v-popover:popoverAboutMe
+        class="can-click"
+        @click="popoverAboutMeVisible = !popoverAboutMeVisible"
+      >
+        <el-avatar :src="currentUser.avatarUrl" :size="35"></el-avatar>
       </div>
       <router-link :class="`router-link ${activeLink === 1 ? 'active' : ''}`" :to="`/sessions`">
         <i class="el-icon-chat-dot-square"></i>
@@ -26,6 +62,16 @@ export default {
   data() {
     return {
       activeLink: 1,
+      popoverAboutMeVisible: false,
+      currentUser: {
+        id: 12580,
+        username: '阿甘',
+        gender: 1, // 1-男，2-女
+        phoneNumber: '13320354693',
+        email: '909498022@qq.com',
+        avatarUrl:
+          'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
+      },
     }
   },
   watch: {
@@ -50,13 +96,24 @@ export default {
           this.activeLink = 0
       }
     },
-    // 点击头像后跳转
-    clickMe() {
+    // 路由跳转
+    routeTo(path) {
+      if (this.$route.path !== path) {
+        this.$router.push({
+          path,
+        })
+      }
+    },
+    // 修改头像
+    modifyAvatar() {
+      this.popoverAboutMeVisible = !this.popoverAboutMeVisible
       // TODO
-      this.$router.push({
-        path: '/me'
-      })
-    }
+    },
+    // 修改个人信息，弹出框修改
+    modifyMsg() {
+      this.popoverAboutMeVisible = !this.popoverAboutMeVisible
+      this.routeTo('/me')
+    },
   },
   created() {
     // 初始化当前tab
@@ -112,5 +169,11 @@ div#me > img {
 }
 .can-click:hover {
   cursor: pointer;
+}
+#id-card {
+  padding: 10px;
+}
+.hover-color-black:hover {
+  color: black;
 }
 </style>
