@@ -1,6 +1,6 @@
 package com.github.mrag.livechat.usermsg.api;
 
-import com.github.mrag.livechat.usermsg.dto.UserDTO;
+import com.github.mrag.livechat.usermsg.dto.ChatUsermsgDTO;
 
 /**
  * 用户服务提供
@@ -14,20 +14,20 @@ public interface UserService {
      * @param uid 用户ID
      * @return 若存在则返回用户信息；否则返回<code>null</code>
      */
-    UserDTO findUserById(Long uid);
+    ChatUsermsgDTO findUserById(Long uid);
 
     /**
-     * 通过用户名查询用户
+     * 通过微信号查询用户
      *
-     * @param username 用户ID
+     * @param chatNo 微信号
      * @return 若存在则返回用户信息；否则返回<code>null</code>
      */
-    UserDTO findUserByUsername(String username);
+    ChatUsermsgDTO findUserByChatNo(String chatNo);
 
     /**
      * 保存用户信息
      *
-     * @param userDTO 用户信息
+     * @param chatUsermsgDTO 用户信息
      */
-    void save(UserDTO userDTO);
+    void save(ChatUsermsgDTO chatUsermsgDTO);
 }

@@ -55,7 +55,7 @@ export default {
   justify-content: center;
   width: 100%;
   height: 100%;
-  /* overflow-y: scroll; */
+  max-width: 600px;
   box-sizing: border-box;
   padding: 20px;
 }
