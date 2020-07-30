@@ -15,7 +15,8 @@ public enum BusinessType {
 
     BusinessType(long value) {
         if (value < 0L || value > SnowflakeIdWorker.maxBusinessId) {
-            throw new IllegalArgumentException(String.format("business Id can't be greater than %d or less than 0", SnowflakeIdWorker.maxBusinessId));
+            throw new IllegalArgumentException(String.format(
+                    "business Id can't be greater than %d or less than 0", SnowflakeIdWorker.maxBusinessId));
         }
         this.value = value;
     }

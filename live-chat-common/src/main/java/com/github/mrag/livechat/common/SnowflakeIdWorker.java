@@ -65,11 +65,12 @@ public class SnowflakeIdWorker {
     /**
      * 提供一个机器标识ID以初始化该生成器
      *
-     * @param workerId 机器标识 0 ~ 31
+     * @param workerId 机器标识
      */
     public SnowflakeIdWorker(long workerId) {
         if (workerId < 0 || workerId > maxWorkerId) {
-            throw new IllegalArgumentException(String.format("worker Id can't be greater than %d or less than 0", maxWorkerId));
+            throw new IllegalArgumentException(
+                    String.format("worker Id can't be greater than %d or less than 0", maxWorkerId));
         }
         this.workerId = workerId;
         this.sequence = 0L;
@@ -90,7 +91,9 @@ public class SnowflakeIdWorker {
      */
     private long checkTimestampMoved(long timestamp) {
         if (timestamp < this.lastTimestamp) {
-            throw new RuntimeException(String.format("Clock moved backwards.  Refusing to generate id for %d milliseconds", lastTimestamp - timestamp));
+            throw new RuntimeException(String.format(
+                    "Clock moved backwards.  Refusing to generate id for %d milliseconds",
+                    lastTimestamp - timestamp));
         }
         return timestamp;
     }

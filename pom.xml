@@ -9,7 +9,8 @@
         <module>live-chat-communication-center</module>
         <module>live-chat-usermsg-api</module>
         <module>live-chat-common</module>
-        <module>live-chat-center-app</module>
+        <module>live-chat-test-consumer</module>
+        <module>live-chat-restful-entry</module>
     </modules>
     <groupId>com.github.mrag</groupId>
     <artifactId>live-chat</artifactId>
@@ -17,10 +18,16 @@
 
     <properties>
         <spring.boot.version>2.3.1.RELEASE</spring.boot.version>
+        <dubbo.version>2.7.7</dubbo.version>
+        <mybatis.generator.core.version>1.4.0</mybatis.generator.core.version>
+        <mybatis.boot.version>2.1.2</mybatis.boot.version>
+        <mybatis.dynamic.version>1.1.4</mybatis.dynamic.version>
+        <druid.version>1.1.23</druid.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <!--springboot全依赖-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
@@ -29,35 +36,46 @@
                 <scope>import</scope>
             </dependency>
 
+            <!--druid连接池依赖-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+
+            <!--mybatis相关依赖-->
             <dependency>
                 <groupId>org.mybatis.generator</groupId>
                 <artifactId>mybatis-generator-core</artifactId>
-                <version>1.4.0</version>
+                <version>${mybatis.generator.core.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
-                <version>2.1.2</version>
+                <version>${mybatis.boot.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.mybatis.dynamic-sql</groupId>
                 <artifactId>mybatis-dynamic-sql</artifactId>
-                <version>1.1.4</version>
+                <version>${mybatis.dynamic.version}</version>
+            </dependency>
+
+            <!--dubbo依赖-->
+            <!--需放在springboot依赖的后面，因为其本身依赖的spring版本偏低-->
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-dependencies-bom</artifactId>
+                <version>${dubbo.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-spring-boot-starter</artifactId>
+                <version>${dubbo.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.github.mrag</groupId>
-            <artifactId>live-chat-common</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
 
     <build>
         <plugins>
