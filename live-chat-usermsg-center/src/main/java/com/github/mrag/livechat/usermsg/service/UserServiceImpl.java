@@ -1,6 +1,5 @@
 package com.github.mrag.livechat.usermsg.service;
 
-import com.github.mrag.livechat.common.Constants;
 import com.github.mrag.livechat.usermsg.api.UserService;
 import com.github.mrag.livechat.usermsg.dao.ChatUsermsgDynamicSqlSupport;
 import com.github.mrag.livechat.usermsg.dao.ChatUsermsgMapper;
@@ -17,7 +16,7 @@ import javax.annotation.Resource;
 /**
  * @author Gmw
  */
-@DubboService(group = Constants.DUBBO_SERV_GROUP, version = Constants.DUBBO_SERV_VERSION)
+@DubboService
 public class UserServiceImpl implements UserService {
     private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
