@@ -1,11 +1,11 @@
-package com.github.mrag.livechat.rest;
+package com.github.mrag.livechat.client;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RestApp {
+public class LocalClientApp {
     public static void main(String[] args) {
-        SpringApplication.run(RestApp.class, args);
+        SpringApplication.run(LocalClientApp.class, args);
     }
 }

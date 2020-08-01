@@ -10,12 +10,18 @@
         <module>live-chat-usermsg-api</module>
         <module>live-chat-common</module>
         <module>live-chat-restful-entry</module>
+        <module>live-chat-client-server</module>
     </modules>
     <groupId>com.github.mrag</groupId>
     <artifactId>live-chat</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
+        <!--系统属性，配置完将自动生效-->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <!--所有依赖版本声明-->
         <spring.boot.version>2.3.1.RELEASE</spring.boot.version>
         <dubbo.version>2.7.7</dubbo.version>
         <mybatis.generator.core.version>1.4.0</mybatis.generator.core.version>
@@ -97,9 +103,9 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <encoding>UTF-8</encoding>
-                    <source>11</source>
-                    <target>11</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
                 </configuration>
             </plugin>
         </plugins>
