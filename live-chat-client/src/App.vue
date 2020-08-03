@@ -31,7 +31,7 @@
         </div>
       </div>
     </el-popover>
-    <div id="global-left">
+    <div id="global-left" v-show="isLogin">
       <div
         id="me"
         v-popover:popoverAboutMe
@@ -50,7 +50,7 @@
         <i class="el-icon-s-tools"></i>
       </router-link>
     </div>
-    <div id="global-right">
+    <div id="global-right" :style="isLogin ? '' : `width:100vw`">
       <router-view></router-view>
     </div>
   </div>
@@ -72,6 +72,11 @@ export default {
         avatarUrl:
           'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
       },
+    }
+  },
+  computed: {
+    isLogin() {
+      return this.$store.getters.isLogin
     }
   },
   watch: {
@@ -116,6 +121,10 @@ export default {
     },
   },
   created() {
+    // 验证是否登陆
+    if (!this.isLogin) {
+      this.routeTo('/login')
+    }
     // 初始化当前tab
     this.initTab()
   },
