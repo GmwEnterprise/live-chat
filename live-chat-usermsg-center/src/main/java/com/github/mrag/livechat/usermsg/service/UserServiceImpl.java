@@ -47,6 +47,17 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public boolean checkPhoneExists(String phone) {
+        if (phone == null || "".equals(phone.trim())) {
+            return false;
+        }
+        // long count = chatUsermsgMapper.count(dsl -> dsl
+        //         .where(ChatUsermsgDynamicSqlSupport.phoneNumber, SqlBuilder.isEqualTo(phone)));
+        long count = chatUsermsgMapper.countByPhoneNumber(phone);
+        return count > 0;
+    }
+
     private ChatUsermsgDTO toDto(ChatUsermsg entity) {
         ChatUsermsgDTO dto = new ChatUsermsgDTO();
         BeanUtils.copyProperties(entity, dto);

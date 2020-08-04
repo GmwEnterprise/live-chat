@@ -17,7 +17,12 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/{userId}")
-    public ChatUsermsgDTO findUserByUserId(@PathVariable("userId") Long userId) {
-        return userService.findUserById(userId);
+    public HttpResp<ChatUsermsgDTO> findUserByUserId(@PathVariable("userId") Long userId) {
+        return new HttpResp<>(userService.findUserById(userId));
+    }
+
+    @GetMapping("/phone/{phone}")
+    public HttpResp<Boolean> phoneExists(@PathVariable String phone) {
+        return new HttpResp<>(userService.checkPhoneExists(phone));
     }
 }

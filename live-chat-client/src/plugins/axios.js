@@ -3,6 +3,8 @@
 import Vue from 'vue'
 import axios from "axios"
 
+import { IS_DEV } from '../assets/js/constants'
+
 // Full config:  https://github.com/axios/axios#request-config
 // axios.defaults.baseURL = process.env.baseURL || process.env.apiUrl || ''
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN
@@ -19,6 +21,9 @@ const _axios = axios.create(config)
 _axios.interceptors.request.use(
   function (config) {
     // Do something before request is sent
+    if (IS_DEV) {
+      config.url = 'http://localhost:3000' + config.url
+    }
     return config
   },
   function (error) {

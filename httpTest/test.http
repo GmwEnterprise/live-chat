@@ -1,1 +1,5 @@
 GET http://localhost:4200/api/v1/usermsg/1
+
+###
+
+GET http://localhost:4200/api/v1/usermsg/phone/13320354693

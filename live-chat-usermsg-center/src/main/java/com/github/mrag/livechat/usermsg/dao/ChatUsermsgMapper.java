@@ -28,6 +28,9 @@ import static org.mybatis.dynamic.sql.SqlBuilder.isEqualTo;
 
 @Mapper
 public interface ChatUsermsgMapper {
+    @Select("select count(*) from chat_usermsg where phone_number = #{phone}")
+    long countByPhoneNumber(String phone);
+
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     BasicColumn[] selectList = BasicColumn.columnList(id, chatNo, username, gender, birthday, signature, company, personalDescription, userPassword, salt, phoneNumber, email, bloodGroup, occupation, location, hometown, accountStatus);
 

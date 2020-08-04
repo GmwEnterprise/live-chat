@@ -18,10 +18,18 @@ public class UsermsgController {
     @GetMapping("/{userId}")
     public HttpResp<ChatUsermsgDTO> findUserByUserId(@PathVariable Long userId) {
         ChatUsermsgDTO user = userService.findUserById(userId);
-        HttpResp<ChatUsermsgDTO> dto = new HttpResp<>();
-        dto.setBody(user);
-        dto.setCode(0);
-        dto.setMessage("ok");
-        return dto;
+        return new HttpResp<ChatUsermsgDTO>()
+                .setBody(user)
+                .setCode(0)
+                .setMessage("ok");
+    }
+
+    @GetMapping("/phone/{phone}")
+    public HttpResp<Boolean> phoneExists(@PathVariable String phone) {
+        boolean exists = userService.checkPhoneExists(phone);
+        return new HttpResp<Boolean>()
+                .setCode(0)
+                .setMessage("ok")
+                .setBody(exists);
     }
 }

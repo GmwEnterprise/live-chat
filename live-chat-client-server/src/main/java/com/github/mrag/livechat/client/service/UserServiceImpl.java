@@ -18,6 +18,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(ChatUsermsgDTO chatUsermsgDTO) {
+    }
 
+    @Override
+    public boolean checkPhoneExists(String phone) {
+        // TODO
+        return false;
     }
 }
