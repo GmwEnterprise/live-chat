@@ -15,6 +15,11 @@
         <!--项目模块依赖-->
         <dependency>
             <groupId>com.github.mrag</groupId>
+            <artifactId>live-chat-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.mrag</groupId>
             <artifactId>live-chat-usermsg-api</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>

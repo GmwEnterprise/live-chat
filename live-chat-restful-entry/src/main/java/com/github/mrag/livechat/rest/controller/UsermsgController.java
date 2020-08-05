@@ -1,13 +1,10 @@
 package com.github.mrag.livechat.rest.controller;
 
-import com.github.mrag.livechat.rest.base.HttpResp;
+import com.github.mrag.livechat.common.HttpResponse;
 import com.github.mrag.livechat.usermsg.api.UserService;
 import com.github.mrag.livechat.usermsg.dto.ChatUsermsgDTO;
 import org.apache.dubbo.config.annotation.DubboReference;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/usermsg")
@@ -16,20 +13,21 @@ public class UsermsgController {
     private UserService userService;
 
     @GetMapping("/{userId}")
-    public HttpResp<ChatUsermsgDTO> findUserByUserId(@PathVariable Long userId) {
+    public HttpResponse findUserByUserId(@PathVariable Long userId) {
         ChatUsermsgDTO user = userService.findUserById(userId);
-        return new HttpResp<ChatUsermsgDTO>()
-                .setBody(user)
-                .setCode(0)
-                .setMessage("ok");
+        return user == null ? HttpResponse.notFound("系统无此用户")
+                : HttpResponse.ok(user);
     }
 
     @GetMapping("/phone/{phone}")
-    public HttpResp<Boolean> phoneExists(@PathVariable String phone) {
+    public HttpResponse phoneExists(@PathVariable String phone) {
         boolean exists = userService.checkPhoneExists(phone);
-        return new HttpResp<Boolean>()
-                .setCode(0)
-                .setMessage("ok")
-                .setBody(exists);
+        return HttpResponse.ok(exists);
+    }
+
+    @PostMapping
+    public HttpResponse registry(@RequestBody ChatUsermsgDTO dto) {
+        userService.save(dto);
+        return HttpResponse.ok(null);
     }
 }

@@ -29,7 +29,7 @@ public interface UserService {
      *
      * @param chatUsermsgDTO 用户信息
      */
-    void save(ChatUsermsgDTO chatUsermsgDTO);
+    ChatUsermsgDTO save(ChatUsermsgDTO chatUsermsgDTO);
 
     /**
      * 检查数据库中是否有这个手机号的账户存在，返回布尔值

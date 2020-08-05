@@ -59,7 +59,9 @@ export default {
         this.axios
           .get(`/cli/user/phone/${this.loginData.phoneNumber}`)
           .then((resp) => {
-            if (resp.data.body) {
+            console.log('ajax result: ')
+            console.log(resp)
+            if (resp.body) {
               // 手机号存在
               this.currentView = 3 // 进入密码输入登陆字段填写
             } else {

@@ -36,15 +36,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void save(ChatUsermsgDTO chatUsermsgDTO) {
+    public ChatUsermsgDTO save(ChatUsermsgDTO chatUsermsgDTO) {
         ChatUsermsg entity = toEntity(chatUsermsgDTO);
         if (entity.getId() != null) {
             // update
             chatUsermsgMapper.updateByPrimaryKeySelective(entity);
         } else {
-            entity.setId(null);
+            entity.setId(null); // TODO
             chatUsermsgMapper.insertSelective(entity);
         }
+        return findUserById(entity.getId());
     }
 
     @Override
