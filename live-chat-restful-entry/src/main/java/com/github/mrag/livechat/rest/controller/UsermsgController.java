@@ -6,6 +6,8 @@ import com.github.mrag.livechat.usermsg.dto.ChatUsermsgDTO;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1/usermsg")
 public class UsermsgController {
@@ -26,7 +28,7 @@ public class UsermsgController {
     }
 
     @PostMapping
-    public HttpResponse registry(@RequestBody ChatUsermsgDTO dto) {
+    public HttpResponse registry(@RequestBody @Valid ChatUsermsgDTO dto) {
         userService.save(dto);
         return HttpResponse.ok(null);
     }

@@ -1,5 +1,6 @@
 package com.github.mrag.livechat.usermsg.dto;
 
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -12,12 +13,17 @@ public class ChatUsermsgDTO implements Serializable {
 
     private Long id;
 
+    @NotBlank(message = "ID不能为空")
+    @Pattern(message = "", regexp = "")
     private String chatNo;
 
+    @Pattern(regexp = "^[\\u4E00-\\u9FA5A-Za-z0-9_]+$", message = "用户名仅支持中文、数字、字母以及下划线")
+    @Size(min = 2, max = 16, message = "用户名长度在2-16个字符之间")
     private String username;
 
     private Byte gender;
 
+    @Past(message = "出生日期必须是过去的时间")
     private LocalDateTime birthday;
 
     private String signature;
@@ -26,12 +32,16 @@ public class ChatUsermsgDTO implements Serializable {
 
     private String personalDescription;
 
+    // 密码需要经过自定义验证
     private String userPassword;
 
     private String salt;
 
+    @Pattern(regexp = "^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\\d{8}$",
+            message = "手机号码不符合规范")
     private String phoneNumber;
 
+    @Email(message = "Email地址不符合规范")
     private String email;
 
     private Integer bloodGroup;

@@ -1,0 +1,16 @@
+{
+  "groups": [
+    {
+      "name": "myproperties",
+      "type": "com.github.mrag.livechat.client.LocalClientAppProperties",
+      "description": "自定义属性."
+    }
+  ],
+  "properties": [
+    {
+      "name": "myproperties.server-address-prefix",
+      "type": "java.lang.String",
+      "description": "Description for myproperties.server-address-prefix."
+    }
+  ]
+}
