@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.mrag.livechat.usermsg.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="com.github.mrag.livechat.usermsg.entity.User">
+    <id column="id" jdbcType="BIGINT" property="id"/>
+    <result column="chat_no" jdbcType="VARCHAR" property="chatNo"/>
+    <result column="username" jdbcType="VARCHAR" property="username"/>
+    <result column="gender" jdbcType="TINYINT" property="gender"/>
+    <result column="birthday" jdbcType="TIMESTAMP" property="birthday"/>
+    <result column="signature" jdbcType="VARCHAR" property="signature"/>
+    <result column="company" jdbcType="VARCHAR" property="company"/>
+    <result column="personal_description" jdbcType="VARCHAR" property="personalDescription"/>
+    <result column="user_password" jdbcType="VARCHAR" property="userPassword"/>
+    <result column="salt" jdbcType="VARCHAR" property="salt"/>
+    <result column="phone_number" jdbcType="VARCHAR" property="phoneNumber"/>
+    <result column="email" jdbcType="VARCHAR" property="email"/>
+    <result column="blood_group" jdbcType="INTEGER" property="bloodGroup"/>
+    <result column="occupation" jdbcType="INTEGER" property="occupation"/>
+    <result column="location" jdbcType="INTEGER" property="location"/>
+    <result column="hometown" jdbcType="INTEGER" property="hometown"/>
+    <result column="account_status" jdbcType="TINYINT" property="accountStatus"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, chat_no, username, gender, birthday, signature, company, personal_description, 
+    user_password, salt, phone_number, email, blood_group, occupation, location, hometown, 
+    account_status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByChatNo" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from user where chat_no = #{chatNo}
+  </select>
+  <select id="countByPhoneNumber" resultType="java.lang.Long">
+    select count(*) from user where phone_number = #{phone}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.github.mrag.livechat.usermsg.entity.User">
+    insert into user (id, chat_no, username,
+      gender, birthday, signature,
+      company, personal_description, user_password,
+      salt, phone_number, email,
+      blood_group, occupation, location,
+      hometown, account_status)
+    values (#{id,jdbcType=BIGINT}, #{chatNo,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR},
+      #{gender,jdbcType=TINYINT}, #{birthday,jdbcType=TIMESTAMP}, #{signature,jdbcType=VARCHAR},
+      #{company,jdbcType=VARCHAR}, #{personalDescription,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR},
+      #{salt,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+      #{bloodGroup,jdbcType=INTEGER}, #{occupation,jdbcType=INTEGER}, #{location,jdbcType=INTEGER},
+      #{hometown,jdbcType=INTEGER}, #{accountStatus,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.github.mrag.livechat.usermsg.entity.User">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="chatNo != null">
+        chat_no,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="signature != null">
+        signature,
+      </if>
+      <if test="company != null">
+        company,
+      </if>
+      <if test="personalDescription != null">
+        personal_description,
+      </if>
+      <if test="userPassword != null">
+        user_password,
+      </if>
+      <if test="salt != null">
+        salt,
+      </if>
+      <if test="phoneNumber != null">
+        phone_number,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="bloodGroup != null">
+        blood_group,
+      </if>
+      <if test="occupation != null">
+        occupation,
+      </if>
+      <if test="location != null">
+        location,
+      </if>
+      <if test="hometown != null">
+        hometown,
+      </if>
+      <if test="accountStatus != null">
+        account_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="chatNo != null">
+        #{chatNo,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=TINYINT},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="signature != null">
+        #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null">
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="personalDescription != null">
+        #{personalDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null">
+        #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null">
+        #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null">
+        #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="bloodGroup != null">
+        #{bloodGroup,jdbcType=INTEGER},
+      </if>
+      <if test="occupation != null">
+        #{occupation,jdbcType=INTEGER},
+      </if>
+      <if test="location != null">
+        #{location,jdbcType=INTEGER},
+      </if>
+      <if test="hometown != null">
+        #{hometown,jdbcType=INTEGER},
+      </if>
+      <if test="accountStatus != null">
+        #{accountStatus,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.github.mrag.livechat.usermsg.entity.User">
+    update user
+    <set>
+      <if test="chatNo != null">
+        chat_no = #{chatNo,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=TINYINT},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="signature != null">
+        signature = #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null">
+        company = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="personalDescription != null">
+        personal_description = #{personalDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null">
+        user_password = #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null">
+        salt = #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null">
+        phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="bloodGroup != null">
+        blood_group = #{bloodGroup,jdbcType=INTEGER},
+      </if>
+      <if test="occupation != null">
+        occupation = #{occupation,jdbcType=INTEGER},
+      </if>
+      <if test="location != null">
+        location = #{location,jdbcType=INTEGER},
+      </if>
+      <if test="hometown != null">
+        hometown = #{hometown,jdbcType=INTEGER},
+      </if>
+      <if test="accountStatus != null">
+        account_status = #{accountStatus,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.github.mrag.livechat.usermsg.entity.User">
+    update user
+    set chat_no = #{chatNo,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=TINYINT},
+      birthday = #{birthday,jdbcType=TIMESTAMP},
+      signature = #{signature,jdbcType=VARCHAR},
+      company = #{company,jdbcType=VARCHAR},
+      personal_description = #{personalDescription,jdbcType=VARCHAR},
+      user_password = #{userPassword,jdbcType=VARCHAR},
+      salt = #{salt,jdbcType=VARCHAR},
+      phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      blood_group = #{bloodGroup,jdbcType=INTEGER},
+      occupation = #{occupation,jdbcType=INTEGER},
+      location = #{location,jdbcType=INTEGER},
+      hometown = #{hometown,jdbcType=INTEGER},
+      account_status = #{accountStatus,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

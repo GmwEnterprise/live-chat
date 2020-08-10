@@ -1,14 +1,16 @@
 package com.github.mrag.livechat.usermsg;
 
-import org.apache.ibatis.annotations.Mapper;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * @author Gmw
+ */
 @SpringBootApplication
-@MapperScan(annotationClass = Mapper.class)
-public class UsermsgApp {
+@MapperScan(basePackages = "com.github.mrag.livechat.usermsg.dao")
+public class UserApp {
     public static void main(String[] args) {
-        SpringApplication.run(UsermsgApp.class, args);
+        SpringApplication.run(UserApp.class, args);
     }
 }

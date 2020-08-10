@@ -21,9 +21,6 @@ const _axios = axios.create(config)
 _axios.interceptors.request.use(
   function (config) {
     // Do something before request is sent
-    // if (IS_DEV) { // 经测试发现就按此写法部署到服务器，仍然可以访问
-      config.url = 'http://localhost:3000' + config.url
-    // }
     return config
   },
   function (error) {
@@ -41,8 +38,9 @@ _axios.interceptors.response.use(
   },
   function (error) {
     // Do something with response error
-    const err = JSON.stringify(error)
-    console.error(err)
+    const err = JSON.stringify(error.response)
+    console.error(error)
+    console.error(error.response)
     Notification.error({
       title: '系统报错',
       message: err,

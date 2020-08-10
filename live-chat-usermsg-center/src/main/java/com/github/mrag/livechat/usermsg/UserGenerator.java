@@ -10,7 +10,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UsermsgGenerator {
+public class UserGenerator {
     public static void main(String[] args) throws Exception {
         // mbg执行过程中的警告信息
         List<String> warnings = new ArrayList<>();

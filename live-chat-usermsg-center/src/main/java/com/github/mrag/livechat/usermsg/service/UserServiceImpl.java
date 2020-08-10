@@ -1,73 +1,63 @@
 package com.github.mrag.livechat.usermsg.service;
 
+import com.github.mrag.livechat.common.BusinessType;
+import com.github.mrag.livechat.common.RegExp;
+import com.github.mrag.livechat.common.Tools;
+import com.github.mrag.livechat.common.utils.SequenceUtils;
 import com.github.mrag.livechat.usermsg.api.UserService;
-import com.github.mrag.livechat.usermsg.dao.ChatUsermsgDynamicSqlSupport;
-import com.github.mrag.livechat.usermsg.dao.ChatUsermsgMapper;
-import com.github.mrag.livechat.usermsg.dto.ChatUsermsgDTO;
-import com.github.mrag.livechat.usermsg.entity.ChatUsermsg;
+import com.github.mrag.livechat.usermsg.dao.UserMapper;
+import com.github.mrag.livechat.usermsg.dto.UserDTO;
+import com.github.mrag.livechat.usermsg.entity.User;
 import org.apache.dubbo.config.annotation.DubboService;
-import org.mybatis.dynamic.sql.SqlBuilder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 
 import javax.annotation.Resource;
+import java.util.regex.Pattern;
 
 /**
  * @author Gmw
  */
 @DubboService
 public class UserServiceImpl implements UserService {
-    private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Resource
-    private ChatUsermsgMapper chatUsermsgMapper;
+    private UserMapper userMapper;
 
     @Override
-    public ChatUsermsgDTO findUserById(Long uid) {
-        return chatUsermsgMapper.selectByPrimaryKey(uid).map(this::toDto).orElse(null);
-    }
-
-    @Override
-    public ChatUsermsgDTO findUserByChatNo(String chatNo) {
-        return chatUsermsgMapper.selectOne(dsl -> dsl
-                .where(ChatUsermsgDynamicSqlSupport.chatNo, SqlBuilder.isEqualTo(chatNo)))
-                .map(this::toDto).orElse(null);
-    }
-
-    @Override
-    public ChatUsermsgDTO save(ChatUsermsgDTO chatUsermsgDTO) {
-        ChatUsermsg entity = toEntity(chatUsermsgDTO);
-        if (entity.getId() != null) {
-            // update
-            chatUsermsgMapper.updateByPrimaryKeySelective(entity);
-        } else {
-            entity.setId(null); // TODO
-            chatUsermsgMapper.insertSelective(entity);
+    public UserDTO findUserById(Long uid) {
+        User entity = userMapper.selectByPrimaryKey(uid);
+        if (entity == null) {
+            return null;
         }
-        return findUserById(entity.getId());
+        return Tools.copyProperties(entity, UserDTO.class);
+    }
+
+    @Override
+    public UserDTO findUserByChatNo(String chatNo) {
+        User entity = userMapper.selectByChatNo(chatNo);
+        if (entity == null) {
+            return null;
+        }
+        return Tools.copyProperties(entity, UserDTO.class);
+    }
+
+    @Override
+    public UserDTO save(UserDTO dto) {
+        User user = Tools.copyProperties(dto, User.class);
+        if (user.getId() == null) {
+            // insert
+            user.setId(SequenceUtils.nextId(BusinessType.USER_BUSINESS));
+            userMapper.insertSelective(user);
+        } else {
+            userMapper.updateByPrimaryKeySelective(user);
+        }
+        return findUserById(user.getId());
     }
 
     @Override
     public boolean checkPhoneExists(String phone) {
-        if (phone == null || "".equals(phone.trim())) {
-            return false;
+        if (!Pattern.matches(RegExp.REGEXP_PHONE, phone)) {
+            throw new IllegalArgumentException(String.format("%s[%s]", RegExp.REGEXP_PHONE_MSG, phone));
         }
-        // long count = chatUsermsgMapper.count(dsl -> dsl
-        //         .where(ChatUsermsgDynamicSqlSupport.phoneNumber, SqlBuilder.isEqualTo(phone)));
-        long count = chatUsermsgMapper.countByPhoneNumber(phone);
-        return count > 0;
-    }
-
-    private ChatUsermsgDTO toDto(ChatUsermsg entity) {
-        ChatUsermsgDTO dto = new ChatUsermsgDTO();
-        BeanUtils.copyProperties(entity, dto);
-        return dto;
-    }
-
-    private ChatUsermsg toEntity(ChatUsermsgDTO dto) {
-        ChatUsermsg entity = new ChatUsermsg();
-        BeanUtils.copyProperties(dto, entity);
-        return entity;
+        return userMapper.countByPhoneNumber(phone) > 0;
     }
 }

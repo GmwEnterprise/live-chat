@@ -1,6 +1,6 @@
 package com.github.mrag.livechat.usermsg.api;
 
-import com.github.mrag.livechat.usermsg.dto.ChatUsermsgDTO;
+import com.github.mrag.livechat.usermsg.dto.UserDTO;
 
 /**
  * 用户服务提供
@@ -14,7 +14,7 @@ public interface UserService {
      * @param uid 用户ID
      * @return 若存在则返回用户信息；否则返回<code>null</code>
      */
-    ChatUsermsgDTO findUserById(Long uid);
+    UserDTO findUserById(Long uid);
 
     /**
      * 通过微信号查询用户
@@ -22,14 +22,15 @@ public interface UserService {
      * @param chatNo 微信号
      * @return 若存在则返回用户信息；否则返回<code>null</code>
      */
-    ChatUsermsgDTO findUserByChatNo(String chatNo);
+    UserDTO findUserByChatNo(String chatNo);
 
     /**
      * 保存用户信息
      *
-     * @param chatUsermsgDTO 用户信息
+     * @param dto 用户信息
+     * @return 更新后的信息
      */
-    ChatUsermsgDTO save(ChatUsermsgDTO chatUsermsgDTO);
+    UserDTO save(UserDTO dto);
 
     /**
      * 检查数据库中是否有这个手机号的账户存在，返回布尔值

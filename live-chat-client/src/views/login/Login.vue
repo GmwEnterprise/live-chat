@@ -42,77 +42,54 @@ export default {
      * 点击下一步则验证当前显示的输入框
      */
     nextStep() {
-      const phoneRegex = /^1[3456789]\d{9}$/,
-        // emailRegex = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
-        strongPasswordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$/,
-        idRegex = /^[a-zA-Z][a-zA-Z0-9_]{8,20}$/
+      // const strongPasswordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,16}$/
+      // 13320354693
 
       if (this.currentView === 1) {
-        // 验证手机号是否存在，若存在则为登陆，不存在则为注册
-        if (!phoneRegex.test(this.loginData.phoneNumber)) {
+        // 检查手机号，判断接下来是登陆还是注册
+        this.axios
+          .get(`/user/phone/${this.loginData.phoneNumber}/exists`)
+          .then((result) => {
+            if (result.body) {
+              // 手机号码存在，转为登陆
+            } else {
+              // 不存在，转为注册
+              this.currentView = 2
+              return
+            }
+          })
+      } else if (this.currentView === 2) {
+        // 填写注册信息
+        const passwdLengthWrong =
+          this.loginData.passwd.length < 4 || this.loginData.passwd.length > 32
+        if (passwdLengthWrong) {
+          // 密码长度不符合要求
           this.$message({
-            message: '手机号格式不正确，请重新输入',
+            message: '密码长度应在4-32之间',
+            type: 'warning',
+          })
+          return
+        }
+
+        if (this.loginData.passwd !== this.loginData.repasswd) {
+          // 两次密码输入不一致
+          this.$message({
+            message: '两次密码输入不一致',
             type: 'warning',
           })
           return
         }
         this.axios
-          .get(`/cli/user/phone/${this.loginData.phoneNumber}`)
-          .then((resp) => {
-            console.log('ajax result: ')
-            console.log(resp)
-            if (resp.body) {
-              // 手机号存在
-              this.currentView = 3 // 进入密码输入登陆字段填写
-            } else {
-              // 手机号不存在
-              this.currentView = 2 // 进入注册字段填写
-            }
+          .post(`/user`, {
+            chatNo: this.loginData.chatNo,
+            userPassword: this.loginData.passwd,
+            phoneNumber: this.loginData.phoneNumber,
           })
-      } else if (this.currentView === 2) {
-        // 验证注册信息是否填写正确
-        if (!idRegex.test(this.loginData.chatNo)) {
-          this.$message({
-            message: 'ID由字母、数字、下划线组成，长度为8-20',
-            type: 'warning',
+          .then((result) => {
+            console.log(result)
           })
-          return
-        }
-        if (!strongPasswordRegex.test(this.loginData.passwd)) {
-          this.$message({
-            message:
-              '密码必须包含大小写字母和数字的组合，不能使用特殊字符，长度在8-16之间',
-            type: 'warning',
-          })
-          return
-        }
-        if (this.loginData.repasswd !== this.loginData.passwd) {
-          this.$message({
-            message: '两次输入密码不一致',
-            type: 'warning',
-          })
-          return
-        }
-        // 验证成功，注册并登陆
-        // TODO
-        alert('验证成功')
       } else if (this.currentView === 3) {
-        // 密码长度符合条件即可
-        if (this.passwd === null || this.passwd === '') {
-          this.$message({
-            message: '请输入密码',
-            type: 'warning',
-          })
-          return
-        } else if (this.passwd.length < 8 || this.passwd.length > 16) {
-          this.$message({
-            message: '密码错误',
-            type: 'warning',
-          })
-        } else {
-          // 发往服务器验证密码
-          // TODO
-        }
+        // 填写登陆密码
       }
     },
   },
