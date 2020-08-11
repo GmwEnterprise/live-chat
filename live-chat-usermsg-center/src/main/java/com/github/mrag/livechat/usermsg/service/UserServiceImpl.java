@@ -1,6 +1,7 @@
 package com.github.mrag.livechat.usermsg.service;
 
 import com.github.mrag.livechat.common.BusinessType;
+import com.github.mrag.livechat.common.Encryption;
 import com.github.mrag.livechat.common.RegExp;
 import com.github.mrag.livechat.common.Tools;
 import com.github.mrag.livechat.common.utils.SequenceUtils;
@@ -9,6 +10,7 @@ import com.github.mrag.livechat.usermsg.dao.UserMapper;
 import com.github.mrag.livechat.usermsg.dto.UserDTO;
 import com.github.mrag.livechat.usermsg.entity.User;
 import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,33 +70,59 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 对原始密码加盐，并返回哈希加密后的密码与盐值
+     * <p>
+     * http://commons.apache.org/proper/commons-codec/userguide.html
      *
      * @param originalPassword 原始密码
      * @return 加密哈希::盐
      */
     private String generatePasswordHashWithSalt(String originalPassword) {
-        String encryptedHash = "", salt;
+        String encryptedHash, salt = "";
 
         // 计算盐
         try {
             SecureRandom rand = SecureRandom.getInstance("SHA1PRNG");
             byte[] saltBytes = new byte[16];
             rand.nextBytes(saltBytes);
-            salt = Hex.encodeHexString(saltBytes);
-        } catch (NoSuchAlgorithmException e) {
-            log.warn("SecureRandom cannot got the algorithm[SHA1PRNG]");
-            salt = String.valueOf(SequenceUtils.nextId(BusinessType.ENCRYPTION_BUSINESS))
-                    .substring(0, 16);
+            salt = Hex.encodeHexString(saltBytes).substring(0, 8);
+        } catch (NoSuchAlgorithmException ignored) {
         }
 
         // 混淆密码 todo
-        
-        // http://commons.apache.org/proper/commons-codec/userguide.html
+        byte[] afterComputed = matrixMultiplication(originalPassword.getBytes(), salt.getBytes());
+        String computedBinary = Encryption.binary(afterComputed, Character.MAX_RADIX);
 
         // 哈希加密 todo
-
+        encryptedHash = DigestUtils.md5Hex(computedBinary);
         return encryptedHash + "::" + salt;
     }
+
+    /**
+     * 矩阵相乘
+     *
+     * @param m 横向向量
+     * @param n 纵向向量
+     * @return result
+     */
+    private byte[] matrixMultiplication(byte[] m, byte[] n) {
+        // byte[][] matrix = new byte[m.length][n.length];
+        byte[] result = new byte[m.length * n.length];
+        for (int i = 0; i < m.length; i++) {
+            for (int j = 0; j < n.length; j++) {
+                byte temp = (byte) (m[i] ^ n[j]);
+                // matrix[i][j] = temp;
+                result[i * n.length + j] = temp;
+            }
+        }
+        return result;
+    }
+
+    // public static void main(String[] args) {
+    //     UserServiceImpl t = new UserServiceImpl();
+    //     System.out.println(t.generatePasswordHashWithSalt("123456"));
+    //     System.out.println(t.generatePasswordHashWithSalt("acxswe"));
+    //     System.out.println(t.generatePasswordHashWithSalt("gan1ming2wei3"));
+    // }
 
     @Override
     public boolean checkPhoneExists(String phone) {
