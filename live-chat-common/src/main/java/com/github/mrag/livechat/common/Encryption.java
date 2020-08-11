@@ -1,4 +1,4 @@
-package com.github.mrag.livechat.rest;
+package com.github.mrag.livechat.common;
 
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.util.StringUtils;
@@ -15,7 +15,7 @@ import java.nio.charset.StandardCharsets;
 public class Encryption {
 
     private static final String ALGORITHMSTR = "AES/ECB/PKCS5Padding";
-    private static final String AES_KEY = "GmwEnterprise.cn";
+    public static final String AES_KEY = "GmwEnterprise.cn";
 
     /**
      * 将byte[]转为各种进制的字符串
@@ -26,7 +26,8 @@ public class Encryption {
      * @return 转换后的字符串
      */
     public static String binary(byte[] bytes, int radix) {
-        return new BigInteger(1, bytes).toString(radix);// 这里的1代表正数
+        // 这里的1代表正数
+        return new BigInteger(1, bytes).toString(radix);
     }
 
     /**

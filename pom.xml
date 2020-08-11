@@ -26,6 +26,7 @@
     <mybatis.generator.core.version>1.4.0</mybatis.generator.core.version>
     <mybatis.boot.version>2.1.2</mybatis.boot.version>
     <mybatis.dynamic.version>1.1.4</mybatis.dynamic.version>
+    <pagehelper.version>1.2.13</pagehelper.version>
     <!--druid版本1.1.23有问题，使用1.1.22-->
     <druid.version>1.1.22</druid.version>
   </properties>
@@ -49,6 +50,11 @@
       </dependency>
       
       <!--mybatis相关依赖-->
+      <dependency>
+        <groupId>com.github.pagehelper</groupId>
+        <artifactId>pagehelper-spring-boot-starter</artifactId>
+        <version>${pagehelper.version}</version>
+      </dependency>
       <dependency>
         <groupId>org.mybatis.generator</groupId>
         <artifactId>mybatis-generator-core</artifactId>

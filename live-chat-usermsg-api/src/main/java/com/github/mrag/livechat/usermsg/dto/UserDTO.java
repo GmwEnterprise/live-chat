@@ -1,6 +1,7 @@
 package com.github.mrag.livechat.usermsg.dto;
 
 import com.github.mrag.livechat.common.RegExp;
+import com.github.mrag.livechat.common.validation.Password;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
@@ -14,11 +15,11 @@ import java.time.LocalDateTime;
 public class UserDTO implements Serializable {
     private Long id;
 
-    @Size(min = 6, max = 18, message = "长度应在6-18")
+    @Size(min = 6, max = 18, message = "ID长度应在6-18")
     @Pattern(regexp = RegExp.REGEXP_ID, message = RegExp.REGEXP_ID_MSG)
     private String chatNo;
 
-    @Size(min = 1, max = 20, message = "长度应在1-20")
+    @Size(min = 1, max = 20, message = "用户名长度应在1-20")
     @Pattern(regexp = RegExp.REGEXP_USERNAME, message = RegExp.REGEXP_USERNAME_MSG)
     private String username;
 
@@ -32,7 +33,7 @@ public class UserDTO implements Serializable {
 
     private String personalDescription;
 
-    // @Size(min = 4, max = 32, message = "长度应在4-32")
+    @Password(message = "密码格式有误")
     private String userPassword;
 
     private String salt;

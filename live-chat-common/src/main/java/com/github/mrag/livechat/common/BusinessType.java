@@ -11,7 +11,11 @@ public enum BusinessType {
     /**
      * 消息业务
      */
-    MESSAGE_BUSINESS(2L);
+    MESSAGE_BUSINESS(2L),
+    /**
+     * 加密
+     */
+    ENCRYPTION_BUSINESS(3L);
 
     BusinessType(long value) {
         if (value < 0L || value > SnowflakeIdWorker.maxBusinessId) {

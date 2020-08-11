@@ -29,7 +29,7 @@ public class RestErrorAdvice {
             errorMsg = bindingResult.getGlobalError().getDefaultMessage();
         } else {
             FieldError fieldError = bindingResult.getFieldError();
-            errorMsg = String.format("参数[%s]校验失败：%s.", fieldError.getField(), fieldError.getDefaultMessage());
+            errorMsg = String.format("参数校验失败：%s.", fieldError.getDefaultMessage());
         }
         return HttpResponse.badRequest(errorMsg);
     }

@@ -33,14 +33,11 @@ _axios.interceptors.request.use(
 _axios.interceptors.response.use(
   function (response) {
     // Do something with response data
-    console.log(response)
     return response.data
   },
   function (error) {
     // Do something with response error
     const err = JSON.stringify(error.response)
-    console.error(error)
-    console.error(error.response)
     Notification.error({
       title: '系统报错',
       message: err,

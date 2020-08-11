@@ -24,10 +24,8 @@ router.beforeEach((to, from, next) => {
   console.log(from)
   if (to.fullPath ===  '/login' || store.getters.isLogin) {
     next()
-    console.log(1)
   } else {
     next('/login')
-    console.log(2)
   }
   return
 })

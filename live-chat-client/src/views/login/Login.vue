@@ -24,6 +24,7 @@
 </template> 
 
 <script>
+import Encrypt from '@/assets/js/encryption'
 export default {
   name: 'Login',
   data() {
@@ -82,11 +83,20 @@ export default {
         this.axios
           .post(`/user`, {
             chatNo: this.loginData.chatNo,
-            userPassword: this.loginData.passwd,
+            userPassword: Encrypt.aesEncode(this.loginData.passwd),
             phoneNumber: this.loginData.phoneNumber,
           })
           .then((result) => {
-            console.log(result)
+            if (result.code !== 0) {
+              // 失败
+              this.$message({
+                message: result.errorDesc,
+                type: 'warning',
+              })
+            } else {
+              // 成功
+              console.log(result)
+            }
           })
       } else if (this.currentView === 3) {
         // 填写登陆密码

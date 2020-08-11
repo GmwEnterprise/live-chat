@@ -1,6 +1,6 @@
 import CryptoJS from 'crypto-js'
 
-var key = CryptoJS.enc.Utf8.parse("cBssbHB3ZA==HKXT")
+var key = CryptoJS.enc.Utf8.parse('GmwEnterprise.cn')
 /*加密*/
 function aesEncode(str) {
   var encryptedData = CryptoJS.AES.encrypt(str, key, {
