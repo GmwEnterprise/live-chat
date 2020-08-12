@@ -33,6 +33,15 @@ public interface UserService {
     UserDTO save(UserDTO dto);
 
     /**
+     * 登陆
+     *
+     * @param phone    手机号码
+     * @param password 密码
+     * @return 登陆成功则返回用户信息；失败则抛异常
+     */
+    UserDTO login(String phone, String password);
+
+    /**
      * 检查数据库中是否有这个手机号的账户存在，返回布尔值
      *
      * @param phone 手机号

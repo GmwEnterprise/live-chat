@@ -1,5 +1,16 @@
-GET http://localhost:4200/api/v1/usermsg/1
+###
+
+GET http://localhost:4200/api/v1/user
 
 ###
 
-GET http://localhost:4200/api/v1/usermsg/phone/13320354693
+GET http://localhost:4200/api/v1/user/phone/13320354693/exists
+
+### 注册 请求体不加密
+
+POST http://localhost:4200/api/v1/user
+Content-Type: application/json
+
+{
+  "chatNo": "1"
+}

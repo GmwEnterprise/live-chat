@@ -1,6 +1,7 @@
 package com.github.mrag.livechat.rest.controller;
 
 import com.github.mrag.livechat.common.HttpResponse;
+import com.github.mrag.livechat.rest.OpenApi;
 import com.github.mrag.livechat.usermsg.api.UserService;
 import com.github.mrag.livechat.usermsg.dto.UserDTO;
 import org.apache.dubbo.config.annotation.DubboReference;
@@ -37,6 +38,7 @@ public class UserController {
      * @return 是否存在
      */
     @GetMapping("/phone/{phone}/exists")
+    @OpenApi
     public HttpResponse phoneExists(@PathVariable String phone) {
         boolean exists = userService.checkPhoneExists(phone);
         return HttpResponse.ok(exists);

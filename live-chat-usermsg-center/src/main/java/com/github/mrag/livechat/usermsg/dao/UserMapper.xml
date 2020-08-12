@@ -39,6 +39,11 @@
   <select id="countByPhoneNumber" resultType="java.lang.Long">
     select count(*) from user where phone_number = #{phone}
   </select>
+  <select id="selectByPhoneNumber" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from user where phone_number = #{phone}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from user
     where id = #{id,jdbcType=BIGINT}

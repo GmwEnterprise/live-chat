@@ -2,43 +2,49 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>live-chat</artifactId>
-        <groupId>com.github.mrag</groupId>
-        <version>1.0-SNAPSHOT</version>
-    </parent>
-    <modelVersion>4.0.0</modelVersion>
-
-    <artifactId>live-chat-restful-entry</artifactId>
-
-    <dependencies>
-        <!--项目模块-->
-        <dependency>
-            <groupId>com.github.mrag</groupId>
-            <artifactId>live-chat-common</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.mrag</groupId>
-            <artifactId>live-chat-usermsg-api</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
-        <!--springboot + dubbo-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.dubbo</groupId>
-            <artifactId>dubbo-spring-boot-starter</artifactId>
-        </dependency>
-
-        <!--zookeeper-->
-        <dependency>
-            <groupId>org.apache.dubbo</groupId>
-            <artifactId>dubbo-dependencies-zookeeper</artifactId>
-            <type>pom</type>
-        </dependency>
-    </dependencies>
+  <parent>
+    <artifactId>live-chat</artifactId>
+    <groupId>com.github.mrag</groupId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  
+  <artifactId>live-chat-restful-entry</artifactId>
+  
+  <dependencies>
+    <!--项目模块-->
+    <dependency>
+      <groupId>com.github.mrag</groupId>
+      <artifactId>live-chat-common</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>com.github.mrag</groupId>
+      <artifactId>live-chat-usermsg-api</artifactId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
+    
+    <!--springboot + dubbo-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.dubbo</groupId>
+      <artifactId>dubbo-spring-boot-starter</artifactId>
+    </dependency>
+    
+    <!--zookeeper-->
+    <dependency>
+      <groupId>org.apache.dubbo</groupId>
+      <artifactId>dubbo-dependencies-zookeeper</artifactId>
+      <type>pom</type>
+    </dependency>
+    
+    <!--jwt-->
+    <dependency>
+      <groupId>com.nimbusds</groupId>
+      <artifactId>nimbus-jose-jwt</artifactId>
+    </dependency>
+  </dependencies>
 </project>

@@ -3,6 +3,9 @@ package com.github.mrag.livechat.common.utils;
 import com.github.mrag.livechat.common.BusinessType;
 import com.github.mrag.livechat.common.SnowflakeIdWorker;
 
+/**
+ * @author Gmw
+ */
 public final class SequenceUtils {
     // TODO 基于zookeeper的分布式机器ID分配
     private static final SnowflakeIdWorker counter = new SnowflakeIdWorker(1L);

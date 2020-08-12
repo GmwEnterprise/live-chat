@@ -1,9 +1,6 @@
 package com.github.mrag.livechat.usermsg.service;
 
-import com.github.mrag.livechat.common.BusinessType;
-import com.github.mrag.livechat.common.Encryption;
-import com.github.mrag.livechat.common.RegExp;
-import com.github.mrag.livechat.common.Tools;
+import com.github.mrag.livechat.common.*;
 import com.github.mrag.livechat.common.utils.SequenceUtils;
 import com.github.mrag.livechat.usermsg.api.UserService;
 import com.github.mrag.livechat.usermsg.dao.UserMapper;
@@ -68,6 +65,30 @@ public class UserServiceImpl implements UserService {
         return findUserById(user.getId());
     }
 
+    @Override
+    public UserDTO login(String phone, String password) {
+        // 获取用户信息
+        User user = userMapper.selectByPhoneNumber(phone);
+        String realHash = user.getUserPassword();
+        String salt = user.getSalt();
+
+        // 计算输入密码的哈希
+        byte[] afterComputed = matrixMultiplication(password.getBytes(), salt.getBytes());
+        String computedBinary = Encryption.binary(afterComputed, Character.MAX_RADIX);
+        String encryptedHash = DigestUtils.md5Hex(computedBinary);
+
+        // 核对密码
+        if (encryptedHash.equals(realHash)) {
+            // 密码正确，登陆成功
+
+            // TODO 生成token
+
+            return Tools.copyProperties(user, UserDTO.class);
+        }
+        // 密码错误
+        throw new BusinessException(BusinessException.ErrorType.LOGIN_FAILED_PASSWORD_WRONG);
+    }
+
     /**
      * 对原始密码加盐，并返回哈希加密后的密码与盐值
      * <p>
@@ -77,22 +98,23 @@ public class UserServiceImpl implements UserService {
      * @return 加密哈希::盐
      */
     private String generatePasswordHashWithSalt(String originalPassword) {
-        String encryptedHash, salt = "";
+        String encryptedHash, salt;
 
-        // 计算盐
+        // 获取随机盐
         try {
             SecureRandom rand = SecureRandom.getInstance("SHA1PRNG");
             byte[] saltBytes = new byte[16];
             rand.nextBytes(saltBytes);
             salt = Hex.encodeHexString(saltBytes).substring(0, 8);
-        } catch (NoSuchAlgorithmException ignored) {
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
         }
 
-        // 混淆密码 todo
+        // 混淆密码
         byte[] afterComputed = matrixMultiplication(originalPassword.getBytes(), salt.getBytes());
         String computedBinary = Encryption.binary(afterComputed, Character.MAX_RADIX);
 
-        // 哈希加密 todo
+        // 哈希加密
         encryptedHash = DigestUtils.md5Hex(computedBinary);
         return encryptedHash + "::" + salt;
     }

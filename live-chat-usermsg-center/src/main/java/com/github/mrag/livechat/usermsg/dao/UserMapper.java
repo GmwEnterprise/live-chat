@@ -18,4 +18,6 @@ public interface UserMapper {
     User selectByChatNo(String chatNo);
 
     long countByPhoneNumber(String phone);
+
+    User selectByPhoneNumber(String phone);
 }
