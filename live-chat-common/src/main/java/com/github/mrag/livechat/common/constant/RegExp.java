@@ -1,4 +1,4 @@
-package com.github.mrag.livechat.common;
+package com.github.mrag.livechat.common.constant;
 
 /**
  * 正则表达式汇总

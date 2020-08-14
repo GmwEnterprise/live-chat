@@ -1,13 +1,10 @@
-package com.github.mrag.livechat.rest;
+package com.github.mrag.livechat.common.token;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import com.nimbusds.jose.JWSAlgorithm;
-import com.nimbusds.jose.JWSHeader;
-import com.nimbusds.jose.JWSObject;
-import com.nimbusds.jose.Payload;
+import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -36,6 +33,7 @@ public final class TokenUtil {
             signer = new MACSigner(SECRET_KEY);
             verifier = new MACVerifier(SECRET_KEY);
 
+            // 初始化常规的objectMapper
             DateTimeFormatter f = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             JavaTimeModule module = new JavaTimeModule();
             module.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(f));
@@ -47,36 +45,43 @@ public final class TokenUtil {
         }
     }
 
-    // test
-    public static void main(String[] args) {
-        System.out.println(TokenUtil.generateToken("123"));
-    }
-
-    public static String generateToken(Object payload) {
-        log.info("生成token调用");
+    /**
+     * 生成jwt token
+     *
+     * @param payload 待序列化的payload
+     * @return 序列化后的jwt字符串
+     * @throws Exception payload序列化失败
+     */
+    public static String generateToken(TokenPayload payload) throws Exception {
+        JWSObject jwsObject = new JWSObject(COMMON_HEADER,
+                // JsonProcessingException payload序列化失败
+                new Payload(objectMapper.writeValueAsString(payload)));
         try {
-            JWSObject jwsObject = new JWSObject(COMMON_HEADER,
-                    new Payload(objectMapper.writeValueAsString(payload)));
             jwsObject.sign(signer);
-            return jwsObject.serialize();
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            return null;
+        } catch (JOSEException ignored) {
+            // 不可能
         }
+        return jwsObject.serialize();
     }
 
-    public static <R> R parseToken(String token, Class<R> type) {
-        try {
-            JWSObject jwsObject = JWSObject.parse(token);
-            if (jwsObject.verify(verifier)) {
-                String json = jwsObject.getPayload().toString();
-                return objectMapper.readValue(json, type);
-            }
-            return null;
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            return null;
+    /**
+     * 解析 jwt token
+     *
+     * @param token jwt token
+     * @param type  解析后的java类型
+     * @param <R>   泛型
+     * @return 解析后的对象
+     * @throws Exception 解析异常
+     */
+    public static <R extends TokenPayload> R parseToken(String token, Class<R> type) throws Exception {
+        // ParseException token解析失败
+        JWSObject jwsObject = JWSObject.parse(token);
+        if (jwsObject.verify(verifier)) {
+            String json = jwsObject.getPayload().toString();
+            // JsonProcessingException json解析失败
+            return objectMapper.readValue(json, type);
         }
+        throw new Exception("Failed to verify signature.");
     }
 
     /*

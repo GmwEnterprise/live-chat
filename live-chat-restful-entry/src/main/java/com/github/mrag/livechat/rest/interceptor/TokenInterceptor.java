@@ -1,8 +1,11 @@
 package com.github.mrag.livechat.rest.interceptor;
 
-import com.github.mrag.livechat.common.Tools;
+import com.github.mrag.livechat.common.BusinessException;
+import com.github.mrag.livechat.common.token.TokenPayload;
+import com.github.mrag.livechat.common.utils.Tools;
 import com.github.mrag.livechat.rest.HandlerInterceptorWithOrder;
 import com.github.mrag.livechat.rest.OpenApi;
+import com.github.mrag.livechat.common.token.TokenUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
@@ -43,6 +46,22 @@ public class TokenInterceptor implements HandlerInterceptorWithOrder {
             // 没有token，访问失败
             return false;
         }
+
+        // token应该为系统所提供的jwt字符串
+        // 会抛出解析异常，解析失败就直接返回false并记录日志
+        TokenPayload payload;
+        try {
+            payload = TokenUtil.parseToken(authorization, TokenPayload.class);
+        } catch (Exception parsingError) {
+            log.info("token校验时产生解析异常.", parsingError);
+            return false;
+        }
+        // 校验payload
+        if (payload.checkExpired()) {
+            throw new BusinessException(BusinessException.ErrorType.TOKEN_EXPIRED);
+        }
+
+        // TODO
 
         return true;
     }

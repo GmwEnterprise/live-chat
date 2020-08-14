@@ -1,6 +1,8 @@
 package com.github.mrag.livechat.rest;
 
-import com.github.mrag.livechat.common.HttpResponse;
+import com.github.mrag.livechat.common.BusinessException;
+import com.github.mrag.livechat.common.http.HttpResponse;
+import com.github.mrag.livechat.common.http.HttpResponseCode;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -32,5 +34,25 @@ public class RestErrorAdvice {
             errorMsg = String.format("参数校验失败：%s.", fieldError.getDefaultMessage());
         }
         return HttpResponse.badRequest(errorMsg);
+    }
+
+    /**
+     * 业务异常处理
+     *
+     * @param e 异常
+     * @return 响应信息
+     */
+    @ExceptionHandler(BusinessException.class)
+    public HttpResponse handler(BusinessException e) {
+        switch (e.getErrorType()) {
+            case PASSWORD_WRONG:
+                // 密码错误
+                return new HttpResponse(HttpResponseCode.PASSWORD_WRONG, e.getMessage());
+            case TOKEN_EXPIRED:
+                // 登陆信息过期
+                return new HttpResponse(HttpResponseCode.CREDENTIALS_EXPIRED, e.getMessage());
+            default:
+                return HttpResponse.sysError(e.getMessage());
+        }
     }
 }

@@ -32,7 +32,7 @@ public class EncryptionFilter extends HttpFilter {
 
     @Override
     public void init() throws ServletException {
-        System.out.println("filter init");
+        // System.out.println("filter init");
         super.init();
     }
 

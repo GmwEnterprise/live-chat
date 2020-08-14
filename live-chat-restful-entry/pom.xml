@@ -40,11 +40,5 @@
       <artifactId>dubbo-dependencies-zookeeper</artifactId>
       <type>pom</type>
     </dependency>
-    
-    <!--jwt-->
-    <dependency>
-      <groupId>com.nimbusds</groupId>
-      <artifactId>nimbus-jose-jwt</artifactId>
-    </dependency>
   </dependencies>
 </project>

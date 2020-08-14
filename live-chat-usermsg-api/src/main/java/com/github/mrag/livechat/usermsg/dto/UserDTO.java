@@ -1,6 +1,7 @@
 package com.github.mrag.livechat.usermsg.dto;
 
-import com.github.mrag.livechat.common.RegExp;
+import com.github.mrag.livechat.common.constant.RegExp;
+import com.github.mrag.livechat.common.validation.Dictionary;
 import com.github.mrag.livechat.common.validation.Password;
 
 import javax.validation.constraints.Email;
@@ -13,6 +14,9 @@ import java.time.LocalDateTime;
  * @author Gmw
  */
 public class UserDTO implements Serializable {
+    private String token;
+    // ###### 以下为 entity.User原有字段
+
     private Long id;
 
     @Size(min = 6, max = 18, message = "ID长度应在6-18")
@@ -23,6 +27,7 @@ public class UserDTO implements Serializable {
     @Pattern(regexp = RegExp.REGEXP_USERNAME, message = RegExp.REGEXP_USERNAME_MSG)
     private String username;
 
+    @Dictionary
     private Byte gender;
 
     private LocalDateTime birthday;
@@ -56,167 +61,165 @@ public class UserDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public String getToken() {
+        return token;
+    }
+
+    public UserDTO setToken(String token) {
+        this.token = token;
+        return this;
+    }
+
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public UserDTO setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getChatNo() {
         return chatNo;
     }
 
-    public void setChatNo(String chatNo) {
+    public UserDTO setChatNo(String chatNo) {
         this.chatNo = chatNo;
+        return this;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
+    public UserDTO setUsername(String username) {
         this.username = username;
+        return this;
     }
 
     public Byte getGender() {
         return gender;
     }
 
-    public void setGender(Byte gender) {
+    public UserDTO setGender(Byte gender) {
         this.gender = gender;
+        return this;
     }
 
     public LocalDateTime getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(LocalDateTime birthday) {
+    public UserDTO setBirthday(LocalDateTime birthday) {
         this.birthday = birthday;
+        return this;
     }
 
     public String getSignature() {
         return signature;
     }
 
-    public void setSignature(String signature) {
+    public UserDTO setSignature(String signature) {
         this.signature = signature;
+        return this;
     }
 
     public String getCompany() {
         return company;
     }
 
-    public void setCompany(String company) {
+    public UserDTO setCompany(String company) {
         this.company = company;
+        return this;
     }
 
     public String getPersonalDescription() {
         return personalDescription;
     }
 
-    public void setPersonalDescription(String personalDescription) {
+    public UserDTO setPersonalDescription(String personalDescription) {
         this.personalDescription = personalDescription;
+        return this;
     }
 
     public String getUserPassword() {
         return userPassword;
     }
 
-    public void setUserPassword(String userPassword) {
+    public UserDTO setUserPassword(String userPassword) {
         this.userPassword = userPassword;
+        return this;
     }
 
     public String getSalt() {
         return salt;
     }
 
-    public void setSalt(String salt) {
+    public UserDTO setSalt(String salt) {
         this.salt = salt;
+        return this;
     }
 
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    public UserDTO setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+        return this;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public UserDTO setEmail(String email) {
         this.email = email;
+        return this;
     }
 
     public Integer getBloodGroup() {
         return bloodGroup;
     }
 
-    public void setBloodGroup(Integer bloodGroup) {
+    public UserDTO setBloodGroup(Integer bloodGroup) {
         this.bloodGroup = bloodGroup;
+        return this;
     }
 
     public Integer getOccupation() {
         return occupation;
     }
 
-    public void setOccupation(Integer occupation) {
+    public UserDTO setOccupation(Integer occupation) {
         this.occupation = occupation;
+        return this;
     }
 
     public Integer getLocation() {
         return location;
     }
 
-    public void setLocation(Integer location) {
+    public UserDTO setLocation(Integer location) {
         this.location = location;
+        return this;
     }
 
     public Integer getHometown() {
         return hometown;
     }
 
-    public void setHometown(Integer hometown) {
+    public UserDTO setHometown(Integer hometown) {
         this.hometown = hometown;
+        return this;
     }
 
     public Byte getAccountStatus() {
         return accountStatus;
     }
 
-    public void setAccountStatus(Byte accountStatus) {
+    public UserDTO setAccountStatus(Byte accountStatus) {
         this.accountStatus = accountStatus;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", chatNo=").append(chatNo);
-        sb.append(", username=").append(username);
-        sb.append(", gender=").append(gender);
-        sb.append(", birthday=").append(birthday);
-        sb.append(", signature=").append(signature);
-        sb.append(", company=").append(company);
-        sb.append(", personalDescription=").append(personalDescription);
-        sb.append(", userPassword=").append(userPassword);
-        sb.append(", salt=").append(salt);
-        sb.append(", phoneNumber=").append(phoneNumber);
-        sb.append(", email=").append(email);
-        sb.append(", bloodGroup=").append(bloodGroup);
-        sb.append(", occupation=").append(occupation);
-        sb.append(", location=").append(location);
-        sb.append(", hometown=").append(hometown);
-        sb.append(", accountStatus=").append(accountStatus);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+        return this;
     }
 }

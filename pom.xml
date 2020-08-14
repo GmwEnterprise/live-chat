@@ -10,6 +10,7 @@
     <module>live-chat-usermsg-api</module>
     <module>live-chat-common</module>
     <module>live-chat-restful-entry</module>
+    <module>live-chat-cache-center</module>
   </modules>
   <groupId>com.github.mrag</groupId>
   <artifactId>live-chat</artifactId>
@@ -147,6 +148,9 @@
           <include>**/*.properties</include>
         </includes>
         <filtering>false</filtering>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
       </resource>
     </resources>
   </build>

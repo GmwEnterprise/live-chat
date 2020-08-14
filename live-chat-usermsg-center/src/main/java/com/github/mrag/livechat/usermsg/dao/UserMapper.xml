@@ -37,7 +37,9 @@
     from user where chat_no = #{chatNo}
   </select>
   <select id="countByPhoneNumber" resultType="java.lang.Long">
-    select count(*) from user where phone_number = #{phone}
+    select count(*)
+    from user
+    where phone_number = #{phone}
   </select>
   <select id="selectByPhoneNumber" resultMap="BaseResultMap">
     select
@@ -45,22 +47,23 @@
     from user where phone_number = #{phone}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from user
+    delete
+    from user
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.github.mrag.livechat.usermsg.entity.User">
     insert into user (id, chat_no, username,
-      gender, birthday, signature,
-      company, personal_description, user_password,
-      salt, phone_number, email,
-      blood_group, occupation, location,
-      hometown, account_status)
+                      gender, birthday, signature,
+                      company, personal_description, user_password,
+                      salt, phone_number, email,
+                      blood_group, occupation, location,
+                      hometown, account_status)
     values (#{id,jdbcType=BIGINT}, #{chatNo,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR},
-      #{gender,jdbcType=TINYINT}, #{birthday,jdbcType=TIMESTAMP}, #{signature,jdbcType=VARCHAR},
-      #{company,jdbcType=VARCHAR}, #{personalDescription,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR},
-      #{salt,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
-      #{bloodGroup,jdbcType=INTEGER}, #{occupation,jdbcType=INTEGER}, #{location,jdbcType=INTEGER},
-      #{hometown,jdbcType=INTEGER}, #{accountStatus,jdbcType=TINYINT})
+            #{gender,jdbcType=TINYINT}, #{birthday,jdbcType=TIMESTAMP}, #{signature,jdbcType=VARCHAR},
+            #{company,jdbcType=VARCHAR}, #{personalDescription,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR},
+            #{salt,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+            #{bloodGroup,jdbcType=INTEGER}, #{occupation,jdbcType=INTEGER}, #{location,jdbcType=INTEGER},
+            #{hometown,jdbcType=INTEGER}, #{accountStatus,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.github.mrag.livechat.usermsg.entity.User">
     insert into user
@@ -227,22 +230,22 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.github.mrag.livechat.usermsg.entity.User">
     update user
-    set chat_no = #{chatNo,jdbcType=VARCHAR},
-      username = #{username,jdbcType=VARCHAR},
-      gender = #{gender,jdbcType=TINYINT},
-      birthday = #{birthday,jdbcType=TIMESTAMP},
-      signature = #{signature,jdbcType=VARCHAR},
-      company = #{company,jdbcType=VARCHAR},
-      personal_description = #{personalDescription,jdbcType=VARCHAR},
-      user_password = #{userPassword,jdbcType=VARCHAR},
-      salt = #{salt,jdbcType=VARCHAR},
-      phone_number = #{phoneNumber,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
-      blood_group = #{bloodGroup,jdbcType=INTEGER},
-      occupation = #{occupation,jdbcType=INTEGER},
-      location = #{location,jdbcType=INTEGER},
-      hometown = #{hometown,jdbcType=INTEGER},
-      account_status = #{accountStatus,jdbcType=TINYINT}
+    set chat_no              = #{chatNo,jdbcType=VARCHAR},
+        username             = #{username,jdbcType=VARCHAR},
+        gender               = #{gender,jdbcType=TINYINT},
+        birthday             = #{birthday,jdbcType=TIMESTAMP},
+        signature            = #{signature,jdbcType=VARCHAR},
+        company              = #{company,jdbcType=VARCHAR},
+        personal_description = #{personalDescription,jdbcType=VARCHAR},
+        user_password        = #{userPassword,jdbcType=VARCHAR},
+        salt                 = #{salt,jdbcType=VARCHAR},
+        phone_number         = #{phoneNumber,jdbcType=VARCHAR},
+        email                = #{email,jdbcType=VARCHAR},
+        blood_group          = #{bloodGroup,jdbcType=INTEGER},
+        occupation           = #{occupation,jdbcType=INTEGER},
+        location             = #{location,jdbcType=INTEGER},
+        hometown             = #{hometown,jdbcType=INTEGER},
+        account_status       = #{accountStatus,jdbcType=TINYINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

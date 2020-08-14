@@ -1,4 +1,4 @@
-package com.github.mrag.livechat.common;
+package com.github.mrag.livechat.common.utils;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;

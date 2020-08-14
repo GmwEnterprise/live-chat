@@ -178,32 +178,4 @@ public class User implements Serializable {
     public void setAccountStatus(Byte accountStatus) {
         this.accountStatus = accountStatus;
     }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", chatNo=").append(chatNo);
-        sb.append(", username=").append(username);
-        sb.append(", gender=").append(gender);
-        sb.append(", birthday=").append(birthday);
-        sb.append(", signature=").append(signature);
-        sb.append(", company=").append(company);
-        sb.append(", personalDescription=").append(personalDescription);
-        sb.append(", userPassword=").append(userPassword);
-        sb.append(", salt=").append(salt);
-        sb.append(", phoneNumber=").append(phoneNumber);
-        sb.append(", email=").append(email);
-        sb.append(", bloodGroup=").append(bloodGroup);
-        sb.append(", occupation=").append(occupation);
-        sb.append(", location=").append(location);
-        sb.append(", hometown=").append(hometown);
-        sb.append(", accountStatus=").append(accountStatus);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
-    }
 }

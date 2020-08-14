@@ -1,7 +1,11 @@
 package com.github.mrag.livechat.usermsg.service;
 
 import com.github.mrag.livechat.common.*;
+import com.github.mrag.livechat.common.constant.RegExp;
+import com.github.mrag.livechat.common.token.TokenPayload;
+import com.github.mrag.livechat.common.token.TokenUtil;
 import com.github.mrag.livechat.common.utils.SequenceUtils;
+import com.github.mrag.livechat.common.utils.Tools;
 import com.github.mrag.livechat.usermsg.api.UserService;
 import com.github.mrag.livechat.usermsg.dao.UserMapper;
 import com.github.mrag.livechat.usermsg.dto.UserDTO;
@@ -58,11 +62,20 @@ public class UserServiceImpl implements UserService {
             user.setUserPassword(hashAndSalt[0]);
             user.setSalt(hashAndSalt[1]);
             // 设置默认值 TODO
+
             userMapper.insertSelective(user);
+            try {
+                // 注册成功，返回用户信息以及token
+                String token = TokenUtil.generateToken(new TokenPayload(user.getId()));
+                return findUserById(user.getId()).setToken(token);
+            } catch (Exception e) {
+                log.info("异常记录.", e);
+                throw BusinessException.systemError(e);
+            }
         } else {
             userMapper.updateByPrimaryKeySelective(user);
+            return findUserById(user.getId());
         }
-        return findUserById(user.getId());
     }
 
     @Override
@@ -79,14 +92,16 @@ public class UserServiceImpl implements UserService {
 
         // 核对密码
         if (encryptedHash.equals(realHash)) {
-            // 密码正确，登陆成功
-
-            // TODO 生成token
-
-            return Tools.copyProperties(user, UserDTO.class);
+            // 密码正确，登陆成功，返回用户信息以及token
+            try {
+                String token = TokenUtil.generateToken(new TokenPayload(user.getId()));
+                return Tools.copyProperties(user, UserDTO.class).setToken(token);
+            } catch (Exception e) {
+                throw BusinessException.systemError(e);
+            }
         }
         // 密码错误
-        throw new BusinessException(BusinessException.ErrorType.LOGIN_FAILED_PASSWORD_WRONG);
+        throw new BusinessException(BusinessException.ErrorType.PASSWORD_WRONG);
     }
 
     /**
@@ -138,13 +153,6 @@ public class UserServiceImpl implements UserService {
         }
         return result;
     }
-
-    // public static void main(String[] args) {
-    //     UserServiceImpl t = new UserServiceImpl();
-    //     System.out.println(t.generatePasswordHashWithSalt("123456"));
-    //     System.out.println(t.generatePasswordHashWithSalt("acxswe"));
-    //     System.out.println(t.generatePasswordHashWithSalt("gan1ming2wei3"));
-    // }
 
     @Override
     public boolean checkPhoneExists(String phone) {

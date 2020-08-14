@@ -1,6 +1,6 @@
 package com.github.mrag.livechat.rest.controller;
 
-import com.github.mrag.livechat.common.HttpResponse;
+import com.github.mrag.livechat.common.http.HttpResponse;
 import com.github.mrag.livechat.rest.OpenApi;
 import com.github.mrag.livechat.usermsg.api.UserService;
 import com.github.mrag.livechat.usermsg.dto.UserDTO;
@@ -51,6 +51,7 @@ public class UserController {
      * @return 注册成功后的信息
      */
     @PostMapping
+    @OpenApi
     public HttpResponse registry(@RequestBody @Valid UserDTO dto) {
         UserDTO afterSave = userService.save(dto);
         return HttpResponse.ok(afterSave);
