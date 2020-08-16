@@ -10,6 +10,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Gmw
+ */
 public class CacheMybatisGenerator {
     public static void main(String[] args) throws Exception {
         // mbg执行过程中的警告信息

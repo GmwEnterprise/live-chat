@@ -26,12 +26,12 @@ public final class InterceptorRegister {
         if (resourceURL == null) {
             throw new RuntimeException("resourceURL is null.");
         }
-        return findClassInDir(new File(resourceURL.getFile()), packageName, HandlerInterceptorWithOrder.class);
+        return findClassInPackage(new File(resourceURL.getFile()), packageName, HandlerInterceptorWithOrder.class);
     }
 
-    private static List<HandlerInterceptorWithOrder> findClassInDir(File dir,
-                                                                    String packageName,
-                                                                    Class<?>... superInterfaces) {
+    private static List<HandlerInterceptorWithOrder> findClassInPackage(File dir,
+                                                                        String packageName,
+                                                                        Class<?>... superInterfaces) {
         if (!dir.isDirectory()) {
             throw new RuntimeException("错误的文件夹格式");
         }
@@ -40,8 +40,8 @@ public final class InterceptorRegister {
         List<HandlerInterceptorWithOrder> interceptors = new ArrayList<>();
         for (File item : dir.listFiles()) {
             if (item.isDirectory()) {
-                // 递归
-                interceptors.addAll(findClassInDir(item, packageName + "." + item.getName()));
+                // 递归 package
+                interceptors.addAll(findClassInPackage(item, packageName + "." + item.getName()));
             } else {
                 // 类文件
                 String className = item.getName().replace(".class", "");

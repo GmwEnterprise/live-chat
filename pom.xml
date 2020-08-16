@@ -50,7 +50,12 @@
         <version>${druid.version}</version>
       </dependency>
       
-      <!--mybatis相关依赖-->
+      <!--mybatis相关依赖，版本号源于 mybatis-spring-boot-2.1.2.pom-->
+      <dependency>
+        <groupId>org.mybatis</groupId>
+        <artifactId>mybatis</artifactId>
+        <version>3.5.4</version>
+      </dependency>
       <dependency>
         <groupId>com.github.pagehelper</groupId>
         <artifactId>pagehelper-spring-boot-starter</artifactId>
@@ -99,6 +104,13 @@
             <artifactId>slf4j-log4j12</artifactId>
           </exclusion>
         </exclusions>
+      </dependency>
+      
+      <!--redisson依赖-->
+      <dependency>
+        <groupId>org.redisson</groupId>
+        <artifactId>redisson</artifactId>
+        <version>3.13.3</version>
       </dependency>
       
       <!--jwt依赖-->

@@ -7,10 +7,13 @@
     <result column="key_desc" jdbcType="VARCHAR" property="keyDesc"/>
     <result column="value_no" jdbcType="INTEGER" property="valueNo"/>
     <result column="value_desc" jdbcType="VARCHAR" property="valueDesc"/>
+    <result column="value_more_detail" jdbcType="INTEGER" property="valueMoreDetail"/>
     <result column="dependency_on_id" jdbcType="INTEGER" property="dependencyOnId"/>
+    <result column="can_modify" jdbcType="TINYINT" property="canModify"/>
   </resultMap>
   <sql id="Base_Column_List">
-    kv_id, key, key_desc, value_no, value_desc, dependency_on_id
+    kv_id, `key`, key_desc, value_no, value_desc, value_more_detail, dependency_on_id,
+    can_modify
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
@@ -40,16 +43,24 @@
     where `key` = #{key}
       and value_no = #{val}
   </select>
+  <select id="selectIdByKv" resultType="java.lang.Integer">
+    select kv_id
+    from system_dict
+    where `key` = #{key}
+      and value_no = #{val}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete
     from system_dict
     where kv_id = #{kvId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.github.mrag.livechat.common.SystemDict">
-    insert into system_dict (kv_id, key, key_desc,
-                             value_no, value_desc, dependency_on_id)
+    insert into system_dict (kv_id, `key`, key_desc,
+                             value_no, value_desc, value_more_detail,
+                             dependency_on_id, can_modify)
     values (#{kvId,jdbcType=INTEGER}, #{key,jdbcType=VARCHAR}, #{keyDesc,jdbcType=VARCHAR},
-            #{valueNo,jdbcType=INTEGER}, #{valueDesc,jdbcType=VARCHAR}, #{dependencyOnId,jdbcType=INTEGER})
+            #{valueNo,jdbcType=INTEGER}, #{valueDesc,jdbcType=VARCHAR}, #{valueMoreDetail,jdbcType=INTEGER},
+            #{dependencyOnId,jdbcType=INTEGER}, #{canModify,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.github.mrag.livechat.common.SystemDict">
     insert into system_dict
@@ -58,7 +69,7 @@
         kv_id,
       </if>
       <if test="key != null">
-        key,
+        `key`,
       </if>
       <if test="keyDesc != null">
         key_desc,
@@ -69,8 +80,14 @@
       <if test="valueDesc != null">
         value_desc,
       </if>
+      <if test="valueMoreDetail != null">
+        value_more_detail,
+      </if>
       <if test="dependencyOnId != null">
         dependency_on_id,
+      </if>
+      <if test="canModify != null">
+        can_modify,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -89,8 +106,14 @@
       <if test="valueDesc != null">
         #{valueDesc,jdbcType=VARCHAR},
       </if>
+      <if test="valueMoreDetail != null">
+        #{valueMoreDetail,jdbcType=INTEGER},
+      </if>
       <if test="dependencyOnId != null">
         #{dependencyOnId,jdbcType=INTEGER},
+      </if>
+      <if test="canModify != null">
+        #{canModify,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
@@ -98,7 +121,7 @@
     update system_dict
     <set>
       <if test="key != null">
-        key = #{key,jdbcType=VARCHAR},
+        `key` = #{key,jdbcType=VARCHAR},
       </if>
       <if test="keyDesc != null">
         key_desc = #{keyDesc,jdbcType=VARCHAR},
@@ -109,19 +132,27 @@
       <if test="valueDesc != null">
         value_desc = #{valueDesc,jdbcType=VARCHAR},
       </if>
+      <if test="valueMoreDetail != null">
+        value_more_detail = #{valueMoreDetail,jdbcType=INTEGER},
+      </if>
       <if test="dependencyOnId != null">
         dependency_on_id = #{dependencyOnId,jdbcType=INTEGER},
+      </if>
+      <if test="canModify != null">
+        can_modify = #{canModify,jdbcType=TINYINT},
       </if>
     </set>
     where kv_id = #{kvId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.github.mrag.livechat.common.SystemDict">
     update system_dict
-    set key              = #{key,jdbcType=VARCHAR},
-        key_desc         = #{keyDesc,jdbcType=VARCHAR},
-        value_no         = #{valueNo,jdbcType=INTEGER},
-        value_desc       = #{valueDesc,jdbcType=VARCHAR},
-        dependency_on_id = #{dependencyOnId,jdbcType=INTEGER}
+    set `key`             = #{key,jdbcType=VARCHAR},
+        key_desc          = #{keyDesc,jdbcType=VARCHAR},
+        value_no          = #{valueNo,jdbcType=INTEGER},
+        value_desc        = #{valueDesc,jdbcType=VARCHAR},
+        value_more_detail = #{valueMoreDetail,jdbcType=INTEGER},
+        dependency_on_id  = #{dependencyOnId,jdbcType=INTEGER},
+        can_modify        = #{canModify,jdbcType=TINYINT}
     where kv_id = #{kvId,jdbcType=INTEGER}
   </update>
 </mapper>

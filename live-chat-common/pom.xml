@@ -18,6 +18,12 @@
       <artifactId>spring-boot-starter-validation</artifactId>
     </dependency>
   
+    <!--mybatis typehandler use-->
+    <dependency>
+      <groupId>org.mybatis</groupId>
+      <artifactId>mybatis</artifactId>
+    </dependency>
+  
     <!--JSON 解析-->
     <dependency>
       <groupId>org.springframework.boot</groupId>

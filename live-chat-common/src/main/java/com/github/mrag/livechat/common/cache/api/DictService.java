@@ -1,4 +1,4 @@
-package com.github.mrag.livechat.common.cacheapi;
+package com.github.mrag.livechat.common.cache.api;
 
 import com.github.mrag.livechat.common.SystemDict;
 

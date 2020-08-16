@@ -1,7 +1,11 @@
 package com.github.mrag.livechat.usermsg.entity;
 
+import com.github.mrag.livechat.common.constant.enums.AccountStatus;
+import com.github.mrag.livechat.common.constant.enums.BloodGroup;
+import com.github.mrag.livechat.common.constant.enums.Gender;
+
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author Gmw
@@ -13,9 +17,9 @@ public class User implements Serializable {
 
     private String username;
 
-    private Byte gender;
+    private Gender gender;
 
-    private Date birthday;
+    private LocalDateTime birthday;
 
     private String signature;
 
@@ -31,7 +35,7 @@ public class User implements Serializable {
 
     private String email;
 
-    private Integer bloodGroup;
+    private BloodGroup bloodGroup;
 
     private Integer occupation;
 
@@ -39,7 +43,7 @@ public class User implements Serializable {
 
     private Integer hometown;
 
-    private Byte accountStatus;
+    private AccountStatus accountStatus;
 
     private static final long serialVersionUID = 1L;
 
@@ -67,19 +71,19 @@ public class User implements Serializable {
         this.username = username;
     }
 
-    public Byte getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(Byte gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
-    public Date getBirthday() {
+    public LocalDateTime getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(LocalDateTime birthday) {
         this.birthday = birthday;
     }
 
@@ -139,11 +143,11 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public Integer getBloodGroup() {
+    public BloodGroup getBloodGroup() {
         return bloodGroup;
     }
 
-    public void setBloodGroup(Integer bloodGroup) {
+    public void setBloodGroup(BloodGroup bloodGroup) {
         this.bloodGroup = bloodGroup;
     }
 
@@ -171,11 +175,11 @@ public class User implements Serializable {
         this.hometown = hometown;
     }
 
-    public Byte getAccountStatus() {
+    public AccountStatus getAccountStatus() {
         return accountStatus;
     }
 
-    public void setAccountStatus(Byte accountStatus) {
+    public void setAccountStatus(AccountStatus accountStatus) {
         this.accountStatus = accountStatus;
     }
 }

@@ -2,10 +2,10 @@ package com.github.mrag.livechat.rest.interceptor;
 
 import com.github.mrag.livechat.common.BusinessException;
 import com.github.mrag.livechat.common.token.TokenPayload;
+import com.github.mrag.livechat.common.token.TokenUtil;
 import com.github.mrag.livechat.common.utils.Tools;
 import com.github.mrag.livechat.rest.HandlerInterceptorWithOrder;
 import com.github.mrag.livechat.rest.OpenApi;
-import com.github.mrag.livechat.common.token.TokenUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
@@ -44,7 +44,7 @@ public class TokenInterceptor implements HandlerInterceptorWithOrder {
         String authorization = request.getHeader("authorization");
         if (authorization == null) {
             // 没有token，访问失败
-            return false;
+            throw BusinessException.withoutToken();
         }
 
         // token应该为系统所提供的jwt字符串

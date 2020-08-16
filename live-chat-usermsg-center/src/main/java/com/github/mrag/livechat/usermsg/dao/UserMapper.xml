@@ -5,7 +5,8 @@
     <id column="id" jdbcType="BIGINT" property="id"/>
     <result column="chat_no" jdbcType="VARCHAR" property="chatNo"/>
     <result column="username" jdbcType="VARCHAR" property="username"/>
-    <result column="gender" jdbcType="TINYINT" property="gender"/>
+    <result column="gender" jdbcType="TINYINT" property="gender"
+            typeHandler="com.github.mrag.livechat.common.constant.typehandler.GenderTypeHandler"/>
     <result column="birthday" jdbcType="TIMESTAMP" property="birthday"/>
     <result column="signature" jdbcType="VARCHAR" property="signature"/>
     <result column="company" jdbcType="VARCHAR" property="company"/>
@@ -14,11 +15,13 @@
     <result column="salt" jdbcType="VARCHAR" property="salt"/>
     <result column="phone_number" jdbcType="VARCHAR" property="phoneNumber"/>
     <result column="email" jdbcType="VARCHAR" property="email"/>
-    <result column="blood_group" jdbcType="INTEGER" property="bloodGroup"/>
+    <result column="blood_group" jdbcType="INTEGER" property="bloodGroup"
+            typeHandler="com.github.mrag.livechat.common.constant.typehandler.BloodGroupTypeHandler"/>
     <result column="occupation" jdbcType="INTEGER" property="occupation"/>
     <result column="location" jdbcType="INTEGER" property="location"/>
     <result column="hometown" jdbcType="INTEGER" property="hometown"/>
-    <result column="account_status" jdbcType="TINYINT" property="accountStatus"/>
+    <result column="account_status" jdbcType="TINYINT" property="accountStatus"
+            typeHandler="com.github.mrag.livechat.common.constant.typehandler.AccountStatusTypeHandler"/>
   </resultMap>
   <sql id="Base_Column_List">
     id, chat_no, username, gender, birthday, signature, company, personal_description, 
@@ -59,11 +62,13 @@
                       blood_group, occupation, location,
                       hometown, account_status)
     values (#{id,jdbcType=BIGINT}, #{chatNo,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR},
-            #{gender,jdbcType=TINYINT}, #{birthday,jdbcType=TIMESTAMP}, #{signature,jdbcType=VARCHAR},
+            #{gender,jdbcType=TINYINT,typeHandler=com.github.mrag.livechat.common.constant.typehandler.GenderTypeHandler},
+            #{birthday,jdbcType=TIMESTAMP}, #{signature,jdbcType=VARCHAR},
             #{company,jdbcType=VARCHAR}, #{personalDescription,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR},
             #{salt,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
-            #{bloodGroup,jdbcType=INTEGER}, #{occupation,jdbcType=INTEGER}, #{location,jdbcType=INTEGER},
-            #{hometown,jdbcType=INTEGER}, #{accountStatus,jdbcType=TINYINT})
+            #{bloodGroup,jdbcType=INTEGER,typeHandler=com.github.mrag.livechat.common.constant.typehandler.BloodGroupTypeHandler},
+            #{occupation,jdbcType=INTEGER}, #{location,jdbcType=INTEGER}, #{hometown,jdbcType=INTEGER},
+            #{accountStatus,jdbcType=TINYINT,typeHandler=com.github.mrag.livechat.common.constant.typehandler.AccountStatusTypeHandler})
   </insert>
   <insert id="insertSelective" parameterType="com.github.mrag.livechat.usermsg.entity.User">
     insert into user
@@ -131,7 +136,7 @@
         #{username,jdbcType=VARCHAR},
       </if>
       <if test="gender != null">
-        #{gender,jdbcType=TINYINT},
+        #{gender,jdbcType=TINYINT,typeHandler=com.github.mrag.livechat.common.constant.typehandler.GenderTypeHandler},
       </if>
       <if test="birthday != null">
         #{birthday,jdbcType=TIMESTAMP},
@@ -158,7 +163,7 @@
         #{email,jdbcType=VARCHAR},
       </if>
       <if test="bloodGroup != null">
-        #{bloodGroup,jdbcType=INTEGER},
+        #{bloodGroup,jdbcType=INTEGER,typeHandler=com.github.mrag.livechat.common.constant.typehandler.BloodGroupTypeHandler},
       </if>
       <if test="occupation != null">
         #{occupation,jdbcType=INTEGER},
@@ -170,7 +175,7 @@
         #{hometown,jdbcType=INTEGER},
       </if>
       <if test="accountStatus != null">
-        #{accountStatus,jdbcType=TINYINT},
+        #{accountStatus,jdbcType=TINYINT,typeHandler=com.github.mrag.livechat.common.constant.typehandler.AccountStatusTypeHandler},
       </if>
     </trim>
   </insert>
@@ -184,7 +189,8 @@
         username = #{username,jdbcType=VARCHAR},
       </if>
       <if test="gender != null">
-        gender = #{gender,jdbcType=TINYINT},
+        gender =
+        #{gender,jdbcType=TINYINT,typeHandler=com.github.mrag.livechat.common.constant.typehandler.GenderTypeHandler},
       </if>
       <if test="birthday != null">
         birthday = #{birthday,jdbcType=TIMESTAMP},
@@ -211,7 +217,8 @@
         email = #{email,jdbcType=VARCHAR},
       </if>
       <if test="bloodGroup != null">
-        blood_group = #{bloodGroup,jdbcType=INTEGER},
+        blood_group =
+        #{bloodGroup,jdbcType=INTEGER,typeHandler=com.github.mrag.livechat.common.constant.typehandler.BloodGroupTypeHandler},
       </if>
       <if test="occupation != null">
         occupation = #{occupation,jdbcType=INTEGER},
@@ -223,7 +230,8 @@
         hometown = #{hometown,jdbcType=INTEGER},
       </if>
       <if test="accountStatus != null">
-        account_status = #{accountStatus,jdbcType=TINYINT},
+        account_status =
+        #{accountStatus,jdbcType=TINYINT,typeHandler=com.github.mrag.livechat.common.constant.typehandler.AccountStatusTypeHandler},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -232,7 +240,7 @@
     update user
     set chat_no              = #{chatNo,jdbcType=VARCHAR},
         username             = #{username,jdbcType=VARCHAR},
-        gender               = #{gender,jdbcType=TINYINT},
+        gender               = #{gender,jdbcType=TINYINT,typeHandler=com.github.mrag.livechat.common.constant.typehandler.GenderTypeHandler},
         birthday             = #{birthday,jdbcType=TIMESTAMP},
         signature            = #{signature,jdbcType=VARCHAR},
         company              = #{company,jdbcType=VARCHAR},
@@ -241,11 +249,11 @@
         salt                 = #{salt,jdbcType=VARCHAR},
         phone_number         = #{phoneNumber,jdbcType=VARCHAR},
         email                = #{email,jdbcType=VARCHAR},
-        blood_group          = #{bloodGroup,jdbcType=INTEGER},
+        blood_group          = #{bloodGroup,jdbcType=INTEGER,typeHandler=com.github.mrag.livechat.common.constant.typehandler.BloodGroupTypeHandler},
         occupation           = #{occupation,jdbcType=INTEGER},
         location             = #{location,jdbcType=INTEGER},
         hometown             = #{hometown,jdbcType=INTEGER},
-        account_status       = #{accountStatus,jdbcType=TINYINT}
+        account_status       = #{accountStatus,jdbcType=TINYINT,typeHandler=com.github.mrag.livechat.common.constant.typehandler.AccountStatusTypeHandler}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

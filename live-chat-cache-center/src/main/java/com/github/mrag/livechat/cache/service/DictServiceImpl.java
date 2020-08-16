@@ -2,7 +2,7 @@ package com.github.mrag.livechat.cache.service;
 
 import com.github.mrag.livechat.cache.dao.SystemDictMapper;
 import com.github.mrag.livechat.common.SystemDict;
-import com.github.mrag.livechat.common.cacheapi.DictService;
+import com.github.mrag.livechat.common.cache.api.DictService;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +45,7 @@ public class DictServiceImpl implements DictService {
                     Integer maxKvId = dictMapper.findMaxKvId();
                     dictItem.setKvId(maxKvId != null ? maxKvId + 1 : 1);
                 }
-                dictMapper.insert(dictItem);
+                dictMapper.insertSelective(dictItem);
             }
         } else {
             // update

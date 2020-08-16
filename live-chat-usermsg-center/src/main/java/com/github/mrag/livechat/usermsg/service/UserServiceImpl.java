@@ -63,6 +63,7 @@ public class UserServiceImpl implements UserService {
             user.setSalt(hashAndSalt[1]);
             // 设置默认值 TODO
 
+
             userMapper.insertSelective(user);
             try {
                 // 注册成功，返回用户信息以及token

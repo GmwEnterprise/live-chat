@@ -25,4 +25,6 @@ public interface SystemDictMapper {
     SystemDict selectByKv(@Param("key") String key, @Param("val") Integer valueNo);
 
     int countByKv(@Param("key") String key, @Param("val") Integer valueNo);
+
+    Integer selectIdByKv(@Param("key") String key, @Param("val") Integer valueNo);
 }

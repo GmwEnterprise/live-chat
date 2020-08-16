@@ -1,5 +1,9 @@
 package com.github.mrag.livechat.common.http;
 
+/**
+ * @author Gmw
+ */
+
 public enum HttpResponseCode {
     // ok
     OK(0, "OK"),
@@ -17,7 +21,10 @@ public enum HttpResponseCode {
     CREDENTIALS_EXPIRED(5, "登陆凭据已失效"),
 
     // 密码错误
-    PASSWORD_WRONG(6, "密码错误");
+    PASSWORD_WRONG(6, "密码错误"),
+
+    // 需要token
+    WITHOUT_TOKEN(7, "访问权限控制");
 
     final int code;
     final String title;

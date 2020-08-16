@@ -16,7 +16,7 @@
     <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
     
     <!-- 为生成的Java模型创建一个toString方法 -->
-    <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+    <!--<plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>-->
     
     <!--可以自定义生成model的代码注释-->
     <commentGenerator>
@@ -34,6 +34,12 @@
       <!--解决mysql驱动升级到8.0后不生成指定数据库代码的问题-->
       <property name="nullCatalogMeansCurrent" value="true"/>
     </jdbcConnection>
+    
+    <javaTypeResolver>
+      <property name="forceBigDecimals" value="true"/>
+      <!-- 使用java8的新时间类型 -->
+      <property name="useJSR310Types" value="true"/>
+    </javaTypeResolver>
     
     <!--指定生成model的路径-->
     <javaModelGenerator targetPackage="com.github.mrag.livechat.usermsg.entity"

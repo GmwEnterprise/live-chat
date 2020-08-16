@@ -35,6 +35,12 @@
       <property name="nullCatalogMeansCurrent" value="true"/>
     </jdbcConnection>
     
+    <javaTypeResolver>
+      <property name="forceBigDecimals" value="true"/>
+      <!-- 使用java8的新时间类型 -->
+      <property name="useJSR310Types" value="true"/>
+    </javaTypeResolver>
+    
     <!--指定生成model的路径-->
     <javaModelGenerator targetPackage="com.github.mrag.livechat.common"
                         targetProject="D:\.generatedfiles"/>

@@ -1,10 +1,14 @@
 package com.github.mrag.livechat.usermsg.dto;
 
 import com.github.mrag.livechat.common.constant.RegExp;
+import com.github.mrag.livechat.common.constant.enums.AccountStatus;
+import com.github.mrag.livechat.common.constant.enums.BloodGroup;
+import com.github.mrag.livechat.common.constant.enums.Gender;
 import com.github.mrag.livechat.common.validation.Dictionary;
 import com.github.mrag.livechat.common.validation.Password;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -27,9 +31,9 @@ public class UserDTO implements Serializable {
     @Pattern(regexp = RegExp.REGEXP_USERNAME, message = RegExp.REGEXP_USERNAME_MSG)
     private String username;
 
-    @Dictionary
-    private Byte gender;
+    private Gender gender;
 
+    @Past(message = "生日必须是过去的一个时间")
     private LocalDateTime birthday;
 
     private String signature;
@@ -49,15 +53,17 @@ public class UserDTO implements Serializable {
     @Email(message = "Email格式错误")
     private String email;
 
-    private Integer bloodGroup;
+    private BloodGroup bloodGroup;
 
     private Integer occupation;
 
+    @Dictionary
     private Integer location;
 
+    @Dictionary
     private Integer hometown;
 
-    private Byte accountStatus;
+    private AccountStatus accountStatus;
 
     private static final long serialVersionUID = 1L;
 
@@ -97,11 +103,11 @@ public class UserDTO implements Serializable {
         return this;
     }
 
-    public Byte getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public UserDTO setGender(Byte gender) {
+    public UserDTO setGender(Gender gender) {
         this.gender = gender;
         return this;
     }
@@ -178,11 +184,11 @@ public class UserDTO implements Serializable {
         return this;
     }
 
-    public Integer getBloodGroup() {
+    public BloodGroup getBloodGroup() {
         return bloodGroup;
     }
 
-    public UserDTO setBloodGroup(Integer bloodGroup) {
+    public UserDTO setBloodGroup(BloodGroup bloodGroup) {
         this.bloodGroup = bloodGroup;
         return this;
     }
@@ -214,11 +220,11 @@ public class UserDTO implements Serializable {
         return this;
     }
 
-    public Byte getAccountStatus() {
+    public AccountStatus getAccountStatus() {
         return accountStatus;
     }
 
-    public UserDTO setAccountStatus(Byte accountStatus) {
+    public UserDTO setAccountStatus(AccountStatus accountStatus) {
         this.accountStatus = accountStatus;
         return this;
     }

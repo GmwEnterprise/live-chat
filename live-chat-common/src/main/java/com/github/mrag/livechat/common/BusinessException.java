@@ -13,6 +13,10 @@ public class BusinessException extends RuntimeException {
         return businessException;
     }
 
+    public static BusinessException withoutToken() {
+        return new BusinessException(ErrorType.WITHOUT_TOKEN);
+    }
+
     private ErrorType errorType;
 
     public BusinessException(ErrorType errorType) {
@@ -36,7 +40,8 @@ public class BusinessException extends RuntimeException {
     public enum ErrorType {
         PASSWORD_WRONG("登陆失败，密码错误"),
         TOKEN_EXPIRED("登陆信息已失效，请重新登陆"),
-        SYSTEM_ERROR("系统报错");
+        SYSTEM_ERROR("系统报错"),
+        WITHOUT_TOKEN("访问权限控制");
 
         private final String msg;
 

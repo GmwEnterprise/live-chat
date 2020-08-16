@@ -45,6 +45,8 @@ public class RestErrorAdvice {
     @ExceptionHandler(BusinessException.class)
     public HttpResponse handler(BusinessException e) {
         switch (e.getErrorType()) {
+            case WITHOUT_TOKEN:
+                return new HttpResponse(HttpResponseCode.WITHOUT_TOKEN, e.getMessage());
             case PASSWORD_WRONG:
                 // 密码错误
                 return new HttpResponse(HttpResponseCode.PASSWORD_WRONG, e.getMessage());

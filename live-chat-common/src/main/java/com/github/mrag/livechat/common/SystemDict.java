@@ -3,18 +3,21 @@ package com.github.mrag.livechat.common;
 import java.io.Serializable;
 
 public class SystemDict implements Serializable {
-    // 主键
     private Integer kvId;
-    // 键
+
     private String key;
-    // 键描述
+
     private String keyDesc;
-    // 值编号
+
     private Integer valueNo;
-    // 值描述
+
     private String valueDesc;
-    // 向上依赖主键id
+
+    private Integer valueMoreDetail;
+
     private Integer dependencyOnId;
+
+    private Byte canModify;
 
     private static final long serialVersionUID = 1L;
 
@@ -58,11 +61,27 @@ public class SystemDict implements Serializable {
         this.valueDesc = valueDesc;
     }
 
+    public Integer getValueMoreDetail() {
+        return valueMoreDetail;
+    }
+
+    public void setValueMoreDetail(Integer valueMoreDetail) {
+        this.valueMoreDetail = valueMoreDetail;
+    }
+
     public Integer getDependencyOnId() {
         return dependencyOnId;
     }
 
     public void setDependencyOnId(Integer dependencyOnId) {
         this.dependencyOnId = dependencyOnId;
+    }
+
+    public Byte getCanModify() {
+        return canModify;
+    }
+
+    public void setCanModify(Byte canModify) {
+        this.canModify = canModify;
     }
 }
