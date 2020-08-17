@@ -55,19 +55,22 @@
     where kv_id = #{kvId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.github.mrag.livechat.common.SystemDict">
-    insert into system_dict (kv_id, `key`, key_desc,
+    <selectKey keyProperty="kvId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into system_dict (`key`, key_desc,
                              value_no, value_desc, value_more_detail,
                              dependency_on_id, can_modify)
-    values (#{kvId,jdbcType=INTEGER}, #{key,jdbcType=VARCHAR}, #{keyDesc,jdbcType=VARCHAR},
+    values (#{key,jdbcType=VARCHAR}, #{keyDesc,jdbcType=VARCHAR},
             #{valueNo,jdbcType=INTEGER}, #{valueDesc,jdbcType=VARCHAR}, #{valueMoreDetail,jdbcType=INTEGER},
             #{dependencyOnId,jdbcType=INTEGER}, #{canModify,jdbcType=TINYINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.github.mrag.livechat.common.SystemDict">
+  <insert id="insertSelective" parameterType="com.github.mrag.livechat.common.SystemDict" useGeneratedKeys="true">
+    <selectKey keyProperty="kvId" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into system_dict
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="kvId != null">
-        kv_id,
-      </if>
       <if test="key != null">
         `key`,
       </if>
@@ -91,9 +94,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="kvId != null">
-        #{kvId,jdbcType=INTEGER},
-      </if>
       <if test="key != null">
         #{key,jdbcType=VARCHAR},
       </if>

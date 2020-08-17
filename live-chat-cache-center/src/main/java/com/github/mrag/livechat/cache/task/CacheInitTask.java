@@ -4,6 +4,8 @@ import com.github.mrag.livechat.common.SystemDict;
 import com.github.mrag.livechat.common.cache.api.DictService;
 import com.github.mrag.livechat.common.constant.enums.DictEnumInterface;
 import com.github.mrag.livechat.common.utils.Tools;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -17,6 +19,8 @@ import java.util.Arrays;
  */
 @Component
 public class CacheInitTask {
+    private static final Logger log = LoggerFactory.getLogger(CacheInitTask.class);
+
     @Resource
     private DictService dictService;
 
@@ -47,17 +51,17 @@ public class CacheInitTask {
                         dictItem.setValueDesc(dictEnum.getValueDesc());
                         // 枚举属性没有依赖关系
                         dictItem.setDependencyOnId(0);
-                        try {
-                            dictService.save(dictItem);
-                        } catch (Exception e) {
-                            System.err.println(e.getMessage());
-                        }
+                        // 枚举属性不允许后期修改
+                        dictItem.setCanModify(SystemDict.CANNOT_MODIFY);
+                        dictItem.setValueMoreDetail(null);
+                        dictService.save(dictItem);
                     }
-                } else {
-                    System.out.println("no : " + enumClass);
                 }
+                // else {
+                //     System.out.println("no : " + enumClass);
+                // }
             } catch (Exception e) {
-                System.err.println("Error[" + e.getClass() + "]: " + e.getMessage());
+                log.error("Error[{}]: {}", e.getClass(), e.getMessage());
             }
             return null;
         });

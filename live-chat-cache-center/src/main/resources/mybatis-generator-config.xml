@@ -60,7 +60,7 @@
            enableCountByExample="false" enableDeleteByExample="false"
            enableSelectByExample="false" enableUpdateByExample="false">
       <!--自增主键配置-->
-      <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+      <generatedKey column="kv_id" sqlStatement="MySql" identity="true"/>
     </table>
   </context>
 </generatorConfiguration>

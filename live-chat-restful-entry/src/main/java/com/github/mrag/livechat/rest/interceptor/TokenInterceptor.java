@@ -3,9 +3,11 @@ package com.github.mrag.livechat.rest.interceptor;
 import com.github.mrag.livechat.common.BusinessException;
 import com.github.mrag.livechat.common.token.TokenPayload;
 import com.github.mrag.livechat.common.token.TokenUtil;
+import com.github.mrag.livechat.common.utils.SpringContextUtils;
 import com.github.mrag.livechat.common.utils.Tools;
 import com.github.mrag.livechat.rest.HandlerInterceptorWithOrder;
 import com.github.mrag.livechat.rest.OpenApi;
+import com.github.mrag.livechat.usermsg.api.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
@@ -61,8 +63,11 @@ public class TokenInterceptor implements HandlerInterceptorWithOrder {
             throw new BusinessException(BusinessException.ErrorType.TOKEN_EXPIRED);
         }
 
-        // TODO
-
+        // TODO 密码是否修改
+        long userId = payload.getUserId();
+        // 获取不到bean，空指针异常 TODO
+        UserService userService = SpringContextUtils.getBean(UserService.class);
+        System.out.println(">>> userService is " + userService);
         return true;
     }
 

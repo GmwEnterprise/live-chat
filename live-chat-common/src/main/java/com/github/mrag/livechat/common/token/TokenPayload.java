@@ -8,8 +8,10 @@ import java.io.Serializable;
 public class TokenPayload implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    // 只保存一个userId用来校验用户凭据
+    // 用户主键
     private long userId;
+    // 密码编码后，密码一旦更改那么之前的token自然作废
+    private String auth;
     // 该token签发者
     private String issuer;
     // 该token受众
@@ -24,16 +26,17 @@ public class TokenPayload implements Serializable {
     // 默认过期时间为7天
     private static final long DEFAULT_TIMEOUT = 1000 * 60 * 60 * 24 * 7;
 
-    public TokenPayload(long uid) {
-        this(uid, "All-Client");
+    public TokenPayload(long uid, String auth) {
+        this(uid, auth, "All-Client");
     }
 
     // 提供默认无参构造函数以供JSON工具序列化使用
     public TokenPayload() {
     }
 
-    public TokenPayload(long uid, String aud) {
+    public TokenPayload(long uid, String auth, String aud) {
         userId = uid;
+        this.auth = auth;
         audience = aud;
         issuer = "mrag.io";
         issuedAt = System.currentTimeMillis();
@@ -94,5 +97,14 @@ public class TokenPayload implements Serializable {
 
     public void setExpirationTime(long expirationTime) {
         this.expirationTime = expirationTime;
+    }
+
+    public String getAuth() {
+        return auth;
+    }
+
+    public TokenPayload setAuth(String auth) {
+        this.auth = auth;
+        return this;
     }
 }

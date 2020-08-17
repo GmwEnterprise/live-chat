@@ -3,6 +3,9 @@ package com.github.mrag.livechat.common;
 import java.io.Serializable;
 
 public class SystemDict implements Serializable {
+    public static final byte CAN_MODIFY = 1;
+    public static final byte CANNOT_MODIFY = 0;
+
     private Integer kvId;
 
     private String key;

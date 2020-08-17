@@ -37,19 +37,20 @@ public class DictServiceImpl implements DictService {
 
     @Override
     public void save(SystemDict dictItem) {
-        if (dictItem.getKvId() == null || !kvExists(dictItem.getKey(), dictItem.getValueNo())) {
-            // insert
-            synchronized (this) {
-                // 同步防止主键重复
-                if (dictItem.getKvId() == null) {
-                    Integer maxKvId = dictMapper.findMaxKvId();
-                    dictItem.setKvId(maxKvId != null ? maxKvId + 1 : 1);
-                }
+        if (dictItem.getKvId() == null) {
+            if (kvExists(dictItem.getKey(), dictItem.getValueNo())) {
+                dictMapper.updateByPrimaryKeySelective(dictItem);
+            } else {
                 dictMapper.insertSelective(dictItem);
             }
         } else {
-            // update
-            dictMapper.updateByPrimaryKeySelective(dictItem);
+            SystemDict item = dictMapper.selectByPrimaryKey(dictItem.getKvId());
+            if (item != null) {
+                dictMapper.updateByPrimaryKeySelective(dictItem);
+            } else {
+                dictItem.setKvId(null);
+                dictMapper.insertSelective(dictItem);
+            }
         }
     }
 
