@@ -20,4 +20,6 @@ public interface UserMapper {
     long countByPhoneNumber(String phone);
 
     User selectByPhoneNumber(String phone);
+
+    String selectUserPasswordByUserId(long userId);
 }

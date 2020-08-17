@@ -48,4 +48,12 @@ public interface UserService {
      * @return 是否存在
      */
     boolean checkPhoneExists(String phone);
+
+    /**
+     * 通过userId获取密码加密哈希
+     *
+     * @param userId 用户ID
+     * @return 密码哈希
+     */
+    String findUserHashById(long userId);
 }

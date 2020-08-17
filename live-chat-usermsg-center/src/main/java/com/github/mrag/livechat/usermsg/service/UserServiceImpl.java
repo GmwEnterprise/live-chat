@@ -174,4 +174,9 @@ public class UserServiceImpl implements UserService {
         }
         return userMapper.countByPhoneNumber(phone) > 0;
     }
+
+    @Override
+    public String findUserHashById(long userId) {
+        return userMapper.selectUserPasswordByUserId(userId);
+    }
 }

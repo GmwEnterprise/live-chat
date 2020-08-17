@@ -28,6 +28,11 @@
     user_password, salt, phone_number, email, blood_group, occupation, location, hometown, 
     account_status
   </sql>
+  <select id="selectUserPasswordByUserId" parameterType="java.lang.Long" resultType="java.lang.String">
+    select user_password
+    from user
+    where id = #{userId}
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List"/>

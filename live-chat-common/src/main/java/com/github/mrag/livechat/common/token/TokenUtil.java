@@ -79,16 +79,16 @@ public final class TokenUtil {
         if (jwsObject.verify(verifier)) {
             String json = jwsObject.getPayload().toString();
             // JsonProcessingException json解析失败
-            return objectMapper.readValue(json, type);
+            R result = objectMapper.readValue(json, type);
+            if (result.getUserId() > 0 && result.getAuth() != null) {
+                return result;
+            }
         }
         throw new Exception("Failed to verify signature.");
     }
 
     /*
      * 测试一下jose-jwt的比较通用的功能。
-     * 实际上我写的Authetication已经实现了这个功能，没必要修改
-     *
-     * @param args args
 
     public static void main(String[] args) {
         TokenPayload tokenPayload = new TokenPayload() {{

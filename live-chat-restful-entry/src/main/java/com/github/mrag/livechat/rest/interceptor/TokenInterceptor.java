@@ -7,6 +7,7 @@ import com.github.mrag.livechat.common.utils.SpringContextUtils;
 import com.github.mrag.livechat.common.utils.Tools;
 import com.github.mrag.livechat.rest.HandlerInterceptorWithOrder;
 import com.github.mrag.livechat.rest.OpenApi;
+import com.github.mrag.livechat.rest.RestConsumer;
 import com.github.mrag.livechat.usermsg.api.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,12 +64,14 @@ public class TokenInterceptor implements HandlerInterceptorWithOrder {
             throw new BusinessException(BusinessException.ErrorType.TOKEN_EXPIRED);
         }
 
-        // TODO 密码是否修改
         long userId = payload.getUserId();
-        // 获取不到bean，空指针异常 TODO
-        UserService userService = SpringContextUtils.getBean(UserService.class);
-        System.out.println(">>> userService is " + userService);
-        return true;
+        UserService userService = SpringContextUtils.getBean(RestConsumer.class).getUserService();
+        String hash = userService.findUserHashById(userId);
+        if (hash.equals(payload.getAuth())) {
+            // 密码未修改 原token有效
+            return true;
+        }
+        throw BusinessException.withoutToken();
     }
 
     private void printRequest(HttpServletRequest request) {
