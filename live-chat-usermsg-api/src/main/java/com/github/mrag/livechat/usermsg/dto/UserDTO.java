@@ -57,10 +57,10 @@ public class UserDTO implements Serializable {
 
     private Integer occupation;
 
-    @Dictionary
+    @Dictionary(key = "city")
     private Integer location;
 
-    @Dictionary
+    @Dictionary(key = "city")
     private Integer hometown;
 
     private AccountStatus accountStatus;

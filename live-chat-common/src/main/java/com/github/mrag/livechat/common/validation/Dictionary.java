@@ -20,5 +20,5 @@ public @interface Dictionary {
 
     Class<? extends Payload>[] payload() default {};
 
-    String key() default "";
+    String key();
 }

@@ -7,5 +7,5 @@ import javax.validation.ConstraintValidatorContext;
  */
 public interface DataConstraintValidator {
 
-    boolean isDictionaryValid(Object value, ConstraintValidatorContext context);
+    boolean isDictionaryValid(String key, Integer value);
 }

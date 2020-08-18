@@ -12,7 +12,7 @@ POST http://localhost:4200/api/v1/user
 Content-Type: application/json
 
 {
-  "chatNo": "1"
+  "location": 1
 }
 
 ###
