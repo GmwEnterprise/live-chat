@@ -228,4 +228,28 @@ public class UserDTO implements Serializable {
         this.accountStatus = accountStatus;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "token='" + token + '\'' +
+                ", id=" + id +
+                ", chatNo='" + chatNo + '\'' +
+                ", username='" + username + '\'' +
+                ", gender=" + gender +
+                ", birthday=" + birthday +
+                ", signature='" + signature + '\'' +
+                ", company='" + company + '\'' +
+                ", personalDescription='" + personalDescription + '\'' +
+                ", userPassword='" + userPassword + '\'' +
+                ", salt='" + salt + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", bloodGroup=" + bloodGroup +
+                ", occupation=" + occupation +
+                ", location=" + location +
+                ", hometown=" + hometown +
+                ", accountStatus=" + accountStatus +
+                '}';
+    }
 }

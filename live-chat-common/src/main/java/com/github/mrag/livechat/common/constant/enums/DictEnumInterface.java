@@ -14,8 +14,4 @@ public interface DictEnumInterface {
     int getValueNo();
 
     String getValueDesc();
-
-    default String getValueMoreDetail() {
-        return null;
-    }
 }

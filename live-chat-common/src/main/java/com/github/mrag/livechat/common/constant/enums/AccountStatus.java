@@ -1,8 +1,11 @@
 package com.github.mrag.livechat.common.constant.enums;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * @author Gmw
  */
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum AccountStatus implements DictEnumInterface {
     USING(1, "使用中..."), BANNED(2, "禁用ing"),
     WRITTEN_OFF(3, "已注销");
@@ -46,5 +49,15 @@ public enum AccountStatus implements DictEnumInterface {
     @Override
     public String getValueDesc() {
         return valueDesc;
+    }
+
+    @Override
+    public String toString() {
+        return "AccountStatus{" +
+                "key='" + key + '\'' +
+                ", keyDesc='" + keyDesc + '\'' +
+                ", valueNo=" + valueNo +
+                ", valueDesc='" + valueDesc + '\'' +
+                '}';
     }
 }

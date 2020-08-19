@@ -1,8 +1,11 @@
 package com.github.mrag.livechat.common.constant.enums;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * @author Gmw
  */
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum BloodGroup implements DictEnumInterface {
     A(1, "A"), B(2, "B"),
     O(3, "O"), AB(4, "AB");
@@ -46,5 +49,15 @@ public enum BloodGroup implements DictEnumInterface {
     @Override
     public String getValueDesc() {
         return valueDesc;
+    }
+
+    @Override
+    public String toString() {
+        return "BloodGroup{" +
+                "key='" + key + '\'' +
+                ", keyDesc='" + keyDesc + '\'' +
+                ", valueNo=" + valueNo +
+                ", valueDesc='" + valueDesc + '\'' +
+                '}';
     }
 }

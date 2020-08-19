@@ -56,4 +56,11 @@ public class UserController {
         UserDTO afterSave = userService.save(dto);
         return HttpResponse.ok(afterSave);
     }
+
+    @PostMapping("/testDTO")
+    @OpenApi
+    public HttpResponse testDTO(@RequestBody UserDTO dto) {
+        System.out.println(dto);
+        return HttpResponse.ok(null);
+    }
 }

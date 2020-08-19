@@ -1,8 +1,11 @@
 package com.github.mrag.livechat.common.constant.enums;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * @author Gmw
  */
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum Gender implements DictEnumInterface {
     MEN(1, "男"), WOMEN(2, "女"),
     SECRET(3, "保密");
@@ -46,5 +49,15 @@ public enum Gender implements DictEnumInterface {
     @Override
     public String getValueDesc() {
         return valueDesc;
+    }
+
+    @Override
+    public String toString() {
+        return "Gender{" +
+                "key='" + key + '\'' +
+                ", keyDesc='" + keyDesc + '\'' +
+                ", valueNo=" + valueNo +
+                ", valueDesc='" + valueDesc + '\'' +
+                '}';
     }
 }
