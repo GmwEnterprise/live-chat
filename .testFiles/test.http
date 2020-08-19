@@ -15,4 +15,12 @@ Content-Type: application/json
   "location": 1
 }
 
-###
+### 测试枚举序列化
+
+POST http://localhost:4200/api/v1/user/testDTO
+Content-Type: application/json
+
+{
+  "gender": 2,
+  "accountStatus": 2
+}

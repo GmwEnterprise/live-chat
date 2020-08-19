@@ -26,6 +26,10 @@ public class DictionaryValidator implements ConstraintValidator<Dictionary, Inte
 
     @Override
     public boolean isValid(Integer value, ConstraintValidatorContext context) {
+        if (value == null) {
+            // 可选项
+            return true;
+        }
         Annotation anno = ((ConstraintValidatorContextImpl) context).getConstraintDescriptor().getAnnotation();
         return dataConstraintValidator.isDictionaryValid(((Dictionary) anno).key(), value);
     }

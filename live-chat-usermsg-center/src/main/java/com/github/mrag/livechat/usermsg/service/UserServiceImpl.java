@@ -1,6 +1,8 @@
 package com.github.mrag.livechat.usermsg.service;
 
-import com.github.mrag.livechat.common.*;
+import com.github.mrag.livechat.common.BusinessException;
+import com.github.mrag.livechat.common.BusinessType;
+import com.github.mrag.livechat.common.Encryption;
 import com.github.mrag.livechat.common.constant.RegExp;
 import com.github.mrag.livechat.common.constant.enums.AccountStatus;
 import com.github.mrag.livechat.common.constant.enums.Gender;
@@ -70,7 +72,9 @@ public class UserServiceImpl implements UserService {
             try {
                 // 注册成功，返回用户信息以及token
                 String token = TokenUtil.generateToken(new TokenPayload(user.getId(), hashAndSalt[0]));
-                return findUserById(user.getId()).setToken(token);
+                return findUserById(user.getId()).setToken(token)
+                        // 不返回敏感信息
+                        .setPhoneNumber(null).setEmail(null).setUserPassword(null).setSalt(null);
             } catch (Exception e) {
                 log.info("异常记录.", e);
                 throw BusinessException.systemError(e);

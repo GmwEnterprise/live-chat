@@ -61,6 +61,6 @@ public class UserController {
     @OpenApi
     public HttpResponse testDTO(@RequestBody UserDTO dto) {
         System.out.println(dto);
-        return HttpResponse.ok(null);
+        return HttpResponse.ok(dto);
     }
 }

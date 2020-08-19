@@ -1,6 +1,7 @@
 package com.github.mrag.livechat.common.constant.enums;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * @author Gmw
@@ -22,6 +23,7 @@ public enum AccountStatus implements DictEnumInterface {
         this.valueDesc = valueDesc;
     }
 
+    @JsonValue
     public static AccountStatus findByValue(int valueNo) {
         for (AccountStatus item : values()) {
             if (item.valueNo == valueNo) {

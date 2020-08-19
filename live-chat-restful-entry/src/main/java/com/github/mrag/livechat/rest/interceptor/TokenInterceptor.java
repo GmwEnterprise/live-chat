@@ -36,6 +36,13 @@ public class TokenInterceptor implements HandlerInterceptorWithOrder {
         printRequest(request);
         Tools.printInputStream(request.getInputStream());
 
+        // 特定请求直接放行
+        StringBuffer requestURL = request.getRequestURL();
+        String requestPath = requestURL.substring(requestURL.lastIndexOf("/"));
+        if ("/error".equals(requestPath)) {
+            return true;
+        }
+
         // 判断是否为OpenApi
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         boolean methodIsOpen = handlerMethod.hasMethodAnnotation(OpenApi.class);

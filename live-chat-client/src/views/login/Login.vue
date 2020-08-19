@@ -95,7 +95,27 @@ export default {
               })
             } else {
               // 成功
-              console.log(result)
+              const token = result.body.token
+              const currentUser = {
+                id: result.body.id,
+                chatNo: result.body.chatNo,
+                username: result.body.username,
+                phoneNumber: result.body.phoneNumber,
+                email: result.body.email,
+                gender: result.body.gender,
+                birthday: result.body.birthday,
+                signature: result.body.signature,
+                company: result.body.company,
+                personalDescription: result.body.personalDescription,
+                userPassword: result.body.userPassword,
+                bloodGroup: result.body.bloodGroup,
+                occupation: result.body.occupation,
+                location: result.body.location,
+                hometown: result.body.hometown,
+                accountStatus: result.body.accountStatus
+              }
+              console.log(token)
+              console.log(currentUser)
             }
           })
       } else if (this.currentView === 3) {

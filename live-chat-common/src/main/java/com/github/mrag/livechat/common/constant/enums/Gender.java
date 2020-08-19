@@ -1,6 +1,7 @@
 package com.github.mrag.livechat.common.constant.enums;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * @author Gmw
@@ -22,6 +23,7 @@ public enum Gender implements DictEnumInterface {
         this.valueDesc = valueDesc;
     }
 
+    @JsonValue
     public static Gender findByValue(int valueNo) {
         for (Gender item : values()) {
             if (item.valueNo == valueNo) {
