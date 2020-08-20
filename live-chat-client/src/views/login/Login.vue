@@ -25,6 +25,7 @@
 
 <script>
 import Encrypt from '@/assets/js/encryption'
+import VuexService from '@/services/vuex.service'
 export default {
   name: 'Login',
   data() {
@@ -53,6 +54,8 @@ export default {
           .then((result) => {
             if (result.body) {
               // 手机号码存在，转为登陆
+              this.currentView = 3
+              return
             } else {
               // 不存在，转为注册
               this.currentView = 2
@@ -87,39 +90,60 @@ export default {
             phoneNumber: this.loginData.phoneNumber,
           })
           .then((result) => {
-            if (result.code !== 0) {
-              // 失败
-              this.$message({
-                message: result.errorDesc,
-                type: 'warning',
-              })
-            } else {
-              // 成功
-              const token = result.body.token
-              const currentUser = {
-                id: result.body.id,
-                chatNo: result.body.chatNo,
-                username: result.body.username,
-                phoneNumber: result.body.phoneNumber,
-                email: result.body.email,
-                gender: result.body.gender,
-                birthday: result.body.birthday,
-                signature: result.body.signature,
-                company: result.body.company,
-                personalDescription: result.body.personalDescription,
-                userPassword: result.body.userPassword,
-                bloodGroup: result.body.bloodGroup,
-                occupation: result.body.occupation,
-                location: result.body.location,
-                hometown: result.body.hometown,
-                accountStatus: result.body.accountStatus
-              }
-              console.log(token)
-              console.log(currentUser)
-            }
+            this.handleLoginResult(result)
           })
       } else if (this.currentView === 3) {
         // 填写登陆密码
+        this.axios
+          .post('/user/login', {
+            phoneNumber: this.loginData.phoneNumber,
+            userPassword: Encrypt.aesEncode(this.loginData.passwd),
+          })
+          .then((result) => {
+            this.handleLoginResult(result)
+          })
+      }
+    },
+
+    handleLoginResult(result) {
+      if (result.code !== 0) {
+        // 失败
+        this.$message({
+          message: result.errorDesc,
+          type: 'warning',
+        })
+      } else {
+        // 成功
+        const token = result.body.token
+        const user = {
+          id: result.body.id,
+          chatNo: result.body.chatNo,
+          username: result.body.username,
+          phoneNumber: result.body.phoneNumber,
+          email: result.body.email,
+          gender: result.body.gender,
+          birthday: result.body.birthday,
+          signature: result.body.signature,
+          company: result.body.company,
+          personalDescription: result.body.personalDescription,
+          userPassword: result.body.userPassword,
+          bloodGroup: result.body.bloodGroup,
+          occupation: result.body.occupation,
+          location: result.body.location,
+          hometown: result.body.hometown,
+          accountStatus: result.body.accountStatus,
+        }
+        console.log(token)
+        console.log(user)
+
+        // 保存user信息和token
+        VuexService.saveUser(this.$store, {
+          token,
+          user,
+        })
+
+        // 登录成功 跳转App.vue
+        this.$router.push('/')
       }
     },
   },

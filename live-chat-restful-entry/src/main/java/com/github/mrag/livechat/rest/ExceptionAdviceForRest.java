@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  * @author Gmw
  */
 @RestControllerAdvice
-public class RestErrorAdvice {
+public class ExceptionAdviceForRest {
 
     /**
      * 参数校验错误的全局处理

@@ -14,8 +14,24 @@ export default new Vuex.Store({
 
   // 状态
   state: {
+    currentToken: '',
     currentUser: {
-      id: null
+      id: 0, // Number
+      chatNo: '',
+      username: '',
+      phoneNumber: '',
+      email: '',
+      gender: {},
+      birthday: '',
+      signature: '',
+      company: '',
+      personalDescription: '',
+      userPassword: null,
+      bloodGroup: {},
+      occupation: 0, // 字典 行业
+      location: 0, // 字典 城市
+      hometown: 0, // 字典 城市
+      accountStatus: {}
     }
   },
 
@@ -27,7 +43,12 @@ export default new Vuex.Store({
     }
   },
 
-  mutations: {},
+  mutations: {
+    saveUser(state, payload) {
+      state.currentToken = payload.token
+      state.currentUser = payload.user
+    }
+  },
 
   // 动作
   actions: {},

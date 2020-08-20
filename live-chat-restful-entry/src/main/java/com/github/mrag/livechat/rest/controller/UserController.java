@@ -57,10 +57,16 @@ public class UserController {
         return HttpResponse.ok(afterSave);
     }
 
-    @PostMapping("/testDTO")
+    /**
+     * 登录
+     *
+     * @param dto .phone=手机号，.password=密码
+     * @return 登录成功返回用户信息以及token
+     */
+    @PostMapping("/login")
     @OpenApi
-    public HttpResponse testDTO(@RequestBody UserDTO dto) {
-        System.out.println(dto);
-        return HttpResponse.ok(dto);
+    public HttpResponse testDTO(@RequestBody @Valid UserDTO dto) {
+        UserDTO result = userService.login(dto.getPhoneNumber(), dto.getUserPassword());
+        return HttpResponse.ok(result);
     }
 }

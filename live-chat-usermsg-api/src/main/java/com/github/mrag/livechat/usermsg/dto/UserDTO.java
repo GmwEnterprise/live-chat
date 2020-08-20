@@ -55,6 +55,7 @@ public class UserDTO implements Serializable {
 
     private BloodGroup bloodGroup;
 
+    @Dictionary(key = "trade") // 行业
     private Integer occupation;
 
     @Dictionary(key = "city")
