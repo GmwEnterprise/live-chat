@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
- * 全局异常处理
+ * controller 异常处理
  *
  * @author Gmw
  */
 @RestControllerAdvice
-public class ExceptionAdviceForRest {
+public class ExceptionAdviceForController {
 
     /**
      * 参数校验错误的全局处理

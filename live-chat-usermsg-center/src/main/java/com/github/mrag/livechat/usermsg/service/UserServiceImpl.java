@@ -76,8 +76,8 @@ public class UserServiceImpl implements UserService {
                         // 不返回敏感信息
                         .setPhoneNumber(null).setEmail(null).setUserPassword(null).setSalt(null);
             } catch (Exception e) {
-                log.info("异常记录.", e);
-                throw BusinessException.systemError(e);
+                log.error(e.getMessage(), e);
+                throw BusinessException.unknown();
             }
         } else {
             userMapper.updateByPrimaryKeySelective(user);
@@ -99,11 +99,12 @@ public class UserServiceImpl implements UserService {
                 String token = TokenUtil.generateToken(new TokenPayload(user.getId(), realHash));
                 return Tools.copyProperties(user, UserDTO.class).setToken(token);
             } catch (Exception e) {
-                throw BusinessException.systemError(e);
+                log.error(e.getMessage(), e);
+                throw BusinessException.unknown();
             }
         }
         // 密码错误
-        throw new BusinessException(BusinessException.ErrorType.PASSWORD_WRONG);
+        throw BusinessException.passwordWrong();
     }
 
     /**
