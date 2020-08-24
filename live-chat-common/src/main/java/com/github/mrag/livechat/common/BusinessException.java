@@ -15,16 +15,17 @@ public class BusinessException extends RuntimeException {
         return new BusinessException(ErrorType.WITHOUT_TOKEN);
     }
 
-    public static BusinessException passwordWrong() {
-        return new BusinessException(ErrorType.PASSWORD_WRONG);
+    public static BusinessException incorrectPassword() {
+        return new BusinessException(ErrorType.INCORRECT_PASSWORD);
     }
 
     // 成员
 
     public enum ErrorType {
-        PASSWORD_WRONG("登陆失败，密码错误"),
+        INCORRECT_PASSWORD("登陆失败，密码错误"),
         TOKEN_EXPIRED("登陆信息已失效，请重新登陆"),
-        WITHOUT_TOKEN("访问权限控制"), UNKNOWN("未知系统错误");
+        WITHOUT_TOKEN("访问权限控制"),
+        UNKNOWN("未知系统错误");
 
         private final String msg;
 

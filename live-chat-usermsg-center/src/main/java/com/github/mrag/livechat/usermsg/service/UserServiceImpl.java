@@ -104,7 +104,7 @@ public class UserServiceImpl implements UserService {
             }
         }
         // 密码错误
-        throw BusinessException.passwordWrong();
+        throw BusinessException.incorrectPassword();
     }
 
     /**

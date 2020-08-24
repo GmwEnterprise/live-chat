@@ -10,10 +10,6 @@ public class HttpResponse {
         return new HttpResponse(HttpResponseCode.BAD_REQUEST_ARGUMENT, null, errorDesc);
     }
 
-    public static HttpResponse sysError(String errorDesc) {
-        return new HttpResponse(HttpResponseCode.SYS_ERROR, null, errorDesc);
-    }
-
     public static HttpResponse notFound(String errorDesc) {
         return new HttpResponse(HttpResponseCode.NOT_FOUND, null, errorDesc);
     }
@@ -36,9 +32,9 @@ public class HttpResponse {
         this(httpResponseCode, null, errorDesc);
     }
 
-    public HttpResponse(HttpResponseCode httpResponseCode, Object body, String errorDesc) {
-        this.code = httpResponseCode.code;
-        this.message = httpResponseCode.title;
+    public HttpResponse(HttpResponseCode code, Object body, String errorDesc) {
+        this.code = code.getCode();
+        this.message = code.getTitle();
         this.body = body;
         this.errorDesc = errorDesc;
     }

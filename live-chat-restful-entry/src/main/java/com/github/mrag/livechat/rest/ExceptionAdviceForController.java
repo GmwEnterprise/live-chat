@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ExceptionAdviceForController {
 
     /**
-     * 参数校验错误的全局处理
+     * 参数校验错误处理
      *
      * @param e 参数校验错误
      * @return 响应信息
@@ -48,14 +48,12 @@ public class ExceptionAdviceForController {
         switch (e.getErrorType()) {
             case WITHOUT_TOKEN:
                 return new HttpResponse(HttpResponseCode.WITHOUT_TOKEN, e.getMessage());
-            case PASSWORD_WRONG:
-                // 密码错误
+            case INCORRECT_PASSWORD:
                 return new HttpResponse(HttpResponseCode.PASSWORD_WRONG, e.getMessage());
             case TOKEN_EXPIRED:
-                // 登陆信息过期
                 return new HttpResponse(HttpResponseCode.CREDENTIALS_EXPIRED, e.getMessage());
             default:
-                return HttpResponse.sysError(e.getMessage());
+                return new HttpResponse(HttpResponseCode.UNKNOWN, e.getMessage());
         }
     }
 }
