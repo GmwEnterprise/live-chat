@@ -2,41 +2,56 @@ package com.github.mrag.livechat.common.http;
 
 public class HttpResponse {
 
+    private enum HttpResponseCode {
+        OK(1, "成功"),
+        BAD_REQUEST(2, "错误请求"),
+        WITHOUT_TOKEN(3, "访问权限控制"),
+        INCORRECT_PASSWORD(4, "密码错误"),
+        TOKEN_EXPIRED(5, "访问权限控制"),
+        UNKNOWN(6, "系统未知错误");
+
+        private final int code;
+        private final String msg;
+
+        HttpResponseCode(int code, String msg) {
+            this.code = code;
+            this.msg = msg;
+        }
+    }
+
     public static HttpResponse ok(Object body) {
-        return new HttpResponse(HttpResponseCode.OK, body, null);
+        return new HttpResponse().code(HttpResponseCode.OK).setBody(body);
     }
 
-    public static HttpResponse badRequest(String errorDesc) {
-        return new HttpResponse(HttpResponseCode.BAD_REQUEST_ARGUMENT, null, errorDesc);
+    public static HttpResponse badRequest(String errorDetail) {
+        return new HttpResponse().code(HttpResponseCode.BAD_REQUEST).setErrorDetail(errorDetail);
     }
 
-    public static HttpResponse notFound(String errorDesc) {
-        return new HttpResponse(HttpResponseCode.NOT_FOUND, null, errorDesc);
+    public static HttpResponse withoutToken(String errorDetail) {
+        return new HttpResponse().code(HttpResponseCode.WITHOUT_TOKEN).setErrorDetail(errorDetail);
+    }
+
+    public static HttpResponse incorrectPassword(String errorDetail) {
+        return new HttpResponse().code(HttpResponseCode.INCORRECT_PASSWORD).setErrorDetail(errorDetail);
+    }
+
+    public static HttpResponse tokenExpired(String errorDetail) {
+        return new HttpResponse().code(HttpResponseCode.TOKEN_EXPIRED).setErrorDetail(errorDetail);
+    }
+
+    public static HttpResponse unknown(String errorDetail) {
+        return new HttpResponse().code(HttpResponseCode.UNKNOWN).setErrorDetail(errorDetail);
     }
 
     private int code;
     private String message;
-
-    // ok
-
     private Object body;
+    private String errorDetail;
 
-    // fail
-
-    private String errorDesc;
-
-    public HttpResponse() {
-    }
-
-    public HttpResponse(HttpResponseCode httpResponseCode, String errorDesc) {
-        this(httpResponseCode, null, errorDesc);
-    }
-
-    public HttpResponse(HttpResponseCode code, Object body, String errorDesc) {
-        this.code = code.getCode();
-        this.message = code.getTitle();
-        this.body = body;
-        this.errorDesc = errorDesc;
+    public HttpResponse code(HttpResponseCode code) {
+        this.code = code.code;
+        this.message = code.msg;
+        return this;
     }
 
     public int getCode() {
@@ -66,12 +81,12 @@ public class HttpResponse {
         return this;
     }
 
-    public String getErrorDesc() {
-        return errorDesc;
+    public String getErrorDetail() {
+        return errorDetail;
     }
 
-    public HttpResponse setErrorDesc(String errorDesc) {
-        this.errorDesc = errorDesc;
+    public HttpResponse setErrorDetail(String errorDetail) {
+        this.errorDetail = errorDetail;
         return this;
     }
 }

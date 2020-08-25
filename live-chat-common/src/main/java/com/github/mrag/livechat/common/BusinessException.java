@@ -11,12 +11,32 @@ public class BusinessException extends RuntimeException {
         return new BusinessException(ErrorType.UNKNOWN);
     }
 
+    public static BusinessException unknown(String errorMsg) {
+        return new BusinessException(ErrorType.UNKNOWN, errorMsg);
+    }
+
     public static BusinessException withoutToken() {
         return new BusinessException(ErrorType.WITHOUT_TOKEN);
     }
 
+    public static BusinessException withoutToken(String errorMsg) {
+        return new BusinessException(ErrorType.WITHOUT_TOKEN, errorMsg);
+    }
+
+    public static BusinessException tokenExpired() {
+        return new BusinessException(ErrorType.TOKEN_EXPIRED);
+    }
+
+    public static BusinessException tokenExpired(String errorMsg) {
+        return new BusinessException(ErrorType.TOKEN_EXPIRED, errorMsg);
+    }
+
     public static BusinessException incorrectPassword() {
         return new BusinessException(ErrorType.INCORRECT_PASSWORD);
+    }
+
+    public static BusinessException incorrectPassword(String errorMsg) {
+        return new BusinessException(ErrorType.INCORRECT_PASSWORD, errorMsg);
     }
 
     // 成员
@@ -45,8 +65,8 @@ public class BusinessException extends RuntimeException {
         this.errorType = errorType;
     }
 
-    public BusinessException(ErrorType errorType, String detail) {
-        super(detail);
+    public BusinessException(ErrorType errorType, String errorDetail) {
+        super(errorDetail);
         this.errorType = errorType;
     }
 

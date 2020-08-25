@@ -2,7 +2,8 @@ package com.github.mrag.livechat.rest;
 
 import com.github.mrag.livechat.common.BusinessException;
 import com.github.mrag.livechat.common.http.HttpResponse;
-import com.github.mrag.livechat.common.http.HttpResponseCode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -16,6 +17,14 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  */
 @RestControllerAdvice
 public class ExceptionAdviceForController {
+    private static final Logger log = LoggerFactory.getLogger(ExceptionAdviceForController.class);
+
+    @ExceptionHandler(RuntimeException.class)
+    public HttpResponse handler(RuntimeException e) {
+        // TODO 查看dubbo抛出的异常
+        e.printStackTrace();
+        return HttpResponse.unknown(e.getMessage());
+    }
 
     /**
      * 参数校验错误处理
@@ -38,7 +47,7 @@ public class ExceptionAdviceForController {
     }
 
     /**
-     * 业务异常处理
+     * 统一处理业务异常
      *
      * @param e 异常
      * @return 响应信息
@@ -47,13 +56,13 @@ public class ExceptionAdviceForController {
     public HttpResponse handler(BusinessException e) {
         switch (e.getErrorType()) {
             case WITHOUT_TOKEN:
-                return new HttpResponse(HttpResponseCode.WITHOUT_TOKEN, e.getMessage());
+                return HttpResponse.withoutToken(e.getMessage());
             case INCORRECT_PASSWORD:
-                return new HttpResponse(HttpResponseCode.PASSWORD_WRONG, e.getMessage());
+                return HttpResponse.incorrectPassword(e.getMessage());
             case TOKEN_EXPIRED:
-                return new HttpResponse(HttpResponseCode.CREDENTIALS_EXPIRED, e.getMessage());
+                return HttpResponse.tokenExpired(e.getMessage());
             default:
-                return new HttpResponse(HttpResponseCode.UNKNOWN, e.getMessage());
+                return HttpResponse.unknown(e.getMessage());
         }
     }
 }

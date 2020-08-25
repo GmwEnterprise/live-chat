@@ -106,45 +106,36 @@ export default {
     },
 
     handleLoginResult(result) {
-      if (result.code !== 0) {
-        // 失败
-        this.$message({
-          message: result.errorDesc,
-          type: 'warning',
-        })
-      } else {
-        // 成功
-        const token = result.body.token
-        const user = {
-          id: result.body.id,
-          chatNo: result.body.chatNo,
-          username: result.body.username,
-          phoneNumber: result.body.phoneNumber,
-          email: result.body.email,
-          gender: result.body.gender,
-          birthday: result.body.birthday,
-          signature: result.body.signature,
-          company: result.body.company,
-          personalDescription: result.body.personalDescription,
-          userPassword: result.body.userPassword,
-          bloodGroup: result.body.bloodGroup,
-          occupation: result.body.occupation,
-          location: result.body.location,
-          hometown: result.body.hometown,
-          accountStatus: result.body.accountStatus,
-        }
-        console.log(token)
-        console.log(user)
-
-        // 保存user信息和token
-        VuexService.saveUser(this.$store, {
-          token,
-          user,
-        })
-
-        // 登录成功 跳转App.vue
-        this.$router.push('/')
+      const token = result.body.token
+      const user = {
+        id: result.body.id,
+        chatNo: result.body.chatNo,
+        username: result.body.username,
+        phoneNumber: result.body.phoneNumber,
+        email: result.body.email,
+        gender: result.body.gender,
+        birthday: result.body.birthday,
+        signature: result.body.signature,
+        company: result.body.company,
+        personalDescription: result.body.personalDescription,
+        userPassword: result.body.userPassword,
+        bloodGroup: result.body.bloodGroup,
+        occupation: result.body.occupation,
+        location: result.body.location,
+        hometown: result.body.hometown,
+        accountStatus: result.body.accountStatus,
       }
+      console.log(token)
+      console.log(user)
+
+      // 保存user信息和token
+      VuexService.saveUser(this.$store, {
+        token,
+        user,
+      })
+
+      // 登录成功 跳转App.vue
+      this.$router.push('/')
     },
   },
 }

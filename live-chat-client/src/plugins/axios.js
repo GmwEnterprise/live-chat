@@ -3,7 +3,7 @@
 import Vue from 'vue'
 import axios from "axios"
 
-import { Notification } from 'element-ui';
+import { Notification, Message } from 'element-ui';
 
 // Full config:  https://github.com/axios/axios#request-config
 // axios.defaults.baseURL = process.env.baseURL || process.env.apiUrl || ''
@@ -33,13 +33,24 @@ _axios.interceptors.request.use(
 _axios.interceptors.response.use(
   function (response) {
     // Do something with response data
-    return response.data
+    const result = response.data
+    if (result.code === 1) {
+      // ok
+      return result
+    }
+    console.log('错错错')
+    console.log(result)
+    Message({
+      message: result.errorDetail,
+      type: 'warning'
+    })
+    return Promise.reject(result)
   },
   function (error) {
     // Do something with response error
     const err = JSON.stringify(error.response)
     Notification.error({
-      title: '系统报错',
+      title: '收到服务器异常',
       message: err,
       duration: 0
     })

@@ -28,7 +28,7 @@ public class UserController {
     @GetMapping("/{userId}")
     public HttpResponse findUserByUserId(@PathVariable Long userId) {
         UserDTO user = userService.findUserById(userId);
-        return user == null ? HttpResponse.notFound("系统无此用户") : HttpResponse.ok(user);
+        return HttpResponse.ok(user);
     }
 
     /**

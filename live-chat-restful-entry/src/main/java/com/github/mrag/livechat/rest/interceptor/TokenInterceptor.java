@@ -68,7 +68,7 @@ public class TokenInterceptor implements HandlerInterceptorWithOrder {
         }
         // 校验payload
         if (payload.checkExpired()) {
-            throw new BusinessException(BusinessException.ErrorType.TOKEN_EXPIRED);
+            throw BusinessException.tokenExpired();
         }
 
         long userId = payload.getUserId();
