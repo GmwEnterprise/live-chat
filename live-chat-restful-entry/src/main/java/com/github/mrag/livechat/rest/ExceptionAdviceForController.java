@@ -54,12 +54,12 @@ public class ExceptionAdviceForController {
      */
     @ExceptionHandler(BusinessException.class)
     public HttpResponse handler(BusinessException e) {
-        switch (e.getErrorType()) {
-            case WITHOUT_TOKEN:
+        switch (e.getCode()) {
+            case BusinessException.WITHOUT_TOKEN:
                 return HttpResponse.withoutToken(e.getMessage());
-            case INCORRECT_PASSWORD:
+            case BusinessException.INCORRECT_PASSWORD:
                 return HttpResponse.incorrectPassword(e.getMessage());
-            case TOKEN_EXPIRED:
+            case BusinessException.TOKEN_EXPIRED:
                 return HttpResponse.tokenExpired(e.getMessage());
             default:
                 return HttpResponse.unknown(e.getMessage());
