@@ -1,0 +1,1 @@
+dubboExceptionFilter=com.github.mrag.livechat.usermsg.DubboExceptionFilter

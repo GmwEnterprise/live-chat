@@ -8,73 +8,62 @@ package com.github.mrag.livechat.common;
 public class BusinessException extends RuntimeException {
 
     public static BusinessException unknown() {
-        return new BusinessException(ErrorType.UNKNOWN);
+        return new BusinessException("unknown exception.").setCode(UNKNOWN);
     }
 
-    public static BusinessException unknown(String errorMsg) {
-        return new BusinessException(ErrorType.UNKNOWN, errorMsg);
+    public static BusinessException unknown(String msg) {
+        return new BusinessException(msg).setCode(UNKNOWN);
     }
 
     public static BusinessException withoutToken() {
-        return new BusinessException(ErrorType.WITHOUT_TOKEN);
+        return new BusinessException("missing token.").setCode(UNKNOWN);
     }
 
-    public static BusinessException withoutToken(String errorMsg) {
-        return new BusinessException(ErrorType.WITHOUT_TOKEN, errorMsg);
+    public static BusinessException withoutToken(String msg) {
+        return new BusinessException(msg).setCode(UNKNOWN);
     }
 
     public static BusinessException tokenExpired() {
-        return new BusinessException(ErrorType.TOKEN_EXPIRED);
+        return new BusinessException("token expired.").setCode(UNKNOWN);
     }
 
-    public static BusinessException tokenExpired(String errorMsg) {
-        return new BusinessException(ErrorType.TOKEN_EXPIRED, errorMsg);
+    public static BusinessException tokenExpired(String msg) {
+        return new BusinessException(msg).setCode(UNKNOWN);
     }
 
     public static BusinessException incorrectPassword() {
-        return new BusinessException(ErrorType.INCORRECT_PASSWORD);
+        return new BusinessException("incorrect password.").setCode(UNKNOWN);
     }
 
-    public static BusinessException incorrectPassword(String errorMsg) {
-        return new BusinessException(ErrorType.INCORRECT_PASSWORD, errorMsg);
+    public static BusinessException incorrectPassword(String msg) {
+        return new BusinessException(msg).setCode(UNKNOWN);
     }
 
-    // 成员
+    public static final int UNKNOWN = 1;
+    public static final int WITHOUT_TOKEN = 2;
+    public static final int TOKEN_EXPIRED = 3;
+    public static final int INCORRECT_PASSWORD = 4;
 
-    public enum ErrorType {
-        INCORRECT_PASSWORD("登陆失败，密码错误"),
-        TOKEN_EXPIRED("登陆信息已失效，请重新登陆"),
-        WITHOUT_TOKEN("访问权限控制"),
-        UNKNOWN("未知系统错误");
+    private int code;
 
-        private final String msg;
-
-        ErrorType(String msg) {
-            this.msg = msg;
-        }
-
-        public String getMsg() {
-            return msg;
-        }
+    public BusinessException() {
     }
 
-    private ErrorType errorType;
-
-    public BusinessException(ErrorType errorType) {
-        super(errorType.msg);
-        this.errorType = errorType;
+    public BusinessException(String message) {
+        super(message);
     }
 
-    public BusinessException(ErrorType errorType, String errorDetail) {
-        super(errorDetail);
-        this.errorType = errorType;
+    public BusinessException(String message, int code) {
+        super(message);
+        this.code = code;
     }
 
-    public ErrorType getErrorType() {
-        return errorType;
+    public int getCode() {
+        return code;
     }
 
-    public void setErrorType(ErrorType errorType) {
-        this.errorType = errorType;
+    public BusinessException setCode(int code) {
+        this.code = code;
+        return this;
     }
 }

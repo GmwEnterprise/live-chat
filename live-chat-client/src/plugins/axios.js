@@ -38,10 +38,8 @@ _axios.interceptors.response.use(
       // ok
       return result
     }
-    console.log('错错错')
-    console.log(result)
     Message({
-      message: result.errorDetail,
+      message: `[${result.message}]:${result.errorDetail}`,
       type: 'warning'
     })
     return Promise.reject(result)

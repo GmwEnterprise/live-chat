@@ -54,39 +54,36 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO save(UserDTO dto) {
+    public String registry(UserDTO dto) {
         User user = Tools.copyProperties(dto, User.class);
-        if (user.getId() == null) {
-            // 注册
-            user.setId(SequenceUtils.nextId(BusinessType.USER_BUSINESS));
-            // 手机号码暂作用户名
-            user.setUsername(user.getPhoneNumber());
-            // 密码加盐加密
-            String[] hashAndSalt = generatePasswordHashWithSalt(user.getUserPassword()).split("::");
-            user.setUserPassword(hashAndSalt[0]);
-            user.setSalt(hashAndSalt[1]);
-            user.setGender(Gender.MEN);
-            user.setAccountStatus(AccountStatus.USING);
+        user.setId(SequenceUtils.nextId(BusinessType.USER_BUSINESS));
+        // 手机号码暂作用户名
+        user.setUsername(user.getPhoneNumber());
+        // 密码加盐加密
+        String[] hashAndSalt = generatePasswordHashWithSalt(user.getUserPassword()).split("::");
+        user.setUserPassword(hashAndSalt[0]);
+        user.setSalt(hashAndSalt[1]);
+        user.setGender(Gender.MEN);
+        user.setAccountStatus(AccountStatus.USING);
 
-            userMapper.insertSelective(user);
-            try {
-                // 注册成功，返回用户信息以及token
-                String token = TokenUtil.generateToken(new TokenPayload(user.getId(), hashAndSalt[0]));
-                return findUserById(user.getId()).setToken(token)
-                        // 不返回敏感信息
-                        .setPhoneNumber(null).setEmail(null).setUserPassword(null).setSalt(null);
-            } catch (Exception e) {
-                log.error(e.getMessage(), e);
-                throw BusinessException.unknown();
-            }
-        } else {
-            userMapper.updateByPrimaryKeySelective(user);
-            return findUserById(user.getId());
+        userMapper.insertSelective(user);
+        try {
+            // 注册成功，返回用户信息以及token
+            return TokenUtil.generateToken(new TokenPayload(user.getId(), hashAndSalt[0]));
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            throw BusinessException.unknown();
         }
     }
 
     @Override
-    public UserDTO login(String phone, String password) {
+    public void modify(UserDTO dto) {
+        User record = Tools.copyProperties(dto, User.class);
+        userMapper.updateByPrimaryKeySelective(record);
+    }
+
+    @Override
+    public String login(String phone, String password) {
         // 获取用户信息
         User user = userMapper.selectByPhoneNumber(phone);
         String realHash = user.getUserPassword();
@@ -96,8 +93,7 @@ public class UserServiceImpl implements UserService {
         if (checkPassword(realHash, salt, password)) {
             // 密码正确，登陆成功，返回用户信息以及token
             try {
-                String token = TokenUtil.generateToken(new TokenPayload(user.getId(), realHash));
-                return Tools.copyProperties(user, UserDTO.class).setToken(token);
+                return TokenUtil.generateToken(new TokenPayload(user.getId(), realHash));
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
                 throw BusinessException.unknown();
