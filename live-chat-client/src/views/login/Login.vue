@@ -25,7 +25,7 @@
 
 <script>
 import Encrypt from '@/assets/js/encryption'
-import VuexService from '@/services/vuex.service'
+// import VuexService from '@/services/vuex.service'
 export default {
   name: 'Login',
   data() {
@@ -106,33 +106,38 @@ export default {
     },
 
     handleLoginResult(result) {
-      const token = result.body.token
-      const user = {
-        id: result.body.id,
-        chatNo: result.body.chatNo,
-        username: result.body.username,
-        phoneNumber: result.body.phoneNumber,
-        email: result.body.email,
-        gender: result.body.gender,
-        birthday: result.body.birthday,
-        signature: result.body.signature,
-        company: result.body.company,
-        personalDescription: result.body.personalDescription,
-        userPassword: result.body.userPassword,
-        bloodGroup: result.body.bloodGroup,
-        occupation: result.body.occupation,
-        location: result.body.location,
-        hometown: result.body.hometown,
-        accountStatus: result.body.accountStatus,
-      }
-      console.log(token)
-      console.log(user)
+      // const token = result.body.token
+      // const user = {
+      //   id: result.body.id,
+      //   chatNo: result.body.chatNo,
+      //   username: result.body.username,
+      //   phoneNumber: result.body.phoneNumber,
+      //   email: result.body.email,
+      //   gender: result.body.gender,
+      //   birthday: result.body.birthday,
+      //   signature: result.body.signature,
+      //   company: result.body.company,
+      //   personalDescription: result.body.personalDescription,
+      //   userPassword: result.body.userPassword,
+      //   bloodGroup: result.body.bloodGroup,
+      //   occupation: result.body.occupation,
+      //   location: result.body.location,
+      //   hometown: result.body.hometown,
+      //   accountStatus: result.body.accountStatus,
+      // }
+      // console.log(token)
+      // console.log(user)
 
-      // 保存user信息和token
-      VuexService.saveUser(this.$store, {
-        token,
-        user,
-      })
+      // // 保存user信息和token
+      // VuexService.saveUser(this.$store, {
+      //   token,
+      //   user,
+      // })
+
+      const token = result.body
+
+      // 保存token
+      sessionStorage.setItem('token', token)
 
       // 登录成功 跳转App.vue
       this.$router.push('/')

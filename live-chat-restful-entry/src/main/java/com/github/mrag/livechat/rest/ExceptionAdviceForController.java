@@ -21,7 +21,6 @@ public class ExceptionAdviceForController {
 
     @ExceptionHandler(RuntimeException.class)
     public HttpResponse handler(RuntimeException e) {
-        // TODO 查看dubbo抛出的异常
         e.printStackTrace();
         return HttpResponse.unknown(e.getMessage());
     }

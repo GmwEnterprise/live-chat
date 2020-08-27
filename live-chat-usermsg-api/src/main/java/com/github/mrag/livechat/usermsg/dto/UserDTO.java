@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
  * @author Gmw
  */
 public class UserDTO implements Serializable {
-    private String token;
+
     // ###### 以下为 entity.User原有字段
 
     private Long id;
@@ -67,15 +67,6 @@ public class UserDTO implements Serializable {
     private AccountStatus accountStatus;
 
     private static final long serialVersionUID = 1L;
-
-    public String getToken() {
-        return token;
-    }
-
-    public UserDTO setToken(String token) {
-        this.token = token;
-        return this;
-    }
 
     public Long getId() {
         return id;
@@ -233,8 +224,7 @@ public class UserDTO implements Serializable {
     @Override
     public String toString() {
         return "UserDTO{" +
-                "token='" + token + '\'' +
-                ", id=" + id +
+                "id=" + id +
                 ", chatNo='" + chatNo + '\'' +
                 ", username='" + username + '\'' +
                 ", gender=" + gender +

@@ -24,7 +24,7 @@ import java.lang.reflect.Method;
  */
 @Activate(group = CommonConstants.PROVIDER)
 public class DubboExceptionFilter implements Filter, Filter.Listener {
-    private Logger log = LoggerFactory.getLogger(org.apache.dubbo.rpc.filter.ExceptionFilter.class);
+    private Logger log = LoggerFactory.getLogger(DubboExceptionFilter.class);
 
     @Override
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
@@ -68,7 +68,7 @@ public class DubboExceptionFilter implements Filter, Filter.Listener {
 
                 // 我的自定义异常
                 if (className.equals("com.github.mrag.livechat.common.BusinessException")) {
-                    log.error(exception);
+                    log.info("Dubbo忽略自定义异常");
                     return;
                 }
 

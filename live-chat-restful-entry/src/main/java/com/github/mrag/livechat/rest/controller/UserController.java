@@ -48,25 +48,25 @@ public class UserController {
      * 注册新用户信息
      *
      * @param dto 新用户信息
-     * @return 注册成功后的信息
+     * @return token
      */
     @PostMapping
     @OpenApi
     public HttpResponse registry(@RequestBody @Valid UserDTO dto) {
-        UserDTO afterSave = userService.save(dto);
-        return HttpResponse.ok(afterSave);
+        String token = userService.registry(dto);
+        return HttpResponse.ok(token);
     }
 
     /**
      * 登录
      *
      * @param dto .phone=手机号，.password=密码
-     * @return 登录成功返回用户信息以及token
+     * @return token
      */
     @PostMapping("/login")
     @OpenApi
     public HttpResponse testDTO(@RequestBody @Valid UserDTO dto) {
-        UserDTO result = userService.login(dto.getPhoneNumber(), dto.getUserPassword());
-        return HttpResponse.ok(result);
+        String token = userService.login(dto.getPhoneNumber(), dto.getUserPassword());
+        return HttpResponse.ok(token);
     }
 }

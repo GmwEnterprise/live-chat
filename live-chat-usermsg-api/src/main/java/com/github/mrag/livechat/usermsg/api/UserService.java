@@ -30,16 +30,23 @@ public interface UserService {
      * @param dto 用户信息
      * @return 更新后的信息
      */
-    UserDTO save(UserDTO dto);
+    String registry(UserDTO dto);
+
+    /**
+     * 修改用户信息
+     *
+     * @param dto 用户信息
+     */
+    void modify(UserDTO dto);
 
     /**
      * 登陆
      *
      * @param phone    手机号码
      * @param password 密码
-     * @return 登陆成功则返回用户信息；失败则抛异常
+     * @return 登陆成功则返回token；失败则抛异常
      */
-    UserDTO login(String phone, String password);
+    String login(String phone, String password);
 
     /**
      * 检查数据库中是否有这个手机号的账户存在，返回布尔值
