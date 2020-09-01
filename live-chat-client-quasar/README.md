@@ -1,4 +1,4 @@
-# LiveChatApp (live-chat-quasar-client)
+# LiveChatApp (live-chat-client-quasar)
 
 A Quasar Framework app
 

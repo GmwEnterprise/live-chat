@@ -1,5 +1,5 @@
-import Vue from 'vue';
-import axios from 'axios';
+import Vue from "vue";
+import axios from "axios";
 
 const config = {
   // baseURL: process.env.baseURL || process.env.apiUrl || ""
@@ -30,19 +30,22 @@ function interceptRespOnRejected(err) {
 }
 
 axios.interceptors.request.use(interceptReqOnFulfilled, interceptReqOnRejected);
-axios.interceptors.response.use(interceptRespOnFulfilled, interceptRespOnRejected);
+axios.interceptors.response.use(
+  interceptRespOnFulfilled,
+  interceptRespOnRejected
+);
 
 Object.defineProperties(Vue.prototype, {
   axios: {
     get() {
       return axiosInst;
-    },
+    }
   },
   $axios: {
     get() {
       return axiosInst;
-    },
-  },
+    }
+  }
 });
 
 export default { axiosInst };

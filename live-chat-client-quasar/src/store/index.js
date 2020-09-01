@@ -1,9 +1,9 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import Vue from 'vue'
+import Vuex from 'vuex'
 
 // import example from './module-example'
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
 /*
  * If not building with SSR mode, you can
@@ -22,9 +22,8 @@ export default function (/* { ssrContext } */) {
 
     // enable strict mode (adds overhead!)
     // for dev mode only
-    // 在开发模式中启动严格模式，以保证state只能由mutations发起改变
-    strict: process.env.DEV,
-  });
+    strict: process.env.DEV
+  })
 
-  return Store;
+  return Store
 }

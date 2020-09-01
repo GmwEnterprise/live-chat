@@ -1,5 +1,5 @@
 {
-  "name": "live-chat-quasar-client",
+  "name": "live-chat-client-quasar",
   "version": "0.0.1",
   "description": "A Quasar Framework app",
   "productName": "LiveChatApp",
@@ -23,9 +23,8 @@
     "@quasar/app": "^2.0.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^6.8.0",
-    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.9.0",
     "eslint-loader": "^3.0.3",
-    "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-vue": "^6.1.2"
   },
   "browserslist": [
