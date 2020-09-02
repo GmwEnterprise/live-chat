@@ -1,10 +1,9 @@
 <template>
-  <div id="q-app">
-    <router-view />
-  </div>
+  <div>empty content</div>
 </template>
+
 <script>
 export default {
-  name: "App"
+  name: "Empty"
 };
 </script>
