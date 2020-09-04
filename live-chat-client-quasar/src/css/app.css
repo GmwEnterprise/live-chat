@@ -1,1 +1,14 @@
 /* app global css */
+.hover-cursor-pointer:hover {
+  cursor: pointer;
+}
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.flex-start {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}

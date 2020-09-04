@@ -1,7 +1,25 @@
 const routes = [
   {
     path: "/",
-    component: () => import("layouts/MainLayout.vue")
+    redirect: "/main"
+  },
+  {
+    path: "/main",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "chat",
+        component: () => import("pages/Chat.vue")
+      },
+      {
+        path: "friends",
+        component: () => import("pages/Friends.vue")
+      },
+      {
+        path: "moments",
+        component: () => import("pages/Moments.vue")
+      }
+    ]
   },
 
   // Always leave this as last one,
