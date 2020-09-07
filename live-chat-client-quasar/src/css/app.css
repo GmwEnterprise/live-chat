@@ -12,3 +12,12 @@
   justify-content: flex-start;
   align-items: center;
 }
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+}
+.text-over {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

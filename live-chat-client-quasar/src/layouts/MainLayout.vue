@@ -11,10 +11,12 @@
       </span>
       <!-- 跳转到聊天列表 -->
       <span
-        @click="sidebarChange('/chat')"
+        @click="sidebarChange('/sessions')"
         :class="
           `main-layout-sidebar-icon-wrapper hover-cursor-pointer ${
-            sidebarActive === '/chat' ? 'sidebar-active' : 'sidebar-inactive'
+            sidebarActive === '/sessions'
+              ? 'sidebar-active'
+              : 'sidebar-inactive'
           }`
         "
         ><q-icon
@@ -108,7 +110,11 @@ export default {
     this.sidebarActive = currentRoute === "/main" ? null : currentRoute;
   },
   methods: {
+    searchBlur() {
+      this.$store.commit("status/inputBlur");
+    },
     sidebarChange(path) {
+      this.searchBlur();
       this.sidebarActive = path;
       const link = "/main" + path;
       if (link !== this.$route.path) {
