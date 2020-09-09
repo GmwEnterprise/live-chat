@@ -1,5 +1,27 @@
 <template>
-  <div :class="`scroll-item flex-between ${hoverClass}`">
+  <div
+    @click="emitClick"
+    :class="`scroll-item hover-cursor-context-menu flex-between ${hoverClass}`"
+  >
+    <q-menu context-menu>
+      <q-list dense style="min-width: 130px; font-size: .8em;">
+        <q-item clickable v-close-popup>
+          <q-item-section>{{ topping ? "取消置顶" : "置顶" }}</q-item-section>
+        </q-item>
+        <q-item clickable v-close-popup>
+          <q-item-section>{{
+            mute ? "开启新消息提醒" : "消息免打扰"
+          }}</q-item-section>
+        </q-item>
+        <q-item clickable v-close-popup>
+          <q-item-section>修改备注</q-item-section>
+        </q-item>
+        <q-separator />
+        <q-item clickable v-close-popup>
+          <q-item-section>删除聊天</q-item-section>
+        </q-item>
+      </q-list>
+    </q-menu>
     <div class="scroll-item-avatar flex-center">
       <q-avatar square size="38px">
         <q-badge v-show="unreadCount > 0" color="red" floating>{{
@@ -46,6 +68,7 @@ export default {
       required: false,
       default: 0
     },
+    sessionId: String,
     name: String,
     detail: {
       type: String,
@@ -78,6 +101,11 @@ export default {
         // 未激活也未置顶
         return "topping-active-neither";
       }
+    }
+  },
+  methods: {
+    emitClick() {
+      this.$emit("choose", this.sessionId);
     }
   }
 };

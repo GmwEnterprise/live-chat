@@ -11,7 +11,7 @@
       </span>
       <!-- 跳转到聊天列表 -->
       <span
-        @click="sidebarChange('/sessions')"
+        @click="clickSessions()"
         :class="
           `main-layout-sidebar-icon-wrapper hover-cursor-pointer ${
             sidebarActive === '/sessions'
@@ -19,14 +19,28 @@
               : 'sidebar-inactive'
           }`
         "
-        ><q-icon
+      >
+        <q-menu context-menu>
+          <q-list dense style="min-width: 130px; font-size: .8em;">
+            <q-item clickable v-close-popup>
+              <q-item-section>清除未读</q-item-section>
+            </q-item>
+            <q-item clickable v-close-popup>
+              <q-item-section>关闭所有会话</q-item-section>
+            </q-item>
+          </q-list>
+        </q-menu>
+        <q-icon
           name="fas fa-comments"
           class="main-layout-sidebar-icon"
-        ></q-icon
-      ></span>
+        ></q-icon>
+        <q-badge v-show="unread" color="red" floating>{{
+          unread
+        }}</q-badge></span
+      >
       <!-- 跳转到朋友列表 -->
       <span
-        @click="sidebarChange('/friends')"
+        @click="clickFriends()"
         :class="
           `main-layout-sidebar-icon-wrapper hover-cursor-pointer ${
             sidebarActive === '/friends' ? 'sidebar-active' : 'sidebar-inactive'
@@ -36,7 +50,10 @@
           name="fas fa-user-friends"
           class="main-layout-sidebar-icon"
         ></q-icon
-      ></span>
+        ><q-badge v-show="newFriendCount" color="red" floating>{{
+          newFriendCount
+        }}</q-badge></span
+      >
       <!-- 朋友圈 -->
       <span
         @click="sidebarChange('/moments')"
@@ -102,22 +119,54 @@ export default {
       qmenuTimer: null
     };
   },
+  computed: {
+    unread() {
+      return 50;
+    },
+    newFriendCount() {
+      return 2;
+    },
+    currentRoutePath() {
+      return this.$route.fullPath;
+    }
+  },
+  watch: {
+    currentRoutePath() {
+      this.changeSidebarActive();
+    }
+  },
+  created() {
+    console.debug("MainLayout.vue created");
+  },
   mounted() {
-    const currentRoute = this.$route.path.substring(
-      this.$route.path.lastIndexOf("/")
-    );
-    console.log(currentRoute);
-    this.sidebarActive = currentRoute === "/main" ? null : currentRoute;
+    console.debug("MainLayout.vue mounted");
+    this.changeSidebarActive();
   },
   methods: {
+    changeSidebarActive() {
+      const fullPath = this.$route.fullPath;
+      if (fullPath.startsWith("/main/friends")) {
+        this.sidebarActive = "/friends";
+      } else if (fullPath.startsWith("/main/moments")) {
+        this.sidebarActive = "/moments";
+      } else if (fullPath.startsWith("/main/sessions")) {
+        this.sidebarActive = "/sessions";
+      }
+    },
     searchBlur() {
       this.$store.commit("status/inputBlur");
+    },
+    clickSessions() {
+      this.sidebarChange("/sessions");
+    },
+    clickFriends() {
+      this.sidebarChange("/friends");
     },
     sidebarChange(path) {
       this.searchBlur();
       this.sidebarActive = path;
       const link = "/main" + path;
-      if (link !== this.$route.path) {
+      if (!this.$route.fullPath.startsWith(link)) {
         console.debug(this.$route);
         this.$router.push(link).catch(err => {
           console.log("异常");
@@ -134,7 +183,7 @@ export default {
         clearTimeout(this.qmenuTimer);
       }
       this.qmenuTimer = setTimeout(() => {
-        // 根据dialogItem打开对应dialog
+        // TODO 根据dialogItem打开对应dialog
         switch (dialogItem) {
           case this.dialog.me:
             console.log("me");
@@ -158,6 +207,9 @@ export default {
 <style scoped>
 #main-layout {
   height: 100vh;
+  min-height: 600px;
+  min-width: 800px;
+  flex-wrap: nowrap;
 }
 #main-layout-sidebar {
   width: 50px;
@@ -170,11 +222,12 @@ export default {
   margin-top: 10px;
 }
 #main-layout-contentarea {
-  width: calc(100vw - 50px);
+  width: calc(100% - 50px);
   height: 100%;
   background-color: white;
 }
 .main-layout-sidebar-icon-wrapper {
+  position: relative;
   margin: 20px 10px 0;
   width: 30px;
   height: 30px;

@@ -2,6 +2,9 @@
 .hover-cursor-pointer:hover {
   cursor: pointer;
 }
+.hover-cursor-context-menu:hover {
+  cursor: context-menu;
+}
 .flex-center {
   display: flex;
   justify-content: center;

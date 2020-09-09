@@ -3,7 +3,9 @@
     <div class="scroll-item-group-title">
       更多
     </div>
-    <div class="scroll-item flex-between search-list-hover">
+    <div
+      class="scroll-item hover-cursor-context-menu flex-between search-list-hover"
+    >
       <div class="scroll-item-avatar flex-center">
         <q-avatar
           square
@@ -27,7 +29,9 @@
         </div>
       </div>
     </div>
-    <div class="scroll-item flex-between search-list-hover">
+    <div
+      class="scroll-item hover-cursor-context-menu flex-between search-list-hover"
+    >
       <div class="scroll-item-avatar flex-center">
         <q-avatar
           square

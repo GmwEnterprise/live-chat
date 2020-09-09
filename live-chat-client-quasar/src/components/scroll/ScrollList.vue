@@ -6,7 +6,7 @@
     >
       <search-bar></search-bar>
     </div>
-    <q-scroll-area style="height: calc(100vh - 60px); width: 100%;">
+    <q-scroll-area style="height: calc(100% - 60px); width: 100%;">
       <slot>
         <div
           class="flex-center"
@@ -38,7 +38,7 @@ export default {
 
 <style scoped>
 .scroll-list-wrapper {
-  height: 100vh;
+  height: 100%;
   width: 100%;
   background-color: rgb(234 234 234 / 1);
 }
