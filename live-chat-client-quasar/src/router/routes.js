@@ -8,12 +8,32 @@ const routes = [
     component: () => import("layouts/MainLayout.vue"),
     children: [
       {
-        path: "chat",
-        component: () => import("pages/Chat.vue")
+        path: "sessions",
+        component: () => import("pages/Sessions.vue"),
+        children: [
+          {
+            path: ":sessionId",
+            component: () => import("components/sessions/SessionDialog.vue")
+          }
+        ]
       },
       {
         path: "friends",
-        component: () => import("pages/Friends.vue")
+        component: () => import("pages/Friends.vue"),
+        children: [
+          {
+            path: "newFriends",
+            component: () => import("components/friends/NewFriends.vue")
+          },
+          {
+            path: "chatGroups/:groupId",
+            component: () => import("components/friends/ChatGroup.vue")
+          },
+          {
+            path: ":userId",
+            component: () => import("components/friends/FriendIdCard.vue")
+          }
+        ]
       },
       {
         path: "moments",
