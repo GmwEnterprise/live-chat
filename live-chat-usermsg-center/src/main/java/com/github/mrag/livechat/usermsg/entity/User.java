@@ -17,6 +17,8 @@ public class User implements Serializable {
 
     private String username;
 
+    private String avatarId;
+
     private Gender gender;
 
     private LocalDateTime birthday;
@@ -181,5 +183,14 @@ public class User implements Serializable {
 
     public void setAccountStatus(AccountStatus accountStatus) {
         this.accountStatus = accountStatus;
+    }
+
+    public String getAvatarId() {
+        return avatarId;
+    }
+
+    public User setAvatarId(String avatarId) {
+        this.avatarId = avatarId;
+        return this;
     }
 }

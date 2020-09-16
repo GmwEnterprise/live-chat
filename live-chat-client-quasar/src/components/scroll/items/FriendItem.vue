@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import friendType from "assets/js/constants/friends.type";
+import enumType from "assets/js/constants/type";
 
 export default {
   name: "ScrollItemIdCard",
@@ -46,7 +46,7 @@ export default {
     type: {
       type: Number,
       required: false,
-      default: friendType.FRIEND
+      default: enumType.friendType.FRIEND
     },
     name: String,
     icon: String

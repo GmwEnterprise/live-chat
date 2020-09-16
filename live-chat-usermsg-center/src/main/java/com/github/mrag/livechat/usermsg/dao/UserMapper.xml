@@ -5,6 +5,7 @@
     <id column="id" jdbcType="BIGINT" property="id"/>
     <result column="chat_no" jdbcType="VARCHAR" property="chatNo"/>
     <result column="username" jdbcType="VARCHAR" property="username"/>
+    <result column="avatar_id" jdbcType="VARCHAR" property="avatarId"/>
     <result column="gender" jdbcType="TINYINT" property="gender"
             typeHandler="com.github.mrag.livechat.common.constant.typehandler.GenderTypeHandler"/>
     <result column="birthday" jdbcType="TIMESTAMP" property="birthday"/>
@@ -24,7 +25,7 @@
             typeHandler="com.github.mrag.livechat.common.constant.typehandler.AccountStatusTypeHandler"/>
   </resultMap>
   <sql id="Base_Column_List">
-    id, chat_no, username, gender, birthday, signature, company, personal_description, 
+    id, chat_no, username, avatar_id, gender, birthday, signature, company, personal_description,
     user_password, salt, phone_number, email, blood_group, occupation, location, hometown, 
     account_status
   </sql>
@@ -60,13 +61,14 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.github.mrag.livechat.usermsg.entity.User">
-    insert into user (id, chat_no, username,
+    insert into user (id, chat_no, username, avatar_id,
                       gender, birthday, signature,
                       company, personal_description, user_password,
                       salt, phone_number, email,
                       blood_group, occupation, location,
                       hometown, account_status)
     values (#{id,jdbcType=BIGINT}, #{chatNo,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR},
+            #{avatarId,jdbcType=VARCHAR},
             #{gender,jdbcType=TINYINT,typeHandler=com.github.mrag.livechat.common.constant.typehandler.GenderTypeHandler},
             #{birthday,jdbcType=TIMESTAMP}, #{signature,jdbcType=VARCHAR},
             #{company,jdbcType=VARCHAR}, #{personalDescription,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR},
@@ -86,6 +88,9 @@
       </if>
       <if test="username != null">
         username,
+      </if>
+      <if test="avatarId != null">
+        avatar_id,
       </if>
       <if test="gender != null">
         gender,
@@ -140,6 +145,9 @@
       <if test="username != null">
         #{username,jdbcType=VARCHAR},
       </if>
+      <if test="avatarId != null">
+        #{avatarId,jdbcType=VARCHAR},
+      </if>
       <if test="gender != null">
         #{gender,jdbcType=TINYINT,typeHandler=com.github.mrag.livechat.common.constant.typehandler.GenderTypeHandler},
       </if>
@@ -193,6 +201,9 @@
       <if test="username != null">
         username = #{username,jdbcType=VARCHAR},
       </if>
+      <if test="avatarId != null">
+        avatar_id = #{avatarId,jdbcType=VARCHAR},
+      </if>
       <if test="gender != null">
         gender =
         #{gender,jdbcType=TINYINT,typeHandler=com.github.mrag.livechat.common.constant.typehandler.GenderTypeHandler},
@@ -245,6 +256,7 @@
     update user
     set chat_no              = #{chatNo,jdbcType=VARCHAR},
         username             = #{username,jdbcType=VARCHAR},
+        avatar_id            = #{avatarId,jdbcType=VARCHAR},
         gender               = #{gender,jdbcType=TINYINT,typeHandler=com.github.mrag.livechat.common.constant.typehandler.GenderTypeHandler},
         birthday             = #{birthday,jdbcType=TIMESTAMP},
         signature            = #{signature,jdbcType=VARCHAR},

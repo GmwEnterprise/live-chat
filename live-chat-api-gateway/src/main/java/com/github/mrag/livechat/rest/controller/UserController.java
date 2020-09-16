@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 /**
+ * 用户信息与用户关系接口
+ *
  * @author Gmw
  */
 @RestController
@@ -66,7 +68,8 @@ public class UserController {
     @PostMapping("/login")
     @OpenApi
     public HttpResponse testDTO(@RequestBody @Valid UserDTO dto) {
-        String token = userService.login(dto.getPhoneNumber(), dto.getUserPassword());
-        return HttpResponse.ok(token);
+        String phone = dto.getPhoneNumber(),
+                password = dto.getUserPassword();
+        return HttpResponse.ok(userService.login(phone, password));
     }
 }

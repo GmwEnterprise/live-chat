@@ -23,7 +23,7 @@ public class PasswordValidator implements ConstraintValidator<Password, String> 
             return true;
         }
         String password = Encryption.aesDecrypt(passwordBase64Code, Encryption.AES_KEY);
-        // 暂作简单校验
+        // TODO 暂作简单校验
         return password.length() >= 4;
     }
 }

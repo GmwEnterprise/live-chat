@@ -1,8 +1,6 @@
 <template>
   <div class="chat-group-list" style="height: 100%; width: 100%;">
-    <div class="group-header">
-      {{ `${group.groupName}（${group.members.length}）` }}
-    </div>
+    <my-header :content="`${group.groupName}（${group.members.length}）`" />
     <q-scroll-area
       visible
       style="height: calc(100% - 60px - 100px); width: 100%;"
@@ -13,6 +11,12 @@
           :key="member.id"
           class="group-member"
         >
+          <q-menu :ref="`qmenu-id-card-${member.id}`" :offset="[-30, -75]">
+            <identity-card
+              v-bind="member"
+              @closeMenu="closeIdCard(`qmenu-id-card-${member.id}`)"
+            ></identity-card>
+          </q-menu>
           <div class="avatar-box">
             <q-avatar square size="50px">
               <img v-if="member.avatar" :src="member.avatar" />
@@ -33,6 +37,10 @@
 </template>
 
 <script>
+import enumType from "assets/js/constants/type";
+import IdentityCard from "components/IdentityCard.vue";
+import MyHeader from "components/friends/component/Header.vue";
+
 const group = {
   groupName: "博文视点Java架构成长丛书读者群",
   // groupMemberCount: 145,
@@ -40,17 +48,41 @@ const group = {
     {
       id: "1",
       name: "阿甘",
-      avatar: ""
+      gender: enumType.gender.MALE,
+      avatar: "",
+      detail: {
+        type: enumType.userTypeForMe.MYSELF,
+        backup: null,
+        groupNickname: "懂王",
+        location: "重庆",
+        fromSource: null
+      }
     },
     {
       id: "2",
       name: "阿甘",
-      avatar: ""
+      gender: enumType.gender.MALE,
+      avatar: "",
+      detail: {
+        type: enumType.userTypeForMe.MYSELF,
+        backup: null,
+        groupNickname: "懂王",
+        location: "重庆",
+        fromSource: null
+      }
     },
     {
       id: "3",
       name: "阿甘",
-      avatar: ""
+      gender: enumType.gender.MALE,
+      avatar: "",
+      detail: {
+        type: enumType.userTypeForMe.MYSELF,
+        backup: null,
+        groupNickname: "懂王",
+        location: "重庆",
+        fromSource: null
+      }
     }
   ]
 };
@@ -62,33 +94,22 @@ export default {
       group
     };
   },
+  components: { IdentityCard, MyHeader },
   computed: {
     groupId() {
       return this.$route.params.groupId;
     }
   },
-  created() {
-    for (let i = 5; i < 15; i++) {
-      this.group.members.push({
-        id: `${i}`,
-        name: "阿甘",
-        avatar: ""
-      });
+  methods: {
+    closeIdCard(refName) {
+      console.log(refName);
+      this.$refs[`${refName}`].hide();
     }
   }
 };
 </script>
 
 <style scoped>
-.group-header {
-  border-bottom: 1px solid lightgray;
-  font-size: 20px;
-  line-height: 2.5;
-  padding: 0 20px;
-  padding-top: 10px;
-  box-sizing: border-box;
-  height: 60px;
-}
 .group-members-area {
   display: flex;
   justify-content: flex-start;

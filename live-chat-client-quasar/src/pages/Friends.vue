@@ -40,6 +40,7 @@ import ScrollList from "components/scroll/ScrollList.vue";
 import ScrollListGroup from "components/scroll/ScrollItemGroup.vue";
 
 import friendType from "assets/js/constants/friends.type";
+import enumType from "assets/js/constants/type";
 
 const friends = [
   {
@@ -84,13 +85,13 @@ const chatGroups = [
     items: [
       {
         active: false,
-        type: friendType.CHAT_GROUP,
+        type: enumType.friendType.CHAT_GROUP,
         id: "111111",
         name: "重理工2014级计科系"
       },
       {
         active: false,
-        type: friendType.CHAT_GROUP,
+        type: enumType.friendType.CHAT_GROUP,
         id: "222222",
         name: "共产主义拥护者们"
       }
@@ -115,7 +116,7 @@ export default {
           items: [
             {
               active: false,
-              type: friendType.NEW_FRIEND,
+              type: enumType.friendType.NEW_FRIEND,
               id: "NEW_FRIEND",
               name: "新的朋友",
               icon: "https://cdn.quasar.dev/img/avatar.png" // 应为图标路径
@@ -144,19 +145,19 @@ export default {
   },
   methods: {
     routeToItem(type, itemId) {
-      if (type === friendType.NEW_FRIEND) {
+      if (type === enumType.friendType.NEW_FRIEND) {
         const to = "/main/friends/newFriends";
         if (this.$route.fullPath !== to) {
           this.$router.push(to);
           this.chooseItem(itemId);
         }
-      } else if (type === friendType.CHAT_GROUP) {
+      } else if (type === enumType.friendType.CHAT_GROUP) {
         const to = `/main/friends/chatGroups/${itemId}`;
         if (this.$route.fullPath !== to) {
           this.$router.push(to);
           this.chooseItem(itemId);
         }
-      } else if (type === friendType.FRIEND) {
+      } else if (type === enumType.friendType.FRIEND) {
         const to = `/main/friends/${itemId}`;
         if (this.$route.fullPath !== to) {
           this.$router.push(to);

@@ -60,7 +60,7 @@
 
 <script>
 export default {
-  name: "FriendList" // 好友列表
+  name: "SearchBarList"
 };
 </script>
 

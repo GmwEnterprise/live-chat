@@ -5,6 +5,12 @@
         class="flex-center avatar-wrapper hover-cursor-pointer"
         @click="openDialog(dialog.me)"
       >
+        <q-menu ref="qmenu-id-card" :offset="[-30, -20]">
+          <identity-card
+            v-bind="myMsg"
+            @closeMenu="closeIdCard"
+          ></identity-card>
+        </q-menu>
         <q-avatar size="35px">
           <img src="~assets/avatar-default.png" />
         </q-avatar>
@@ -20,7 +26,7 @@
           }`
         "
       >
-        <q-menu context-menu>
+        <q-menu ref="qmenu-sidebar-btn" context-menu>
           <q-list dense style="min-width: 130px; font-size: .8em;">
             <q-item clickable v-close-popup>
               <q-item-section>清除未读</q-item-section>
@@ -73,7 +79,12 @@
         class="main-layout-sidebar-icon-wrapper hover-cursor-pointer sidebar-inactive"
         style="position: absolute; bottom: 0; margin-bottom: 20px;"
         ><q-icon name="fas fa-cog" class="main-layout-sidebar-icon">
-          <q-menu ref="qmenu" fit anchor="bottom right" self="bottom left">
+          <q-menu
+            ref="qmenu-context-menu"
+            fit
+            anchor="bottom right"
+            self="bottom left"
+          >
             <ul class="menu-ul">
               <li
                 @click="openDialog(dialog.opinion)"
@@ -105,8 +116,14 @@
 </template>
 
 <script>
+import enumType from "assets/js/constants/type";
+import IdentityCard from "components/IdentityCard.vue";
+
 export default {
   name: "MainLayout",
+  components: {
+    IdentityCard
+  },
   data() {
     return {
       sidebarActive: null,
@@ -115,6 +132,19 @@ export default {
         opinion: "opinion", // 意见反馈
         backup: "backup", // 备份
         settings: "settings" // 设置
+      },
+      myMsg: {
+        id: "1",
+        name: "阿甘",
+        gender: enumType.gender.MALE,
+        avatar: "",
+        detail: {
+          type: enumType.userTypeForMe.MYSELF,
+          backup: null,
+          groupNickname: "懂王",
+          location: "重庆",
+          fromSource: null
+        }
       },
       qmenuTimer: null
     };
@@ -143,6 +173,9 @@ export default {
     this.changeSidebarActive();
   },
   methods: {
+    closeIdCard() {
+      this.$refs["qmenu-id-card"].hide();
+    },
     changeSidebarActive() {
       const fullPath = this.$route.fullPath;
       if (fullPath.startsWith("/main/friends")) {
@@ -178,7 +211,7 @@ export default {
       }
     },
     openDialog(dialogItem) {
-      this.$refs.qmenu.hide();
+      this.$refs["qmenu-context-menu"].hide();
       if (this.qmenuTimer != null) {
         clearTimeout(this.qmenuTimer);
       }

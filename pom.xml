@@ -9,7 +9,7 @@
     <module>live-chat-communication-center</module>
     <module>live-chat-usermsg-api</module>
     <module>live-chat-common</module>
-    <module>live-chat-restful-entry</module>
+    <module>live-chat-api-gateway</module>
     <module>live-chat-cache-center</module>
   </modules>
   <groupId>com.github.mrag</groupId>
