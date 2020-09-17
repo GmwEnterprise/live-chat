@@ -29,6 +29,7 @@ function createWindow() {
     width: 1000,
     height: 600,
     useContentSize: true,
+    frame: false, // 取消windows窗口的顶部状态栏
     webPreferences: {
       // Change from /quasar.conf.js > electron > nodeIntegration;
       // More info: https://quasar.dev/quasar-cli/developing-electron-apps/node-integration
