@@ -26,10 +26,15 @@ function createWindow() {
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    width: 1000,
-    height: 600,
+    width: 960,
+    height: 720,
+
+    minWidth: 800, // 限制最小宽高
+    minHeight: 600,
+
+    resizable: true, // 可拖拽右下角调整窗体大小
     useContentSize: true,
-    frame: false, // 取消windows窗口的顶部状态栏
+    frame: false, // 是否显示windows窗口的顶部状态栏
     webPreferences: {
       // Change from /quasar.conf.js > electron > nodeIntegration;
       // More info: https://quasar.dev/quasar-cli/developing-electron-apps/node-integration

@@ -1,8 +1,12 @@
 <template>
   <div id="main-layout" class="full-width row justify-start">
-    <div id="main-layout-sidebar" style="position: relative;">
+    <div
+      id="main-layout-sidebar"
+      class="q-electron-drag"
+      style="position: relative;"
+    >
       <span
-        class="flex-center avatar-wrapper hover-cursor-pointer"
+        class="flex-center avatar-wrapper hover-cursor-pointer q-electron-drag--exception"
         @click="openDialog(dialog.me)"
       >
         <q-menu ref="qmenu-id-card" :offset="[-30, -20]">
@@ -19,7 +23,7 @@
       <span
         @click="clickSessions()"
         :class="
-          `main-layout-sidebar-icon-wrapper hover-cursor-pointer ${
+          `q-electron-drag--exception main-layout-sidebar-icon-wrapper hover-cursor-pointer ${
             sidebarActive === '/sessions'
               ? 'sidebar-active'
               : 'sidebar-inactive'
@@ -48,7 +52,7 @@
       <span
         @click="clickFriends()"
         :class="
-          `main-layout-sidebar-icon-wrapper hover-cursor-pointer ${
+          `q-electron-drag--exception main-layout-sidebar-icon-wrapper hover-cursor-pointer ${
             sidebarActive === '/friends' ? 'sidebar-active' : 'sidebar-inactive'
           }`
         "
@@ -64,7 +68,7 @@
       <span
         @click="sidebarChange('/moments')"
         :class="
-          `main-layout-sidebar-icon-wrapper hover-cursor-pointer ${
+          `q-electron-drag--exception main-layout-sidebar-icon-wrapper hover-cursor-pointer ${
             sidebarActive === '/moments' ? 'sidebar-active' : 'sidebar-inactive'
           }`
         "
@@ -76,7 +80,7 @@
 
       <!-- 菜单 置于最底 -->
       <span
-        class="main-layout-sidebar-icon-wrapper hover-cursor-pointer sidebar-inactive"
+        class="q-electron-drag--exception main-layout-sidebar-icon-wrapper hover-cursor-pointer sidebar-inactive"
         style="position: absolute; bottom: 0; margin-bottom: 20px;"
         ><q-icon name="fas fa-cog" class="main-layout-sidebar-icon">
           <q-menu
@@ -111,6 +115,29 @@
     </div>
     <div id="main-layout-contentarea">
       <router-view></router-view>
+    </div>
+    <div v-if="isElectron" class="electron-mini-max-close">
+      <q-btn
+        size="7px"
+        dense
+        flat
+        icon="far fa-window-minimize"
+        @click="minimize"
+      />
+      <q-btn
+        size="7px"
+        dense
+        flat
+        icon="far fa-window-maximize"
+        @click="maximize"
+      />
+      <q-btn
+        size="7px"
+        dense
+        flat
+        icon="far fa-window-close"
+        @click="closeApp"
+      />
     </div>
   </div>
 </template>
@@ -150,6 +177,9 @@ export default {
     };
   },
   computed: {
+    isElectron() {
+      return process.env.MODE === "electron";
+    },
     unread() {
       return 50;
     },
@@ -232,12 +262,42 @@ export default {
             break;
         }
       }, 200);
+    },
+    minimize() {
+      if (process.env.MODE === "electron") {
+        this.$q.electron.remote.BrowserWindow.getFocusedWindow().minimize();
+      }
+    },
+    maximize() {
+      if (process.env.MODE === "electron") {
+        const win = this.$q.electron.remote.BrowserWindow.getFocusedWindow();
+
+        if (win.isMaximized()) {
+          win.unmaximize();
+        } else {
+          win.maximize();
+        }
+      }
+    },
+    closeApp() {
+      if (process.env.MODE === "electron") {
+        this.$q.electron.remote.BrowserWindow.getFocusedWindow().close();
+      }
     }
   }
 };
 </script>
 
 <style scoped>
+.electron-mini-max-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 25px;
+  width: 75px;
+  display: flex;
+  justify-content: space-evenly;
+}
 #main-layout {
   height: 100vh;
   min-height: 600px;
