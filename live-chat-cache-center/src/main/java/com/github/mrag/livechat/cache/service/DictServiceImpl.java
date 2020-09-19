@@ -3,11 +3,13 @@ package com.github.mrag.livechat.cache.service;
 import com.github.mrag.livechat.cache.dao.SystemDictMapper;
 import com.github.mrag.livechat.common.SystemDict;
 import com.github.mrag.livechat.common.cache.api.DictService;
+import com.github.mrag.livechat.common.cache.vo.City;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -57,5 +59,33 @@ public class DictServiceImpl implements DictService {
     @Override
     public void remove(Integer kvId) {
         dictMapper.deleteByPrimaryKey(kvId);
+    }
+
+    @Override
+    public List<City> allCities() {
+        List<City> cities = new ArrayList<>();
+        List<SystemDict> dictList = findByKey("city");
+        dictList.forEach(item -> {
+            if (item.getDependencyOnId() == 0) {
+                City city = new City().setCityId(item.getValueNo())
+                        .setCityName(item.getValueDesc())
+                        .setLevelId(item.getValueMoreDetail());
+                city.setSubCities(recursiveCities(dictList, city.getCityId()));
+                cities.add(city);
+            }
+        });
+        return cities;
+    }
+
+    private List<City> recursiveCities(List<SystemDict> sources, int fid) {
+        List<City> cities = new ArrayList<>();
+        sources.stream().filter(dict -> dict.getDependencyOnId() == fid).forEach(item -> {
+            City city = new City().setCityId(item.getValueNo())
+                    .setCityName(item.getValueDesc())
+                    .setLevelId(item.getValueMoreDetail());
+            city.setSubCities(recursiveCities(sources, city.getCityId()));
+            cities.add(city);
+        });
+        return cities;
     }
 }

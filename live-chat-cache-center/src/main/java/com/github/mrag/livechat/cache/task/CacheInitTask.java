@@ -1,3 +1,5 @@
+// 弃用   觉得枚举就不需要写进数据库好了
+/*
 package com.github.mrag.livechat.cache.task;
 
 import com.github.mrag.livechat.common.SystemDict;
@@ -14,9 +16,11 @@ import java.io.File;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
+*/
 /**
  * @author Gmw
- */
+ *//*
+
 @Component
 public class CacheInitTask {
     private static final Logger log = LoggerFactory.getLogger(CacheInitTask.class);
@@ -57,9 +61,6 @@ public class CacheInitTask {
                         dictService.save(dictItem);
                     }
                 }
-                // else {
-                //     System.out.println("no : " + enumClass);
-                // }
             } catch (Exception e) {
                 log.error("Error[{}]: {}", e.getClass(), e.getMessage());
             }
@@ -67,3 +68,4 @@ public class CacheInitTask {
         });
     }
 }
+*/

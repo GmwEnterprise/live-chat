@@ -34,7 +34,7 @@
               label="忽略"
               outline
               size="13px"
-              style="color: #999;"
+              style="color: #999; margin-left: 1  0px;"
             ></q-btn>
           </div>
         </div>
@@ -115,9 +115,9 @@ export default {
   justify-content: space-between;
 }
 .req-btn-group {
-  width: 30%;
+  width: 40%;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   height: 34px;
 }
 </style>

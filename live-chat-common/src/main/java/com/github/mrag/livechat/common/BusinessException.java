@@ -16,27 +16,27 @@ public class BusinessException extends RuntimeException {
     }
 
     public static BusinessException withoutToken() {
-        return new BusinessException("missing token.").setCode(UNKNOWN);
+        return new BusinessException("missing token.").setCode(WITHOUT_TOKEN);
     }
 
     public static BusinessException withoutToken(String msg) {
-        return new BusinessException(msg).setCode(UNKNOWN);
+        return new BusinessException(msg).setCode(WITHOUT_TOKEN);
     }
 
     public static BusinessException tokenExpired() {
-        return new BusinessException("token expired.").setCode(UNKNOWN);
+        return new BusinessException("token expired.").setCode(TOKEN_EXPIRED);
     }
 
     public static BusinessException tokenExpired(String msg) {
-        return new BusinessException(msg).setCode(UNKNOWN);
+        return new BusinessException(msg).setCode(TOKEN_EXPIRED);
     }
 
     public static BusinessException incorrectPassword() {
-        return new BusinessException("incorrect password.").setCode(UNKNOWN);
+        return new BusinessException("incorrect password.").setCode(INCORRECT_PASSWORD);
     }
 
     public static BusinessException incorrectPassword(String msg) {
-        return new BusinessException(msg).setCode(UNKNOWN);
+        return new BusinessException(msg).setCode(INCORRECT_PASSWORD);
     }
 
     public static final int UNKNOWN = 1;

@@ -1,6 +1,7 @@
 package com.github.mrag.livechat.common.cache.api;
 
 import com.github.mrag.livechat.common.SystemDict;
+import com.github.mrag.livechat.common.cache.vo.City;
 
 import java.util.List;
 
@@ -15,4 +16,6 @@ public interface DictService {
     void save(SystemDict dictItem);
 
     void remove(Integer kvId);
+
+    List<City> allCities();
 }

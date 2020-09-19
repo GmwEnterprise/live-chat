@@ -1,6 +1,6 @@
 package com.github.mrag.livechat.usermsg.api;
 
-import com.github.mrag.livechat.usermsg.dto.UserDTO;
+import com.github.mrag.livechat.usermsg.vo.UserDTO;
 
 /**
  * 用户服务提供

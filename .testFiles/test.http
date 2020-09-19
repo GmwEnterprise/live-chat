@@ -24,3 +24,13 @@ Content-Type: application/json
   "gender": 2,
   "accountStatus": 2
 }
+
+### 获取城市缓存
+
+GET http://localhost:4200/api/v1/cache/dict/cities
+
+### 开放API数据获取
+
+### 获取省级行政区 from https://www.juhe.cn
+
+GET http://apis.juhe.cn/xzqh/query?fid=150000&key=6b7fe58a1d86199ad4c25e7fad547e8a

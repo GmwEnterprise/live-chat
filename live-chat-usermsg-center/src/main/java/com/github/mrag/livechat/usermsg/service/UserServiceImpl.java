@@ -12,7 +12,7 @@ import com.github.mrag.livechat.common.utils.SequenceUtils;
 import com.github.mrag.livechat.common.utils.Tools;
 import com.github.mrag.livechat.usermsg.api.UserService;
 import com.github.mrag.livechat.usermsg.dao.UserMapper;
-import com.github.mrag.livechat.usermsg.dto.UserDTO;
+import com.github.mrag.livechat.usermsg.vo.UserDTO;
 import com.github.mrag.livechat.usermsg.entity.User;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;

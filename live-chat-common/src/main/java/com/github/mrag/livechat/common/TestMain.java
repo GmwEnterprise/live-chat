@@ -1,7 +1,5 @@
 package com.github.mrag.livechat.common;
 
-import java.util.Date;
-
 /**
  * @author Gmw
  */

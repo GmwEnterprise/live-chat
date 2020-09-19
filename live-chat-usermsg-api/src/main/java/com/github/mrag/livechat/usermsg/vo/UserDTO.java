@@ -1,4 +1,4 @@
-package com.github.mrag.livechat.usermsg.dto;
+package com.github.mrag.livechat.usermsg.vo;
 
 import com.github.mrag.livechat.common.constant.RegExp;
 import com.github.mrag.livechat.common.constant.enums.AccountStatus;

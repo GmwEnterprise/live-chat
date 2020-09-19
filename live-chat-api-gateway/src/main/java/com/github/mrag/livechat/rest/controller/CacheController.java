@@ -2,6 +2,7 @@ package com.github.mrag.livechat.rest.controller;
 
 import com.github.mrag.livechat.common.SystemDict;
 import com.github.mrag.livechat.common.cache.api.DictService;
+import com.github.mrag.livechat.common.cache.vo.City;
 import com.github.mrag.livechat.common.http.HttpResponse;
 import com.github.mrag.livechat.rest.OpenApi;
 import org.apache.dubbo.config.annotation.DubboReference;
@@ -16,13 +17,20 @@ import java.util.List;
 @RequestMapping("/cache")
 public class CacheController {
 
-    @DubboReference
+    @DubboReference(timeout = 200000)
     private DictService dictService;
 
     @GetMapping("/dict/{keyName}")
     @OpenApi
-    public HttpResponse getDictList(@PathVariable String keyName) {
-        List<SystemDict> dicts = dictService.findByKey(keyName);
-        return HttpResponse.ok(dicts);
+    HttpResponse getDictList(@PathVariable String keyName) {
+        List<SystemDict> dict = dictService.findByKey(keyName);
+        return HttpResponse.ok(dict);
+    }
+
+    @GetMapping("/dict/cities")
+    @OpenApi
+    HttpResponse cities() {
+        List<City> cities = dictService.allCities();
+        return HttpResponse.ok(cities);
     }
 }
