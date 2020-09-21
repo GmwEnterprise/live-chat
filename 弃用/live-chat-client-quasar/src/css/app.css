@@ -1,0 +1,26 @@
+/* app global css */
+.hover-cursor-pointer:hover {
+  cursor: pointer;
+}
+.hover-cursor-context-menu:hover {
+  cursor: context-menu;
+}
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.flex-start {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+}
+.text-over {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

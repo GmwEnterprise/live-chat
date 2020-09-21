@@ -186,8 +186,7 @@ module.exports = function(/* ctx */) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: "live-chat-client-quasar",
-        icon: "build/icon.ico"
+        appId: "live-chat-client-quasar"
       },
 
       // More info: https://quasar.dev/quasar-cli/developing-electron-apps/node-integration
