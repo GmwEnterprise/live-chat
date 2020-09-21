@@ -12,8 +12,8 @@ import com.github.mrag.livechat.common.utils.SequenceUtils;
 import com.github.mrag.livechat.common.utils.Tools;
 import com.github.mrag.livechat.usermsg.api.UserService;
 import com.github.mrag.livechat.usermsg.dao.UserMapper;
-import com.github.mrag.livechat.usermsg.vo.UserDTO;
 import com.github.mrag.livechat.usermsg.entity.User;
+import com.github.mrag.livechat.usermsg.vo.UserDetail;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.dubbo.config.annotation.DubboService;
@@ -36,54 +36,13 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public UserDTO findUserById(Long uid) {
-        User entity = userMapper.selectByPrimaryKey(uid);
-        if (entity == null) {
-            return null;
-        }
-        return Tools.copyProperties(entity, UserDTO.class);
-    }
-
-    @Override
-    public UserDTO findUserByChatNo(String chatNo) {
-        User entity = userMapper.selectByChatNo(chatNo);
-        if (entity == null) {
-            return null;
-        }
-        return Tools.copyProperties(entity, UserDTO.class);
-    }
-
-    @Override
-    public String registry(UserDTO dto) {
-        User user = Tools.copyProperties(dto, User.class);
-        user.setId(SequenceUtils.nextId(BusinessType.USER_BUSINESS));
-        // 手机号码暂作用户名
-        user.setUsername(user.getPhoneNumber());
-        // 密码加盐加密
-        String[] hashAndSalt = generatePasswordHashWithSalt(user.getUserPassword()).split("::");
-        user.setUserPassword(hashAndSalt[0]);
-        user.setSalt(hashAndSalt[1]);
-        user.setGender(Gender.MEN);
-        user.setAccountStatus(AccountStatus.USING);
-
-        userMapper.insertSelective(user);
-        try {
-            // 注册成功，返回用户信息以及token
-            return TokenUtil.generateToken(new TokenPayload(user.getId(), hashAndSalt[0]));
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            throw BusinessException.unknown();
-        }
-    }
-
-    @Override
-    public void modify(UserDTO dto) {
-        User record = Tools.copyProperties(dto, User.class);
+    public void modify(UserDetail detail) {
+        User record = Tools.copyProperties(detail, User.class);
         userMapper.updateByPrimaryKeySelective(record);
     }
 
     @Override
-    public String login(String phone, String password) {
+    public String signInUser(String phone, String password) {
         // 获取用户信息
         User user = userMapper.selectByPhoneNumber(phone);
         String realHash = user.getUserPassword();
@@ -179,5 +138,28 @@ public class UserServiceImpl implements UserService {
     @Override
     public String findUserHashById(long userId) {
         return userMapper.selectUserPasswordByUserId(userId);
+    }
+
+    @Override
+    public String registry(UserDetail detail) {
+        User user = Tools.copyProperties(detail, User.class);
+        user.setId(SequenceUtils.nextId(BusinessType.USER_BUSINESS));
+        // 手机号码暂作用户名
+        user.setUsername(user.getPhoneNumber());
+        // 密码加盐加密
+        String[] hashAndSalt = generatePasswordHashWithSalt(user.getUserPassword()).split("::");
+        user.setUserPassword(hashAndSalt[0]);
+        user.setSalt(hashAndSalt[1]);
+        user.setGender(Gender.MEN);
+        user.setAccountStatus(AccountStatus.USING);
+
+        userMapper.insertSelective(user);
+        try {
+            // 注册成功，返回用户信息以及token
+            return TokenUtil.generateToken(new TokenPayload(user.getId(), hashAndSalt[0]));
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            throw BusinessException.unknown();
+        }
     }
 }

@@ -23,6 +23,10 @@ public class HttpResponse {
         return new HttpResponse().code(HttpResponseCode.OK).setBody(body);
     }
 
+    public static HttpResponse ok(Object body, String msg) {
+        return new HttpResponse().code(HttpResponseCode.OK).setBody(body).setMessage(msg);
+    }
+
     public static HttpResponse badRequest(String errorDetail) {
         return new HttpResponse().code(HttpResponseCode.BAD_REQUEST).setErrorDetail(errorDetail);
     }
