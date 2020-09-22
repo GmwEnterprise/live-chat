@@ -11,6 +11,6 @@ GET http://apis.juhe.cn/xzqh/query?fid=150000&key=6b7fe58a1d86199ad4c25e7fad547e
 POST http://localhost:4200/api/v1/user/sign-in-user
 Content-Type: application/x-www-form-urlencoded
 
-phone=13320354693
+phone=13320354693#
 password=123456
 

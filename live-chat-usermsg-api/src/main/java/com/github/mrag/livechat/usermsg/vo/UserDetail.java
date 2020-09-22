@@ -4,6 +4,7 @@ import com.github.mrag.livechat.common.constant.enums.AccountStatus;
 import com.github.mrag.livechat.common.constant.enums.BloodGroup;
 import com.github.mrag.livechat.common.constant.enums.Gender;
 import com.github.mrag.livechat.common.validation.Dictionary;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -14,9 +15,17 @@ import java.time.LocalDateTime;
 public class UserDetail implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private String id; // dto中的主键修改为字符串，避免JS误差
-    private String chatNo;
+    // dto中的主键修改为字符串，避免JS误差
+    @ApiModelProperty(value = "id", name = "ID", dataType = "String")
+    private String id;
+
+    @ApiModelProperty(value = "wechatNo", name = "微信号", dataType = "String")
+    private String wechatNo;
+
+    @ApiModelProperty(value = "username", name = "用户名", dataType = "String")
     private String username;
+
+    // TODO 添加注解  https://blog.csdn.net/cwr452829537/article/details/105066481
     private String avatarId;
     private Gender gender;
     private LocalDateTime birthday;
@@ -44,12 +53,12 @@ public class UserDetail implements Serializable {
         return this;
     }
 
-    public String getChatNo() {
-        return chatNo;
+    public String getWechatNo() {
+        return wechatNo;
     }
 
-    public UserDetail setChatNo(String chatNo) {
-        this.chatNo = chatNo;
+    public UserDetail setWechatNo(String wechatNo) {
+        this.wechatNo = wechatNo;
         return this;
     }
 

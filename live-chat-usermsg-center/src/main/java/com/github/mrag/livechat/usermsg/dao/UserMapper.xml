@@ -3,7 +3,7 @@
 <mapper namespace="com.github.mrag.livechat.usermsg.dao.UserMapper">
   <resultMap id="BaseResultMap" type="com.github.mrag.livechat.usermsg.entity.User">
     <id column="id" jdbcType="BIGINT" property="id"/>
-    <result column="chat_no" jdbcType="VARCHAR" property="chatNo"/>
+    <result column="wechat_no" jdbcType="VARCHAR" property="wechatNo"/>
     <result column="username" jdbcType="VARCHAR" property="username"/>
     <result column="avatar_id" jdbcType="VARCHAR" property="avatarId"/>
     <result column="gender" jdbcType="TINYINT" property="gender"
@@ -25,7 +25,7 @@
             typeHandler="com.github.mrag.livechat.common.constant.typehandler.AccountStatusTypeHandler"/>
   </resultMap>
   <sql id="Base_Column_List">
-    id, chat_no, username, avatar_id, gender, birthday, signature, company, personal_description,
+    id, wechat_no, username, avatar_id, gender, birthday, signature, company, personal_description,
     user_password, salt, phone_number, email, blood_group, occupation, location, hometown, 
     account_status
   </sql>
@@ -40,10 +40,10 @@
     from user
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <select id="selectByChatNo" resultMap="BaseResultMap">
+  <select id="selectByWechatNo" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List"/>
-    from user where chat_no = #{chatNo}
+    from user where wechat_no = #{wechatNo}
   </select>
   <select id="countByPhoneNumber" resultType="java.lang.Long">
     select count(*)
@@ -61,13 +61,13 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.github.mrag.livechat.usermsg.entity.User">
-    insert into user (id, chat_no, username, avatar_id,
+    insert into user (id, wechat_no, username, avatar_id,
                       gender, birthday, signature,
                       company, personal_description, user_password,
                       salt, phone_number, email,
                       blood_group, occupation, location,
                       hometown, account_status)
-    values (#{id,jdbcType=BIGINT}, #{chatNo,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR},
+    values (#{id,jdbcType=BIGINT}, #{wechatNo,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR},
             #{avatarId,jdbcType=VARCHAR},
             #{gender,jdbcType=TINYINT,typeHandler=com.github.mrag.livechat.common.constant.typehandler.GenderTypeHandler},
             #{birthday,jdbcType=TIMESTAMP}, #{signature,jdbcType=VARCHAR},
@@ -83,8 +83,8 @@
       <if test="id != null">
         id,
       </if>
-      <if test="chatNo != null">
-        chat_no,
+      <if test="wechatNo != null">
+        wechat_no,
       </if>
       <if test="username != null">
         username,
@@ -139,8 +139,8 @@
       <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="chatNo != null">
-        #{chatNo,jdbcType=VARCHAR},
+      <if test="wechatNo != null">
+        #{wechatNo,jdbcType=VARCHAR},
       </if>
       <if test="username != null">
         #{username,jdbcType=VARCHAR},
@@ -195,8 +195,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.github.mrag.livechat.usermsg.entity.User">
     update user
     <set>
-      <if test="chatNo != null">
-        chat_no = #{chatNo,jdbcType=VARCHAR},
+      <if test="wechatNo != null">
+        wechat_no = #{wechatNo,jdbcType=VARCHAR},
       </if>
       <if test="username != null">
         username = #{username,jdbcType=VARCHAR},
@@ -254,7 +254,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.github.mrag.livechat.usermsg.entity.User">
     update user
-    set chat_no              = #{chatNo,jdbcType=VARCHAR},
+    set wechat_no            = #{wechatNo,jdbcType=VARCHAR},
         username             = #{username,jdbcType=VARCHAR},
         avatar_id            = #{avatarId,jdbcType=VARCHAR},
         gender               = #{gender,jdbcType=TINYINT,typeHandler=com.github.mrag.livechat.common.constant.typehandler.GenderTypeHandler},

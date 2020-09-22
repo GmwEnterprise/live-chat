@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class User implements Serializable {
     private Long id;
 
-    private String chatNo;
+    private String wechatNo;
 
     private String username;
 
@@ -57,12 +57,12 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public String getChatNo() {
-        return chatNo;
+    public String getWechatNo() {
+        return wechatNo;
     }
 
-    public void setChatNo(String chatNo) {
-        this.chatNo = chatNo;
+    public void setWechatNo(String wechatNo) {
+        this.wechatNo = wechatNo;
     }
 
     public String getUsername() {

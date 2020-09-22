@@ -15,7 +15,7 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
 
-    User selectByChatNo(String chatNo);
+    User selectByWechatNo(String chatNo);
 
     long countByPhoneNumber(String phone);
 
