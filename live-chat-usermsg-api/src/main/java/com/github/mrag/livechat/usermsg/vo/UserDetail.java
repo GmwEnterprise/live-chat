@@ -4,7 +4,6 @@ import com.github.mrag.livechat.common.constant.enums.AccountStatus;
 import com.github.mrag.livechat.common.constant.enums.BloodGroup;
 import com.github.mrag.livechat.common.constant.enums.Gender;
 import com.github.mrag.livechat.common.validation.Dictionary;
-import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -16,32 +15,58 @@ public class UserDetail implements Serializable {
     private static final long serialVersionUID = 1L;
 
     // dto中的主键修改为字符串，避免JS误差
-    @ApiModelProperty(value = "id", name = "ID", dataType = "String")
+    // @ApiModelProperty(value = "id", name = "ID")
     private String id;
 
-    @ApiModelProperty(value = "wechatNo", name = "微信号", dataType = "String")
+    // @ApiModelProperty(value = "wechatNo", name = "微信号")
     private String wechatNo;
 
-    @ApiModelProperty(value = "username", name = "用户名", dataType = "String")
+    // @ApiModelProperty(value = "username", name = "用户名")
     private String username;
 
-    // TODO 添加注解  https://blog.csdn.net/cwr452829537/article/details/105066481
+    // @ApiModelProperty(value = "avatarId", name = "用户头像文件ID")
     private String avatarId;
+
+    // @ApiModelProperty(value = "gender", name = "性别")
     private Gender gender;
+
+    // @ApiModelProperty(value = "birthday", name = "生日")
     private LocalDateTime birthday;
+
+    // @ApiModelProperty(value = "signature", name = "个性签名")
     private String signature;
+
+    // @ApiModelProperty(value = "company", name = "所在单位")
     private String company;
+
+    // @ApiModelProperty(name = "个人说明")
     private String personalDescription;
+
+    // @ApiModelProperty(name = "密码")
     private String userPassword;
+
+    // @ApiModelProperty(name = "手机号码")
     private String phoneNumber;
+
+    // @ApiModelProperty(name = "邮箱")
     private String email;
+
+    // @ApiModelProperty(name = "血型")
     private BloodGroup bloodGroup;
+
+    // @ApiModelProperty(name = "行业")
     @Dictionary(key = "trade")
     private Integer occupation; // 字典获取
+
+    // @ApiModelProperty(name = "所在地")
     @Dictionary(key = "city")
     private Integer location; // 字典获取
+
+    // @ApiModelProperty(name = "故乡")
     @Dictionary(key = "city")
     private Integer hometown; // 字典获取
+
+    // @ApiModelProperty(name = "账户使用状态")
     private AccountStatus accountStatus; // 采用默认值
 
     public String getId() {

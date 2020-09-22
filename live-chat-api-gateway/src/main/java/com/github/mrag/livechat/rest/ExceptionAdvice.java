@@ -60,6 +60,8 @@ public class ExceptionAdvice {
                 return HttpResponse.incorrectPassword(e.getMessage());
             case BusinessException.TOKEN_EXPIRED:
                 return HttpResponse.tokenExpired(e.getMessage());
+            case BusinessException.UNEXPECTED_PARAMETERS:
+                return HttpResponse.badRequest(e.getMessage());
             default:
                 return HttpResponse.unknown(e.getMessage());
         }

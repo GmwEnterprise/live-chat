@@ -6,6 +6,9 @@ package com.github.mrag.livechat.common;
  * @author Gmw
  */
 public class BusinessException extends RuntimeException {
+    public static BusinessException unexpectedParameters(String errorMsg) {
+        return new BusinessException("Unexpected parameters: " + errorMsg).setCode(UNEXPECTED_PARAMETERS);
+    }
 
     public static BusinessException unknown() {
         return new BusinessException("unknown exception.").setCode(UNKNOWN);
@@ -43,6 +46,7 @@ public class BusinessException extends RuntimeException {
     public static final int WITHOUT_TOKEN = 2;
     public static final int TOKEN_EXPIRED = 3;
     public static final int INCORRECT_PASSWORD = 4;
+    public static final int UNEXPECTED_PARAMETERS = 5;
 
     private int code;
 
