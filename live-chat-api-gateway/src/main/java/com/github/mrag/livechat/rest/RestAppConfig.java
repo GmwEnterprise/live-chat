@@ -8,7 +8,7 @@ import com.github.mrag.livechat.rest.converters.AccountStatusConverter;
 import com.github.mrag.livechat.rest.converters.BloodGroupConverter;
 import com.github.mrag.livechat.rest.converters.GenderConverter;
 import com.github.mrag.livechat.rest.converters.LocalDateTimeConverter;
-import com.github.mrag.livechat.rest.interceptor.InterceptorRegister;
+import com.github.mrag.livechat.rest.interceptor.TokenInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,6 +20,13 @@ import org.springframework.format.FormatterRegistry;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.*;
+import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -30,6 +37,7 @@ import java.util.List;
  */
 @Configuration
 @EnableWebMvc
+@EnableSwagger2
 @ServletComponentScan // 支持扫描Servlet组件
 @ComponentScan(basePackages = "com.github.mrag.livechat.rest.controller")
 public class RestAppConfig implements WebMvcConfigurer {
@@ -37,6 +45,30 @@ public class RestAppConfig implements WebMvcConfigurer {
 
     @Value("${spring.profiles.active}")
     private String profile;
+
+    @Bean
+    public Docket createRestApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(apiInfo())
+                .select()
+                //为当前包下controller生成API文档
+                .apis(RequestHandlerSelectors.basePackage("com.github.mrag.livechat.rest.controller"))
+                //为有@Api注解的Controller生成API文档
+//                .apis(RequestHandlerSelectors.withClassAnnotation(Api.class))
+                //为有@ApiOperation注解的方法生成API文档
+//                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
+                .paths(PathSelectors.any())
+                .build();
+    }
+
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                .title("SwaggerUI演示")
+                .description("mall-tiny")
+                .contact("macro")
+                .version("1.0")
+                .build();
+    }
 
     /**
      * 提供全局可使用的 JSON 转换器实例
@@ -59,8 +91,9 @@ public class RestAppConfig implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        InterceptorRegister.registryInterceptors().forEach(interceptor
-                -> registry.addInterceptor(interceptor).order(interceptor.order()));
+        // InterceptorRegister.registryInterceptors().forEach(interceptor
+        //         -> registry.addInterceptor(interceptor).order(interceptor.order()));
+        registry.addInterceptor(new TokenInterceptor());
     }
 
     /**
@@ -86,8 +119,8 @@ public class RestAppConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         if ("dev".equals(profile)) {
-            registry.addMapping("/**").allowedMethods(
-                    "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS");
+            registry.addMapping("/**")
+                    .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS");
         }
     }
 
@@ -97,6 +130,12 @@ public class RestAppConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**")
-                .addResourceLocations("classpath*:static/");
+                .addResourceLocations("classpath:/static/");
+        // 解决swagger无法访问
+        registry.addResourceHandler("/swagger-ui.html")
+                .addResourceLocations("classpath:/META-INF/resources/");
+        // 解决swagger的js文件无法访问
+        registry.addResourceHandler("/webjars/**")
+                .addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 }

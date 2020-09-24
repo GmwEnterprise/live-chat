@@ -15,6 +15,8 @@ import java.util.List;
 /**
  * 自动添加该包下所有拦截器
  *
+ * TODO 该类目前的写法不可用，打包后将无法识别压缩包内的路径，暂时弃用
+ *
  * @author Gmw
  */
 public final class InterceptorRegister {
@@ -33,10 +35,11 @@ public final class InterceptorRegister {
                                                                         String packageName,
                                                                         Class<?>... superInterfaces) {
         if (!dir.isDirectory()) {
-            throw new RuntimeException("错误的文件夹格式");
+            throw new RuntimeException("错误的文件夹格式[" + dir.toString() + "]");
         }
 
-        List<Class<?>> superInterfaceList = superInterfaces != null ? Arrays.asList(superInterfaces) : Collections.emptyList();
+        List<Class<?>> superInterfaceList = superInterfaces != null ?
+                Arrays.asList(superInterfaces) : Collections.emptyList();
         List<HandlerInterceptorWithOrder> interceptors = new ArrayList<>();
         for (File item : dir.listFiles()) {
             if (item.isDirectory()) {
@@ -121,7 +124,10 @@ public final class InterceptorRegister {
     }
 
     public static void main(String[] args) {
-        List<HandlerInterceptorWithOrder> interceptors = registryInterceptors();
-        System.out.println(interceptors);
+        File file = new File("D:\\Project\\live-chat\\live-chat-api-gateway\\target\\live-chat-api-gateway-1.0-SNAPSHOT.jar!\\BOOT-INF\\classes!\\com\\github\\mrag\\livechat\\rest\\interceptor");
+        System.out.println(file);
+        System.out.println(file.isDirectory());
+        System.out.println(file.isFile());
+        System.out.println(file.getAbsolutePath());
     }
 }

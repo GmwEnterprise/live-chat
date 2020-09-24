@@ -3,48 +3,154 @@ package com.github.mrag.livechat.usermsg.entity;
 import com.github.mrag.livechat.common.constant.enums.AccountStatus;
 import com.github.mrag.livechat.common.constant.enums.BloodGroup;
 import com.github.mrag.livechat.common.constant.enums.Gender;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-/**
- * @author Gmw
- */
 public class User implements Serializable {
+    /**
+     * 主键，64位Long型，JSON传输请使用String
+     *
+     * @mbg.generated
+     */
+    @ApiModelProperty(value = "主键，64位Long型，JSON传输请使用String")
     private Long id;
 
+    /**
+     * 微信号，长度限制为8-26位，仅限字母与数字
+     *
+     * @mbg.generated
+     */
+    @ApiModelProperty(value = "微信号，长度限制为8-26位，仅限字母与数字")
     private String wechatNo;
 
+    /**
+     * 用户名称，支持中文，支持空字符串，最大长度为16
+     *
+     * @mbg.generated
+     */
+    @ApiModelProperty(value = "用户名称，支持中文，支持空字符串，最大长度为16")
     private String username;
 
+    /**
+     * 用户头像对应的图片名称，图片地址前缀保存为常量，图片格式统一为png格式，大小处理为200*200
+     *
+     * @mbg.generated
+     */
+    @ApiModelProperty(value = "用户头像对应的图片名称，图片地址前缀保存为常量，图片格式统一为png格式，大小处理为200*200")
     private String avatarId;
 
+    /**
+     * 性别，枚举数值，男[1]女[2]，默认为[1]
+     *
+     * @mbg.generated
+     */
+    @ApiModelProperty(value = "性别，枚举数值，男[1]女[2]，默认为[1]")
     private Gender gender;
 
+    /**
+     * 出生日期，必须为过去的日期，格式[yyyy-MM-dd HH:mm:ss]
+     *
+     * @mbg.generated
+     */
+    @ApiModelProperty(value = "出生日期，必须为过去的日期，格式[yyyy-MM-dd HH:mm:ss]")
     private LocalDateTime birthday;
 
+    /**
+     * 个性签名，最大长度128
+     *
+     * @mbg.generated
+     */
+    @ApiModelProperty(value = "个性签名，最大长度128")
     private String signature;
 
+    /**
+     * 公司名称，最大长度64
+     *
+     * @mbg.generated
+     */
+    @ApiModelProperty(value = "公司名称，最大长度64")
     private String company;
 
+    /**
+     * 个人说明，最大长度255
+     *
+     * @mbg.generated
+     */
+    @ApiModelProperty(value = "个人说明，最大长度255")
     private String personalDescription;
 
+    /**
+     * 加盐密码
+     *
+     * @mbg.generated
+     */
+    @ApiModelProperty(value = "加盐密码")
     private String userPassword;
 
+    /**
+     * 密码盐
+     *
+     * @mbg.generated
+     */
+    @ApiModelProperty(value = "密码盐")
     private String salt;
 
+    /**
+     * 手机号
+     *
+     * @mbg.generated
+     */
+    @ApiModelProperty(value = "手机号")
     private String phoneNumber;
 
+    /**
+     * 邮箱
+     *
+     * @mbg.generated
+     */
+    @ApiModelProperty(value = "邮箱")
     private String email;
 
+    /**
+     * 血型，枚举数值，A型血[1]B型血[2]O型血[3]AB型血[4]
+     *
+     * @mbg.generated
+     */
+    @ApiModelProperty(value = "血型，枚举数值，A型血[1]B型血[2]O型血[3]AB型血[4]")
     private BloodGroup bloodGroup;
 
+    /**
+     * 字典-从事行业
+     *
+     * @mbg.generated
+     */
+    @ApiModelProperty(value = "字典-从事行业")
     private Integer occupation;
 
+    /**
+     * 字典-现居地
+     *
+     * @mbg.generated
+     */
+    @ApiModelProperty(value = "字典-现居地")
     private Integer location;
 
+    /**
+     * 字典-故居
+     *
+     * @mbg.generated
+     */
+    @ApiModelProperty(value = "字典-故居")
     private Integer hometown;
 
+    /**
+     * 账户使用状态，枚举数值，使用中[1]禁用[2]已注销[3]，默认为[1]
+     *
+     * @mbg.generated
+     */
+    @ApiModelProperty(value = "账户使用状态，枚举数值，使用中[1]禁用[2]已注销[3]，默认为[1]")
     private AccountStatus accountStatus;
 
     private static final long serialVersionUID = 1L;
@@ -71,6 +177,14 @@ public class User implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getAvatarId() {
+        return avatarId;
+    }
+
+    public void setAvatarId(String avatarId) {
+        this.avatarId = avatarId;
     }
 
     public Gender getGender() {
@@ -183,14 +297,5 @@ public class User implements Serializable {
 
     public void setAccountStatus(AccountStatus accountStatus) {
         this.accountStatus = accountStatus;
-    }
-
-    public String getAvatarId() {
-        return avatarId;
-    }
-
-    public User setAvatarId(String avatarId) {
-        this.avatarId = avatarId;
-        return this;
     }
 }

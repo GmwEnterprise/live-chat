@@ -2,6 +2,7 @@ package com.github.mrag.livechat.common.constant.enums;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonValue;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * @author Gmw
@@ -11,9 +12,13 @@ public enum Gender implements DictEnumInterface {
     MEN(1, "男"), WOMEN(2, "女"),
     SECRET(3, "保密");
 
+    @ApiModelProperty(value = "键")
     private final String key;
+    @ApiModelProperty(value = "键描述")
     private final String keyDesc;
+    @ApiModelProperty(value = "值")
     private final int valueNo;
+    @ApiModelProperty(value = "值描述")
     private final String valueDesc;
 
     Gender(int valueNo, String valueDesc) {

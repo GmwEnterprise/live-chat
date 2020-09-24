@@ -19,7 +19,7 @@
     <!--<plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>-->
     
     <!--可以自定义生成model的代码注释-->
-    <commentGenerator>
+    <commentGenerator type="com.github.mrag.livechat.common.CommentGenerator">
       <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
       <property name="suppressAllComments" value="true"/>
       <property name="suppressDate" value="true"/>

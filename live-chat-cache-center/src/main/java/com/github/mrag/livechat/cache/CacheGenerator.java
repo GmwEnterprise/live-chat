@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @author Gmw
  */
-public class CacheMybatisGenerator {
+public class CacheGenerator {
     public static void main(String[] args) throws Exception {
         // mbg执行过程中的警告信息
         List<String> warnings = new ArrayList<>();

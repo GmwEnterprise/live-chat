@@ -1,5 +1,7 @@
 package com.github.mrag.livechat.common.http;
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class HttpResponse {
 
     private enum HttpResponseCode {
@@ -47,9 +49,13 @@ public class HttpResponse {
         return new HttpResponse().code(HttpResponseCode.UNKNOWN).setErrorDetail(errorDetail);
     }
 
+    @ApiModelProperty(value = "状态码")
     private int code;
+    @ApiModelProperty(value = "状态信息")
     private String message;
+    @ApiModelProperty(value = "返回体")
     private Object body;
+    @ApiModelProperty(value = "错误信息")
     private String errorDetail;
 
     public HttpResponse code(HttpResponseCode code) {

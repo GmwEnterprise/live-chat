@@ -37,8 +37,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void modify(UserDetail detail) {
-        User record = Tools.copyProperties(detail, User.class);
-        userMapper.updateByPrimaryKeySelective(record);
+        User user = Tools.copyProperties(detail, User.class,
+                (userVo, userEntity) -> userEntity.setId(Long.parseLong(userVo.getId())));
+        userMapper.updateByPrimaryKeySelective(user);
     }
 
     @Override
@@ -70,7 +71,7 @@ public class UserServiceImpl implements UserService {
      * @param inputPassword 用户输入的密码
      * @return 是否正确
      */
-    private boolean checkPassword(String userHash, String salt, String inputPassword) {
+    public boolean checkPassword(String userHash, String salt, String inputPassword) {
         byte[] afterComputed = matrixMultiplication(inputPassword.getBytes(), salt.getBytes());
         String computedBinary = Encryption.binary(afterComputed, Character.MAX_RADIX);
         String encryptedHash = DigestUtils.md5Hex(computedBinary);

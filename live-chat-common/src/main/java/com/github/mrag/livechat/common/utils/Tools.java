@@ -13,6 +13,7 @@ import java.lang.reflect.Constructor;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiConsumer;
 
 /**
  * @author Gmw
@@ -21,10 +22,17 @@ public final class Tools {
     private static final Logger log = LoggerFactory.getLogger(Tools.class);
 
     public static <S, T> T copyProperties(S source, Class<T> targetType) {
+        return copyProperties(source, targetType, null);
+    }
+
+    public static <S, T> T copyProperties(S source, Class<T> targetType, BiConsumer<S, T> afterCopy) {
         try {
             Constructor<T> targetTypeConstructor = targetType.getConstructor();
             T target = targetTypeConstructor.newInstance();
             BeanUtils.copyProperties(source, target);
+            if (afterCopy != null) {
+                afterCopy.accept(source, target);
+            }
             return target;
         } catch (Throwable e) {
             throw new RuntimeException(String.format("拷贝属性失败, sourceType=%s, targetType=%s",

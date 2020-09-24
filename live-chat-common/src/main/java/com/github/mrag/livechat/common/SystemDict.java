@@ -1,25 +1,72 @@
 package com.github.mrag.livechat.common;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 
 public class SystemDict implements Serializable {
-    public static final byte CAN_MODIFY = 1;
-    public static final byte CANNOT_MODIFY = 0;
-
+    /**
+     * 主键
+     *
+     * @mbg.generated
+     */
+    @ApiModelProperty(value = "主键")
     private Integer kvId;
 
+    /**
+     * 键，最大长度16
+     *
+     * @mbg.generated
+     */
+    @ApiModelProperty(value = "键，最大长度16")
     private String key;
 
+    /**
+     * 键描述，最大长度64
+     *
+     * @mbg.generated
+     */
+    @ApiModelProperty(value = "键描述，最大长度64")
     private String keyDesc;
 
+    /**
+     * 键对应的int型值
+     *
+     * @mbg.generated
+     */
+    @ApiModelProperty(value = "键对应的int型值")
     private Integer valueNo;
 
+    /**
+     * 键值描述，最大长度64
+     *
+     * @mbg.generated
+     */
+    @ApiModelProperty(value = "键值描述，最大长度64")
     private String valueDesc;
 
+    /**
+     * 额外信息，根据不同场景来使用。对于有些键而言，该字段可以关联`system_dict_more`表
+     *
+     * @mbg.generated
+     */
+    @ApiModelProperty(value = "额外信息，根据不同场景来使用。对于有些键而言，该字段可以关联`system_dict_more`表")
     private Integer valueMoreDetail;
 
+    /**
+     * 该键值对向上依赖的另一对键值对
+     *
+     * @mbg.generated
+     */
+    @ApiModelProperty(value = "该键值对向上依赖的另一对键值对")
     private Integer dependencyOnId;
 
+    /**
+     * 是否允许修改该条记录，允许[1]禁止[2]，默认[1]
+     *
+     * @mbg.generated
+     */
+    @ApiModelProperty(value = "是否允许修改该条记录，允许[1]禁止[2]，默认[1]")
     private Byte canModify;
 
     private static final long serialVersionUID = 1L;

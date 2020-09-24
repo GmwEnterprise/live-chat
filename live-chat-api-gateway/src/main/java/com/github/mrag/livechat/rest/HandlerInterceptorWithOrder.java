@@ -4,6 +4,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 /**
  * @author Gmw
+ * // TODO 暂时弃用
  */
 public interface HandlerInterceptorWithOrder extends HandlerInterceptor {
 
