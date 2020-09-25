@@ -82,13 +82,12 @@ class MyPromise {
           };
 
     // 返回一个全新的 MyPromise，提供调用链
-    // 这里的resolveFn、rejectFn其实就是构造函数中定义的两个函数的形参指针
     return new MyPromise((resolveFn, rejectFn) => {
-      // 重写传入的newResolve
+      // 重写传入的resolveFn
       const fulfilished = value => {
         try {
           const res = resolve(value);
-          res instanceof MyPromise
+          res instanceof MyPromise // 用户传入的resolve的返回值可能是Promise
             ? res.then(resolveFn, rejectFn)
             : resolveFn(res);
         } catch (e) {
@@ -100,7 +99,7 @@ class MyPromise {
       const rejected = reason => {
         try {
           const res = reject(reason);
-          res instanceof MyPromise
+          res instanceof MyPromise // 用户传入的reject的返回值也可能是Promise
             ? res.then(resolveFn, rejectFn)
             : rejectFn(res);
         } catch (e) {
@@ -121,6 +120,120 @@ class MyPromise {
           rejected(this.reason);
           break;
         default:
+      }
+    });
+  }
+
+  // 实现catch
+  // 在最终状态为rejected时将会执行catch传入的异常执行器
+  // 直接调用then就可以了, 本质上就是then(null, exceptionFn)
+  catch(exceptionFn) {
+    this.then(null, exceptionFn);
+  }
+
+  // 实现Promise.all
+  // promises: Array<MyPromise>，但用户也可能会传入普通值
+  static all(promises) {
+    // 仍然是返回一个Promise
+    return new MyPromise((resolve, reject) => {
+      // 定义存放所有promises的返回值的数组
+      const result = [];
+
+      // 定义一个方法，使用递归来处理每一个promises
+      // promise: 当前Promise实例
+      // index: 当前Promise实例在promises中的索引
+      // 所有promise返回值的数组
+      const deepPromise = (promise, index, result) => {
+        // 执行完所有的promises后返回结果数组，退出递归
+        if (index === promises.length) {
+          return result;
+        }
+
+        if (promise instanceof MyPromise) {
+          // 如果是promise就等该promise到达最终状态了再进行下一步操作
+          promise
+            .then(res => {
+              index++;
+              result.push(res);
+              // 此时可以递归
+              deepPromise(promises[index], index, result);
+            })
+            .catch(e => {
+              // 一旦有一个Promise异常就直接reject了
+              reject(e instanceof Error ? e.message : e);
+            });
+        } else {
+          // 当前promise是一个普通值
+          index++;
+          result.push(promise); // 直接压入这个普通值
+          deepPromise(promises[index], index, result);
+        }
+      };
+
+      // 执行这个递归方法
+      deepPromise(promises[0], 0, result);
+
+      // 此时如果能走到这一行代码则说明所有promises都到达了fulfilled状态，直接resolve返回值数组就行了
+      resolve(result);
+    });
+  }
+
+  static resolve(value) {
+    return new MyPromise((resolveFn, rejectFn) => {
+      resolveFn(value);
+    });
+  }
+
+  static reject(reason) {
+    return new MyPromise((resolveFn, rejectFn) => {
+      rejectFn(reason);
+    });
+  }
+
+  static allSettled(promises) {
+    // 已然是返回一个promise
+    return new MyPromise((resolve, reject) => {
+      // 创建一个收集返回值的数组
+      const result = [];
+
+      // 执行
+      deepPromise(promises[0], 0, result);
+
+      // 返回结果
+      resolve(result);
+
+      // 这里我们用递归来实现
+      // @param {MyPromise} promise 每一个promise方法
+      // @param {number} index 索引
+      // @param {string[]} result 收集返回结果的数组
+      function deepPromise(promise, index, result) {
+        // 边界判断
+        // 所有执行完之后返回收集数组
+        if (index > promises.length - 1) {
+          return result;
+        }
+
+        if (typeof promise.then === "function") {
+          // 如果是promise
+          promise
+            .then(res => {
+              index++;
+              result.push({ status: "fulfilished", value: res }); // 这里推入的是对象
+              deepPromise(promises[index], index, result);
+            })
+            .catch(e => {
+              // reject直接返回
+              index++;
+              result.push({ status: "rejected", value: res }); // 这里推入的是对象
+              deepPromise(promises[index], index, result);
+            });
+        } else {
+          // 如果是普通值
+          // 这里我们只做简单判断，非promise则直接当返回值处理
+          index++;
+          result.push({ status: "fulfilished", value: res }); // 这里推入的是对象
+          deepPromise(promises[index], index, res);
+        }
       }
     });
   }
