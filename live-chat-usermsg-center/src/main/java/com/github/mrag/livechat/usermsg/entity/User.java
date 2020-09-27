@@ -42,11 +42,11 @@ public class User implements Serializable {
     private String avatarId;
 
     /**
-     * 性别，枚举数值，男[1]女[2]，默认为[1]
+     * 性别，枚举数值，男[1]女[2]保密[3]，默认为[3]
      *
      * @mbg.generated
      */
-    @ApiModelProperty(value = "性别，枚举数值，男[1]女[2]，默认为[1]")
+    @ApiModelProperty(value = "性别，枚举数值，男[1]女[2]保密[3]，默认为[3]")
     private Gender gender;
 
     /**

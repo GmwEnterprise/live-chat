@@ -3,7 +3,7 @@
     <div class="search-bar-input flex-between" style="align-items: center;">
       <q-icon name="fas fa-search" size="12px"></q-icon>
       <input
-        @focus="inputFocus()"
+        @focus="inputFocus"
         class="search-bar-inputelement"
         type="text"
         style="border: 0; width: calc(100% - 20px); box-sizing: border-box; font-size: 12px;"

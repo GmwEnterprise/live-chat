@@ -77,6 +77,22 @@
           class="main-layout-sidebar-icon"
         ></q-icon
       ></span>
+      <!-- 打开保存的文件 子窗口 -->
+      <span
+        @click="openSavedFilesWindow()"
+        :class="
+          `q-electron-drag--exception main-layout-sidebar-icon-wrapper hover-cursor-pointer ${
+            sidebarActive === '/friends' ? 'sidebar-active' : 'sidebar-inactive'
+          }`
+        "
+        ><q-icon
+          name="fas fa-user-friends"
+          class="main-layout-sidebar-icon"
+        ></q-icon
+        ><q-badge v-show="newFriendCount" color="red" floating>{{
+          newFriendCount
+        }}</q-badge></span
+      >
 
       <!-- 菜单 置于最底 -->
       <span
@@ -281,6 +297,9 @@ export default {
     },
     searchBlur() {
       this.$store.commit("status/inputBlur");
+    },
+    openSavedFilesWindow() {
+      if (process.env.MODE === )
     },
     clickSessions() {
       this.sidebarChange("/sessions");
