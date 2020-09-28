@@ -48,15 +48,15 @@ const routes = [
     children: [
       {
         path: "show-image", // 查看图片
-        component: () => import("sub-layouts/ShowImage.vue")
+        component: () => import("src/sub-layouts/ShowImage.vue")
       },
       {
         path: "received-files", // 接收到的文件
-        component: () => import("sub-layouts/ReceivedFiles.vue")
+        component: () => import("src/sub-layouts/ReceivedFiles.vue")
       },
       {
         path: "saved-chats", // 保存的聊天记录
-        component: () => import("sub-layouts/SavedChats.vue")
+        component: () => import("src/sub-layouts/SavedChats.vue")
       }
     ]
   },

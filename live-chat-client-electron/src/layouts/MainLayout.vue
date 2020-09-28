@@ -81,18 +81,10 @@
       <span
         @click="openSavedFilesWindow()"
         :class="
-          `q-electron-drag--exception main-layout-sidebar-icon-wrapper hover-cursor-pointer ${
-            sidebarActive === '/friends' ? 'sidebar-active' : 'sidebar-inactive'
-          }`
+          `q-electron-drag--exception main-layout-sidebar-icon-wrapper hover-cursor-pointer sidebar-inactive`
         "
-        ><q-icon
-          name="fas fa-user-friends"
-          class="main-layout-sidebar-icon"
-        ></q-icon
-        ><q-badge v-show="newFriendCount" color="red" floating>{{
-          newFriendCount
-        }}</q-badge></span
-      >
+        ><q-icon name="far fa-folder" class="main-layout-sidebar-icon"></q-icon
+      ></span>
 
       <!-- 菜单 置于最底 -->
       <span
@@ -299,7 +291,21 @@ export default {
       this.$store.commit("status/inputBlur");
     },
     openSavedFilesWindow() {
-      if (process.env.MODE === )
+      if (process.env.MODE === "electron") {
+        // 打开「保存的文件」子窗口
+        // 在quasar中，src文件夹属于渲染器进程，调用BrowserWindow对象的方式：this.$q.electron.remote.BrowserWindow
+        const subwindow = new this.$q.electron.remote.BrowserWindow({
+          width: 400,
+          height: 300
+        });
+        subwindow.on("close", () => {
+          subwindow = null;
+        });
+        const url = `${process.env.APP_URL}/#/subwindow/received-files`;
+        console.log(url);
+        subwindow.loadURL(url);
+        subwindow.show();
+      }
     },
     clickSessions() {
       this.sidebarChange("/sessions");
