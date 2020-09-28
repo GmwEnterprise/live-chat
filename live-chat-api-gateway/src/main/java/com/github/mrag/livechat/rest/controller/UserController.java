@@ -57,7 +57,7 @@ public class UserController {
     }
 
     @ApiOperation("修改个人信息")
-    @PostMapping("/updateMsg")
+    @PostMapping("/update-msg")
     HttpResponse updateMsg(@RequestBody UserDetail detail) {
         log.debug("修改信息，id = {}, unmodified = {}", detail.getId(), detail);
         userService.modify(detail);

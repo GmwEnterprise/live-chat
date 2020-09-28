@@ -42,6 +42,25 @@ const routes = [
     ]
   },
 
+  {
+    path: "/subwindow",
+    component: { render: e => e("router-view") }, // 父路由不需要单独建立一个组件的情况
+    children: [
+      {
+        path: "show-image", // 查看图片
+        component: () => import("sub-layouts/ShowImage.vue")
+      },
+      {
+        path: "received-files", // 接收到的文件
+        component: () => import("sub-layouts/ReceivedFiles.vue")
+      },
+      {
+        path: "saved-chats", // 保存的聊天记录
+        component: () => import("sub-layouts/SavedChats.vue")
+      }
+    ]
+  },
+
   // Always leave this as last one,
   // but you can also remove it
   {
