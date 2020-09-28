@@ -22,26 +22,26 @@ export default function(/* { store, ssrContext } */) {
       },
       {
         path: "/main-layout",
-        component: () => import("layouts/main-layout.vue")
+        component: () => import("layouts/main-layout/main-layout.vue")
       },
       {
         path: "/sub-window",
-        component: () => import("layouts/sub-window-box.vue"),
+        component: () => import("layouts/sub-window/sub-window-box.vue"),
         children: [
           {
             // 保存的聊天记录
             path: "saved-chats",
-            component: () => import("layouts/subwindow/saved-chats.vue")
+            component: () => import("layouts/saved-chats/saved-chats.vue")
           },
           {
             // 接收到的文件
             path: "received-files",
-            component: () => import("layouts/subwindow/received-files.vue")
+            component: () => import("layouts/received-files/received-files.vue")
           },
           {
             // 选择朋友，群发消息
             path: "choose-friends",
-            component: () => import("layouts/subwindow/choose-friends.vue")
+            component: () => import("layouts/choose-friends/choose-friends.vue")
           }
         ]
       },

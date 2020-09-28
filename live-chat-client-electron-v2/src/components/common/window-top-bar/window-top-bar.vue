@@ -2,16 +2,12 @@
   <div id="window-top-bar" class="q-electron-drag">
     <template v-if="!electron">
       <span class="window-top-bar-btn">
-        <q-icon name="img:images/minimize-white.png"></q-icon>
+        <q-icon name="minimize"></q-icon>
       </span>
       <span class="window-top-bar-btn">
-        <q-icon
-          v-if="isMaximized"
-          name="img:images/unmaximize-white.png"
-        ></q-icon>
-        <q-icon v-else name="img:images/maximize-white.png"></q-icon>
+        <q-icon name="crop_square"></q-icon>
       </span>
-      <span class="window-top-bar-btn"> </span>
+      <span class="window-top-bar-btn"> <q-icon name="close"></q-icon></span>
     </template>
   </div>
 </template>
