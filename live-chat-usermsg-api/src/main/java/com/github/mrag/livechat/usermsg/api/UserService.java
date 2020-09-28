@@ -17,7 +17,7 @@ public interface UserService {
     /**
      * 用户登陆并返回token
      */
-    String signInUser(String phone, String password);
+    String signInUser(String key, String password);
 
     /**
      * 检查数据库中是否有这个手机号的账户存在，返回布尔值

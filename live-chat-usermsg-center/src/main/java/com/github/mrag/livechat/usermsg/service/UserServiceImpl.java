@@ -1,6 +1,6 @@
 package com.github.mrag.livechat.usermsg.service;
 
-import com.github.mrag.livechat.common.BusinessException;
+import com.github.mrag.livechat.common.ApiException;
 import com.github.mrag.livechat.common.BusinessType;
 import com.github.mrag.livechat.common.Encryption;
 import com.github.mrag.livechat.common.constant.RegExp;
@@ -43,9 +43,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String signInUser(String phone, String password) {
-        // 获取用户信息
-        User user = userMapper.selectByPhoneNumber(phone);
+    public String signInUser(String key, String password) {
+        /*
+         * key 微信号/手机号/邮箱
+         * TODO: 低效率的执行方式，`where...or...`
+         */
+        User user = userMapper.selectByLoginKey(key);
         String realHash = user.getUserPassword();
         String salt = user.getSalt();
 
@@ -56,11 +59,11 @@ public class UserServiceImpl implements UserService {
                 return TokenUtil.generateToken(new TokenPayload(user.getId(), realHash));
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
-                throw BusinessException.unknown();
+                throw ApiException.unknown();
             }
         }
         // 密码错误
-        throw BusinessException.incorrectPassword();
+        throw ApiException.incorrectPassword();
     }
 
     /**
@@ -160,7 +163,7 @@ public class UserServiceImpl implements UserService {
             return TokenUtil.generateToken(new TokenPayload(user.getId(), hashAndSalt[0]));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            throw BusinessException.unknown();
+            throw ApiException.unknown();
         }
     }
 }

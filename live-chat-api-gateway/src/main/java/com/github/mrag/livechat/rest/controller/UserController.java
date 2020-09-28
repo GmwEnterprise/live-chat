@@ -12,6 +12,8 @@ import io.swagger.annotations.ApiParam;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -34,14 +36,16 @@ public class UserController {
 
     @ApiOperation("用户登陆")
     @PostMapping("/sign-in-user")
-    HttpResponse signInUser(@ApiParam(value = "手机号码/微信号/邮箱", required = true)
-                            @RequestParam String key,
-                            @ApiParam(value = "密码，需加密处理", required = true)
-                            @RequestParam String password) {
-        log.debug("用户登陆, key = {}, password = {}", key, password);
-        // TODO 修改登陆函数，使其支持三种key的登陆
+    ResponseEntity<?> signInUser(@ApiParam(value = "手机号码/微信号/邮箱", required = true)
+                                 @RequestParam String key,
+                                 @ApiParam(value = "密码，需解密", required = true)
+                                 @RequestParam String password) {
         String token = userService.signInUser(key, password);
-        return HttpResponse.ok(token, "登陆成功！");
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("authentication", token);
+        return ResponseEntity.ok().headers(headers).build();
+
+        // TODO 状态201携带的头部Location之于axios的特殊处理
     }
 
     @ApiOperation("用户注册")

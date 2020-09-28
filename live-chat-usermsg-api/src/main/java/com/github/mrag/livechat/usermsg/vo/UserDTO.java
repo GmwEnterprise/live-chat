@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 /**
  * @author Gmw
  */
+@Deprecated
 public class UserDTO implements Serializable {
 
     // ###### 以下为 entity.User原有字段

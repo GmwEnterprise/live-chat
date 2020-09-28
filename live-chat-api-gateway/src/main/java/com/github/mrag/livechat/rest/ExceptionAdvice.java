@@ -1,6 +1,6 @@
 package com.github.mrag.livechat.rest;
 
-import com.github.mrag.livechat.common.BusinessException;
+import com.github.mrag.livechat.common.ApiException;
 import com.github.mrag.livechat.common.http.HttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,16 +51,16 @@ public class ExceptionAdvice {
      * @param e 异常
      * @return 响应信息
      */
-    @ExceptionHandler(BusinessException.class)
-    public HttpResponse handler(BusinessException e) {
+    @ExceptionHandler(ApiException.class)
+    public HttpResponse handler(ApiException e) {
         switch (e.getCode()) {
-            case BusinessException.WITHOUT_TOKEN:
+            case ApiException.WITHOUT_TOKEN:
                 return HttpResponse.withoutToken(e.getMessage());
-            case BusinessException.INCORRECT_PASSWORD:
+            case ApiException.INCORRECT_PASSWORD:
                 return HttpResponse.incorrectPassword(e.getMessage());
-            case BusinessException.TOKEN_EXPIRED:
+            case ApiException.TOKEN_EXPIRED:
                 return HttpResponse.tokenExpired(e.getMessage());
-            case BusinessException.UNEXPECTED_PARAMETERS:
+            case ApiException.UNEXPECTED_PARAMETERS:
                 return HttpResponse.badRequest(e.getMessage());
             default:
                 return HttpResponse.unknown(e.getMessage());
