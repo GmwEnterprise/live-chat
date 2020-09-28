@@ -50,10 +50,10 @@
     from user
     where phone_number = #{phone}
   </select>
-  <select id="selectByPhoneNumber" resultMap="BaseResultMap">
+  <select id="selectByLoginKey" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List"/>
-    from user where phone_number = #{phone}
+    from user where phone_number = #{key} or wechat_no = #{key} or email = #{key}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete

@@ -1,5 +1,6 @@
 package com.github.mrag.livechat.usermsg.vo;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.github.mrag.livechat.common.constant.enums.AccountStatus;
 import com.github.mrag.livechat.common.constant.enums.BloodGroup;
 import com.github.mrag.livechat.common.constant.enums.Gender;
@@ -8,6 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class UserDetail implements Serializable {
     /**
      * 主键，64位Long型，JSON传输请使用String

@@ -2,6 +2,7 @@ package com.github.mrag.livechat.common.http;
 
 import io.swagger.annotations.ApiModelProperty;
 
+@Deprecated
 public class HttpResponse {
 
     private enum HttpResponseCode {

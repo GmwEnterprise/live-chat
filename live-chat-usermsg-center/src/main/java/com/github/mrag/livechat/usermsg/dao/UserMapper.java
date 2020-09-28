@@ -19,7 +19,7 @@ public interface UserMapper {
 
     long countByPhoneNumber(String phone);
 
-    User selectByPhoneNumber(String phone);
+    User selectByLoginKey(String key);
 
     String selectUserPasswordByUserId(long userId);
 }

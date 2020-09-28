@@ -1,6 +1,6 @@
 package com.github.mrag.livechat.rest.interceptor;
 
-import com.github.mrag.livechat.common.BusinessException;
+import com.github.mrag.livechat.common.ApiException;
 import com.github.mrag.livechat.common.token.TokenPayload;
 import com.github.mrag.livechat.common.token.TokenUtil;
 import com.github.mrag.livechat.common.utils.SpringContextUtils;
@@ -48,11 +48,11 @@ public class TokenInterceptor implements HandlerInterceptor {
                     payload = TokenUtil.parseToken(tokenVal, TokenPayload.class);
                 } catch (Exception e) {
                     // 解析错误，可能是token被污染
-                    throw BusinessException.withoutToken("请携带正确的token");
+                    throw ApiException.withoutToken("请携带正确的token");
                 }
                 if (payload.checkExpired()) {
                     // 已过期
-                    throw BusinessException.tokenExpired();
+                    throw ApiException.tokenExpired();
                 }
                 if (userService == null) {
                     synchronized (lock) {
@@ -65,7 +65,7 @@ public class TokenInterceptor implements HandlerInterceptor {
                     // 密码未修改
                     return true;
                 }
-                throw BusinessException.withoutToken("请重新获取token");
+                throw ApiException.withoutToken("请重新获取token");
             }
         }
         return true;

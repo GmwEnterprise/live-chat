@@ -1,6 +1,6 @@
 package com.github.mrag.livechat.rest.converters;
 
-import com.github.mrag.livechat.common.BusinessException;
+import com.github.mrag.livechat.common.ApiException;
 import org.springframework.core.convert.converter.Converter;
 
 import java.time.LocalDateTime;
@@ -15,7 +15,7 @@ public class LocalDateTimeConverter implements Converter<String, LocalDateTime> 
         try {
             return LocalDateTime.parse(source, f);
         } catch (DateTimeParseException e) {
-            throw BusinessException.unexpectedParameters("时间格式转换失败! 收到的格式["
+            throw ApiException.unexpectedParameters("时间格式转换失败! 收到的格式["
                     + source + "], 请使用标准字符串时间格式[yyyy-MM-dd HH:mm:ss]");
         }
     }
