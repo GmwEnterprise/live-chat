@@ -1,7 +1,7 @@
 <template>
-  <div id="main-layout">
-    <!-- 顶部栏 -->
-    <window-top-bar main />
+  <div id="sub-window">
+    <window-top-bar />
+    <router-view />
   </div>
 </template>
 
@@ -9,11 +9,11 @@
 import WindowTopBar from "components/window-top-bar/window-top-bar.vue";
 
 export default {
-  name: "MainLayout",
+  name: "SubWindow",
   components: {
     WindowTopBar
   }
 };
 </script>
 
-<style scoped lang="stylus" src="./main-layout.styl"></style>
+<style lang="stylus" scoped src="./sub-window.styl"></style>

@@ -1,0 +1,50 @@
+.primary-bg-color
+  background-color $green-1
+
+.primary-color
+  color white
+
+.primary-hover-bg-color
+  &:hover
+    background-color $green-2
+
+.secondary-bg-color
+  background-color white
+
+.secondary-color
+  color $black-1
+
+.secondary-hover-bg-color
+  &:hover
+    background-color $gray-1
+
+#window-top-bar
+  width 100%
+  height 25px
+  position relative
+  display flex
+  justify-content space-between
+
+  .left
+    width auto // 自适应宽度
+    height 100%
+    display flex
+    flex-wrap nowrap
+    align-items center
+    justify-content flex-start
+
+  .right
+    width auto // 自适应宽度
+    height 100%
+    display flex
+    flex-wrap nowrap
+    
+    &:hover
+      cursor pointer
+
+    .window-top-bar-btn
+      height 100%
+      width 35px
+      display flex
+      justify-content center
+      align-items center
