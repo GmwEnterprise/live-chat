@@ -1,21 +1,22 @@
 <template>
   <div
     id="window-top-bar"
-    :class="`${mainColor} ${electron ? 'q-electron-drag' : ''}`"
+    :style="`height: ${height}`"
+    :class="`${mainColor} q-electron-drag`"
   >
     <div class="left">
       <slot name="left">
         <!-- 待扩展 -->
       </slot>
     </div>
-    <div class="right">
-      <span :class="`window-top-bar-btn ${hoverColor}`">
+    <div class="right q-electron-drag--exception">
+      <span :class="`window-top-bar-btn ${hoverColor}`" @click="minimize">
         <q-icon name="minimize"></q-icon>
       </span>
-      <span :class="`window-top-bar-btn ${hoverColor}`">
+      <span :class="`window-top-bar-btn ${hoverColor}`" @click="maximize">
         <q-icon name="crop_square"></q-icon>
       </span>
-      <span :class="`window-top-bar-btn ${hoverColor}`"
+      <span :class="`window-top-bar-btn ${hoverColor}`" @click="close"
         ><q-icon name="close"></q-icon
       ></span>
     </div>
@@ -26,6 +27,10 @@
 export default {
   name: "WindowTopBar",
   props: {
+    height: {
+      type: String,
+      default: "50px"
+    },
     main: {
       type: Boolean,
       default: false
