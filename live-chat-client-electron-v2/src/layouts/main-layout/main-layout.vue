@@ -53,14 +53,43 @@
             <search-result-list />
           </q-scroll-area>
           <!-- 好友、会话列表 -->
-          <div id="friends-sessions">
+          <div
+            id="friends-sessions"
+            style="display: flex; flex-direction: column; height: 100%;"
+          >
             <q-tabs v-model="currentTab" dense>
               <q-tab name="sessions" label="会话" />
               <q-tab name="friends" label="朋友" />
               <q-tab name="groups" label="群聊" />
             </q-tabs>
             <q-separator />
-            <!-- <q-scroll-area ></q-scroll-area> -->
+            <q-tab-panels v-model="currentTab" animated style="flex-grow: 1;">
+              <!-- q-tab-panel自带y轴滚动属性，但是滚动条是chromium原生提供 -->
+              <q-tab-panel name="sessions">
+                <div class="q-tab-panel-wrapper">
+                  <q-scroll-area class="q-tab-panel-scroll">
+                    <!-- 会话列表 -->
+                    <!-- TODO -->
+                  </q-scroll-area>
+                </div>
+              </q-tab-panel>
+              <q-tab-panel name="friends">
+                <div class="q-tab-panel-wrapper">
+                  <q-scroll-area class="q-tab-panel-scroll">
+                    <!-- 好友列表 -->
+                    <!-- TODO -->
+                  </q-scroll-area>
+                </div>
+              </q-tab-panel>
+              <q-tab-panel name="groups">
+                <div class="q-tab-panel-wrapper">
+                  <q-scroll-area class="q-tab-panel-scroll">
+                    <!-- 群聊列表 -->
+                    <!-- TODO -->
+                  </q-scroll-area>
+                </div>
+              </q-tab-panel>
+            </q-tab-panels>
           </div>
         </div>
       </div>

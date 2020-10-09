@@ -64,8 +64,10 @@
       position relative
 
       .scroll-area
-        // height 100%
+        position absolute
         width 100%
+        z-index: 100
+        background-color white
 
   #content-pane
     height 100%
@@ -83,3 +85,14 @@
 
   &:hover
     cursor context-menu
+
+.q-tab-panel-wrapper
+  // 抵消掉父元素 q-tab-panel 所具有的 padding
+  box-sizing border-box
+  height calc(100% + 32px)
+  width calc(100% + 32px)
+  margin-left -16px
+  margin-top -16px
+
+  .q-tab-panel-scroll
+    height 99.99999%
