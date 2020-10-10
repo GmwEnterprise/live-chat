@@ -63,29 +63,49 @@
               <q-tab name="groups" label="群聊" />
             </q-tabs>
             <q-separator />
-            <q-tab-panels v-model="currentTab" animated style="flex-grow: 1;">
+            <q-tab-panels
+              v-model="currentTab"
+              animated
+              keep-alive
+              style="flex-grow: 1;"
+              @transition="litsTransition"
+            >
               <!-- q-tab-panel自带y轴滚动属性，但是滚动条是chromium原生提供 -->
-              <q-tab-panel name="sessions">
+              <!-- 设置q-tab-panel的overflow属性取消掉滚动效果 -->
+              <q-tab-panel name="sessions" style="overflow: hidden;">
+                <!-- 抵消掉 q-tab-panel 内部提供的 16px 内边距 -->
                 <div class="q-tab-panel-wrapper">
-                  <q-scroll-area class="q-tab-panel-scroll">
+                  <q-scroll-area
+                    ref="sessions-qsa"
+                    @scroll="scroll($event, 'sessions')"
+                    class="q-tab-panel-scroll"
+                  >
                     <!-- 会话列表 -->
-                    <!-- TODO -->
+                    <session-list />
                   </q-scroll-area>
                 </div>
               </q-tab-panel>
-              <q-tab-panel name="friends">
+              <q-tab-panel name="friends" style="overflow: hidden;">
                 <div class="q-tab-panel-wrapper">
-                  <q-scroll-area class="q-tab-panel-scroll">
+                  <q-scroll-area
+                    ref="friends-qsa"
+                    @scroll="scroll($event, 'friends')"
+                    class="q-tab-panel-scroll"
+                  >
                     <!-- 好友列表 -->
-                    <!-- TODO -->
+                    <friend-list />
                   </q-scroll-area>
                 </div>
               </q-tab-panel>
-              <q-tab-panel name="groups">
+              <q-tab-panel name="groups" style="overflow: hidden;">
                 <div class="q-tab-panel-wrapper">
-                  <q-scroll-area class="q-tab-panel-scroll">
+                  <q-scroll-area
+                    ref="groups-qsa"
+                    @scroll="scroll($event, 'groups')"
+                    class="q-tab-panel-scroll"
+                  >
                     <!-- 群聊列表 -->
-                    <!-- TODO -->
+                    <group-list />
                   </q-scroll-area>
                 </div>
               </q-tab-panel>
@@ -104,6 +124,9 @@
 </template>
 
 <script>
+import SessionList from "./session-list/session-list.vue";
+import FriendList from "./friend-list/friend-list.vue";
+import GroupList from "./group-list/group-list.vue";
 import SearchResultList from "./search-result-list/search-result-list.vue";
 import UserAvatar from "components/user-avatar/user-avatar.vue";
 import WindowTopBar from "components/window-top-bar/window-top-bar.vue";
@@ -112,6 +135,9 @@ import WindowFooter from "components/window-footer/window-footer.vue";
 export default {
   name: "MainLayout",
   components: {
+    SessionList,
+    FriendList,
+    GroupList,
     SearchResultList,
     UserAvatar,
     WindowTopBar,
@@ -123,7 +149,13 @@ export default {
       searching: false,
       searchInput: "",
       // 会话、好友tab
-      currentTab: "sessions"
+      currentTab: "friends",
+
+      litsTransitionScroll: {
+        sessions: 0,
+        friends: 0,
+        groups: 0
+      }
     };
   },
   methods: {
@@ -138,6 +170,16 @@ export default {
     searchInputBlur() {
       // 如果失焦时未输入搜索信息，则直接离开搜索框
       if (!this.searchInput) this.searching = false;
+    },
+    scroll(info, name) {
+      // TODO 滚动事件的防抖处理
+      this.litsTransitionScroll[name] = info.verticalPosition;
+    },
+    litsTransition(newVal, oldVal) {
+      console.debug(`new: ${newVal}, old: ${oldVal}`);
+      this.$refs[newVal + "-qsa"].setScrollPosition(
+        this.litsTransitionScroll[newVal]
+      );
     }
   }
 };

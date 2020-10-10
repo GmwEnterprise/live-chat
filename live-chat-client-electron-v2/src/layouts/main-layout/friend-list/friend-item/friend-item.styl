@@ -1,0 +1,29 @@
+.friend-item-component
+  display flex
+  justify-content space-between
+  align-items center
+  padding 5px 10px
+  
+  &:hover
+    cursor pointer
+
+  .friend-name-and-signature
+    display inline-flex
+    align-items center
+    box-sizing border-box
+    padding-left 10px
+
+    .friend-name
+      white-space nowrap
+
+    .friend-signature
+      margin-left 10px
+      font-size .8em
+      color $gray-3
+
+.item-active
+  background-color $gray-4
+
+.item-inactive
+  &:hover
+    background-color $gray-1

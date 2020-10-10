@@ -6,9 +6,9 @@
     <q-avatar
       :class="hover ? `user-avatar-hover click-hover` : `click-hover`"
       :size="size - 4 + 'px'"
-      v-if="user.id"
+      v-if="avatar"
     >
-      <img :src="user.avatar" />
+      <img :src="avatar" />
     </q-avatar>
     <q-avatar
       :class="hover ? `user-avatar-hover click-hover` : `click-hover`"
@@ -34,12 +34,15 @@ export default {
       type: Number,
       default: 50
     },
-    user: {
+    avatar: {
+      type: String, // png、jpg
+      default: null
+    },
+    userDetail: {
       type: Object,
       default: () => ({
         id: "",
         username: "未命名",
-        avatar: "", // png
         gender: 3 // 男[1]女[2]保密[3]
       })
     }

@@ -8,6 +8,10 @@
 </template>
 
 <script>
+import moment from "moment";
+
+// moment.locale();
+
 export default {
   name: "WindowFooter",
   props: {
@@ -19,18 +23,19 @@ export default {
   },
   data() {
     return {
-      time: new Date().toUTCString(),
-      timeInterval: null
+      time: moment().format("MMM Do h:mm:ss a")
     };
   },
-  created() {
-    this.timeInterval = setInterval(
-      () => (this.time = new Date().toUTCString()),
+  mounted() {
+    // 程序化提供计时，不可以被访问
+    const timeInterval = setInterval(
+      () => (this.time = moment().format("MMM Do h:mm:ss a")),
       1000
     );
-  },
-  beforeDestroy() {
-    clearInterval(this.timeInterval);
+    this.$once("hook:beforeDestroy", () => {
+      clearInterval(timeInterval);
+      console.debug("timeInterval was cleared.");
+    });
   }
 };
 </script>
