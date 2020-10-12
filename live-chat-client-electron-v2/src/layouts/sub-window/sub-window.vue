@@ -1,6 +1,6 @@
 <template>
   <div id="sub-window">
-    <window-top-bar />
+    <window-top-bar height="30px" />
     <router-view />
   </div>
 </template>
