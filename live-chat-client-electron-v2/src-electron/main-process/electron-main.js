@@ -43,6 +43,7 @@ function createWindow() {
     }
   });
 
+  console.warn("URL is " + process.env.APP_URL);
   mainWindow.loadURL(process.env.APP_URL);
 
   mainWindow.on("close", () => {

@@ -45,6 +45,12 @@ export default function(/* { store, ssrContext } */) {
             path: "choose-friends",
             component: () =>
               import("pages/sub-window/choose-friends/choose-friends.vue")
+          },
+          {
+            // 搜索朋友、群聊
+            path: "user-group-search",
+            component: () =>
+              import("pages/sub-window/user-group-search/user-group-search.vue")
           }
         ]
       },

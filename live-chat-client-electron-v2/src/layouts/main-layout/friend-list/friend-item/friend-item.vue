@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="item-wrapper"
     :class="`friend-item-component ${active ? 'item-active' : 'item-inactive'}`"
     @click="$emit('click')"
   >
@@ -13,6 +14,26 @@
         signature
       }}</span>
     </div>
+    <!-- before-show事件支持在右键菜单显示前同样实现选中效果 -->
+    <q-menu context-menu @before-show="$emit('click')">
+      <q-list bordered>
+        <!-- clickable使得q-item可点击 -->
+        <!-- v-ripple是为了增加按钮的水波纹效果 -->
+        <!-- v-close-popup是「关闭弹出指令，用于q-menu或q-dialog的关闭弹出」 -->
+        <q-item class="q-item-style" clickable v-close-popup>
+          <q-item-section>发消息(TODO)</q-item-section>
+        </q-item>
+        <q-item class="q-item-style" clickable v-close-popup>
+          <q-item-section>好友详情(子窗口)</q-item-section>
+        </q-item>
+        <q-item class="q-item-style" clickable v-close-popup>
+          <q-item-section>移除好友(TODO)</q-item-section>
+        </q-item>
+        <q-item class="q-item-style" clickable v-close-popup>
+          <q-item-section>拉黑好友(TODO)</q-item-section>
+        </q-item>
+      </q-list>
+    </q-menu>
   </div>
 </template>
 
@@ -56,6 +77,9 @@ export default {
     hover(name) {
       console.log(`hover: ${name}`);
     }
+  },
+  mounted() {
+    console.debug(this.$refs["item-wrapper"]);
   }
 };
 </script>
