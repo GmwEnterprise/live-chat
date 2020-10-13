@@ -26,8 +26,8 @@ function createWindow() {
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    width: 1000,
-    height: 600,
+    width: 1024,
+    height: 768,
     minWidth: 800,
     minHeight: 600,
     useContentSize: true,
@@ -42,14 +42,11 @@ function createWindow() {
       // preload: path.resolve(__dirname, 'electron-preload.js')
     }
   });
-
-  console.warn("URL is " + process.env.APP_URL);
-  mainWindow.loadURL(process.env.APP_URL);
-
   mainWindow.on("close", () => {
     // closed 改成 close
     mainWindow = null;
   });
+  mainWindow.loadURL(process.env.APP_URL);
 }
 
 app.on("ready", createWindow);

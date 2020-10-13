@@ -4,7 +4,7 @@ import com.github.mrag.livechat.common.ApiException;
 import com.github.mrag.livechat.common.token.TokenPayload;
 import com.github.mrag.livechat.common.token.TokenUtil;
 import com.github.mrag.livechat.common.utils.SpringContextUtils;
-import com.github.mrag.livechat.rest.AuthRequired;
+import com.github.mrag.livechat.rest.Permission;
 import com.github.mrag.livechat.rest.RestConsumer;
 import com.github.mrag.livechat.usermsg.api.UserService;
 import org.slf4j.Logger;
@@ -37,9 +37,9 @@ public class TokenInterceptor implements HandlerInterceptor {
         if (handler instanceof HandlerMethod) {
             HandlerMethod controllerMethod = (HandlerMethod) handler;
             // 权限注解在 class 上
-            boolean classHasAnnotation = controllerMethod.getBeanType().isAnnotationPresent(AuthRequired.class);
+            boolean classHasAnnotation = controllerMethod.getBeanType().isAnnotationPresent(Permission.class);
             // 权限注解在 method 上
-            boolean methodHasAnnotation = controllerMethod.hasMethodAnnotation(AuthRequired.class);
+            boolean methodHasAnnotation = controllerMethod.hasMethodAnnotation(Permission.class);
             if (classHasAnnotation || methodHasAnnotation) {
                 // 验证token
                 String tokenVal = request.getHeader("authentication");

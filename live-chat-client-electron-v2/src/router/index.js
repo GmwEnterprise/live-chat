@@ -31,26 +31,47 @@ export default function(/* { store, ssrContext } */) {
           {
             // 保存的聊天记录
             path: "saved-chats",
+            meta: {
+              title: "保存的聊天记录"
+            },
             component: () =>
               import("pages/sub-window/saved-chats/saved-chats.vue")
           },
           {
             // 接收到的文件
             path: "received-files",
+            meta: {
+              title: "文件管理"
+            },
             component: () =>
               import("pages/sub-window/received-files/received-files.vue")
           },
           {
             // 选择朋友，群发消息
             path: "choose-friends",
+            meta: {
+              title: "群发消息"
+            },
             component: () =>
               import("pages/sub-window/choose-friends/choose-friends.vue")
           },
           {
             // 搜索朋友、群聊
             path: "user-group-search",
+            meta: {
+              title: "搜索朋友、群聊"
+            },
             component: () =>
               import("pages/sub-window/user-group-search/user-group-search.vue")
+          },
+          {
+            // 系统设置
+            path: "settings-page",
+            meta: {
+              title: "设置"
+            },
+            component: () =>
+              import("pages/sub-window/settings-page/settings-page.vue")
           }
         ]
       },

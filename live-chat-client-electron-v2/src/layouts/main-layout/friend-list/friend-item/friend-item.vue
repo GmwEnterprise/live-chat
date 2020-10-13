@@ -78,9 +78,7 @@ export default {
       console.log(`hover: ${name}`);
     }
   },
-  mounted() {
-    console.debug(this.$refs["item-wrapper"]);
-  }
+  mounted() {}
 };
 </script>
 

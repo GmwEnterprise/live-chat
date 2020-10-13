@@ -13,7 +13,7 @@ function createWindow() {
   });
 
   // 加载html文件
-  win.loadFile("index.html");
+  win.loadFile("./src/pages/index.html");
 
   // 打开F12开发者工具
   // win.webContents.openDevTools();

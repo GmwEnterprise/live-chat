@@ -1,6 +1,6 @@
 <template>
   <div id="sub-window">
-    <window-top-bar height="30px" />
+    <window-top-bar height="30px" :title="title" />
     <router-view />
   </div>
 </template>
@@ -12,6 +12,17 @@ export default {
   name: "SubWindow",
   components: {
     WindowTopBar
+  },
+  data() {
+    return {
+      title: null
+    };
+  },
+  created() {
+    const routeMeta = this.$route.meta;
+    if (routeMeta && routeMeta.title) {
+      this.title = routeMeta.title;
+    }
   }
 };
 </script>

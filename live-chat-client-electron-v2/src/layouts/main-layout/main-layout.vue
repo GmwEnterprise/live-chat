@@ -17,10 +17,28 @@
               class="icon-button"
               name="person_add_alt_1"
               @click="addFriend()"
-              ><q-tooltip>新的朋友</q-tooltip></q-icon
+              ><q-tooltip anchor="center middle" self="bottom middle"
+                >新的朋友</q-tooltip
+              ></q-icon
             >
             <q-icon class="icon-button" name="menu"
-              ><q-tooltip>更多选项</q-tooltip></q-icon
+              ><q-menu>
+                <q-list bordered>
+                  <q-item class="q-item-style" clickable v-close-popup>
+                    <q-item-section @click="openSettingsDialog()"
+                      >设置</q-item-section
+                    >
+                  </q-item>
+                  <q-separator />
+                  <q-item class="q-item-style" clickable v-close-popup>
+                    <q-item-section @click="openDevTools()"
+                      >开发者工具</q-item-section
+                    >
+                  </q-item>
+                </q-list> </q-menu
+              ><q-tooltip anchor="center middle" self="bottom middle"
+                >更多选项</q-tooltip
+              ></q-icon
             >
           </div>
         </div>
@@ -132,6 +150,8 @@ import UserAvatar from "components/user-avatar/user-avatar.vue";
 import WindowTopBar from "components/window-top-bar/window-top-bar.vue";
 import WindowFooter from "components/window-footer/window-footer.vue";
 
+import { openSubWindow } from "src/services/open-window.service";
+
 export default {
   name: "MainLayout",
   components: {
@@ -145,6 +165,8 @@ export default {
   },
   data() {
     return {
+      // 子窗口管理
+      windows: new Map(),
       // 搜索信息
       searching: false,
       searchInput: "",
@@ -159,8 +181,39 @@ export default {
     };
   },
   methods: {
+    // 打开指定子窗口
+    openSubWindow(path, config) {
+      if (this.windows.has(path)) {
+        this.windows.get(path).show();
+      } else {
+        const win = openSubWindow(this.$q.electron, path, config, () =>
+          this.windows.delete(path)
+        );
+        this.windows.set(path, win);
+      }
+    },
+    // 打开设置窗口
+    openSettingsDialog() {
+      this.openSubWindow("settings-page", {
+        width: 640,
+        height: 480
+      });
+    },
+    // 打开/关闭开发者界面
+    openDevTools() {
+      if (process.env.MODE === "electron") {
+        this.$q.electron.remote.BrowserWindow.getFocusedWindow().webContents.openDevTools(
+          { mode: "right" }
+        );
+      }
+    },
     // 添加朋友
-    addFriend() {},
+    addFriend() {
+      this.openSubWindow("user-group-search", {
+        width: 700,
+        height: 600
+      });
+    },
     // 清除搜索
     searchInputClear() {
       this.searching = false;
@@ -172,7 +225,6 @@ export default {
       if (!this.searchInput) this.searching = false;
     },
     scroll(info, name) {
-      // TODO 滚动事件的防抖处理
       this.litsTransitionScroll[name] = info.verticalPosition;
     },
     litsTransition(newVal, oldVal) {

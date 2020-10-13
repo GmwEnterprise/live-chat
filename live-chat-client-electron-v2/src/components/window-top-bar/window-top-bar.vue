@@ -5,6 +5,9 @@
     :class="`${mainColor} q-electron-drag`"
   >
     <div class="left">
+      <span id="window-title" v-if="title" style="padding-left: 8px;">{{
+        title
+      }}</span>
       <slot name="left">
         <!-- 待扩展 -->
       </slot>
@@ -27,13 +30,20 @@
 export default {
   name: "WindowTopBar",
   props: {
+    // 高度
     height: {
       type: String,
       default: "50px"
     },
+    // 是否为主窗口顶部栏
     main: {
       type: Boolean,
       default: false
+    },
+    // 顶部栏左侧标题
+    title: {
+      type: String,
+      required: false
     }
   },
   data() {
