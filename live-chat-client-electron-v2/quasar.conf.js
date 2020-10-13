@@ -176,7 +176,6 @@ module.exports = function(/* ctx */) {
 
       builder: {
         // https://www.electron.build/configuration/configuration
-
         appId: "live-chat-client-electron-v2"
       },
 

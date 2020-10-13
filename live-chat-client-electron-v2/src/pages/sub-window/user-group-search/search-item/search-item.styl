@@ -1,0 +1,45 @@
+.search-item
+  box-sizing border-box
+  margin 0
+  width calc(100% / 3 - 20px)
+  // height 80px
+  margin-bottom 15px
+  // border 1px solid $gray-3
+  padding 8px
+  display flex
+  justify-content space-between
+  align-items center
+
+  &:hover
+    cursor context-menu
+
+  .search-item-text-msg
+    height 70px
+    width calc(100% - 70px - 20px)
+    display flex
+    flex-direction column
+    justify-content space-between
+
+    .name
+      font-size 15px
+      line-height 20px
+      height 20px
+
+    .id
+      font-size 10px
+      line-height 13px
+      height 13px
+
+    .buttons
+      height calc(100% - 20px - 13px - 10px)
+      display flex
+
+      .button
+        height 100%
+        color $black-1
+        // background-color $green-1
+        border .5px solid $gray-3
+        box-sizing border-box
+        display flex
+        align-items center
+        padding 0 5px

@@ -13,10 +13,18 @@
       </slot>
     </div>
     <div class="right q-electron-drag--exception">
-      <span :class="`window-top-bar-btn ${hoverColor}`" @click="minimize">
+      <span
+        v-if="!noMinimize"
+        :class="`window-top-bar-btn ${hoverColor}`"
+        @click="minimize"
+      >
         <q-icon name="minimize"></q-icon>
       </span>
-      <span :class="`window-top-bar-btn ${hoverColor}`" @click="maximize">
+      <span
+        v-if="!noMaximize"
+        :class="`window-top-bar-btn ${hoverColor}`"
+        @click="maximize"
+      >
         <q-icon name="crop_square"></q-icon>
       </span>
       <span :class="`window-top-bar-btn ${hoverColor}`" @click="close"
@@ -30,6 +38,14 @@
 export default {
   name: "WindowTopBar",
   props: {
+    noMaximize: {
+      type: Boolean,
+      default: false
+    },
+    noMinimize: {
+      type: Boolean,
+      default: false
+    },
     // 高度
     height: {
       type: String,

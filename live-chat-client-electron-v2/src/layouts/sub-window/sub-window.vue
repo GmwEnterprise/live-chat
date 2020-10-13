@@ -1,7 +1,12 @@
 <template>
   <div id="sub-window">
-    <window-top-bar height="30px" :title="title" />
-    <router-view />
+    <window-top-bar
+      height="30px"
+      :title="title"
+      :no-minimize="noMinimize"
+      :no-maximize="noMaximize"
+    />
+    <div class="sub-window-content"><router-view /></div>
   </div>
 </template>
 
@@ -15,13 +20,17 @@ export default {
   },
   data() {
     return {
-      title: null
+      title: null,
+      noMaximize: false,
+      noMinimize: false
     };
   },
   created() {
     const routeMeta = this.$route.meta;
     if (routeMeta && routeMeta.title) {
       this.title = routeMeta.title;
+      if (routeMeta.noMaximize) this.noMaximize = routeMeta.noMaximize;
+      if (routeMeta.noMinimize) this.noMinimize = routeMeta.noMinimize;
     }
   }
 };

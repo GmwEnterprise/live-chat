@@ -59,7 +59,9 @@ export default function(/* { store, ssrContext } */) {
             // 搜索朋友、群聊
             path: "user-group-search",
             meta: {
-              title: "搜索朋友、群聊"
+              title: "搜索朋友、群聊",
+              noMaximize: true,
+              noMinimize: true
             },
             component: () =>
               import("pages/sub-window/user-group-search/user-group-search.vue")

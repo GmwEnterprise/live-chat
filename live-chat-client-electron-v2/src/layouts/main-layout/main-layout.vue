@@ -211,7 +211,8 @@ export default {
     addFriend() {
       this.openSubWindow("user-group-search", {
         width: 700,
-        height: 600
+        height: 600,
+        resizable: false
       });
     },
     // 清除搜索
