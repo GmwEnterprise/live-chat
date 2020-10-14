@@ -14,14 +14,14 @@
     </div>
     <div class="right q-electron-drag--exception">
       <span
-        v-if="!noMinimize"
+        v-show="!noMinimize"
         :class="`window-top-bar-btn ${hoverColor}`"
         @click="minimize"
       >
         <q-icon name="minimize"></q-icon>
       </span>
       <span
-        v-if="!noMaximize"
+        v-show="!noMaximize"
         :class="`window-top-bar-btn ${hoverColor}`"
         @click="maximize"
       >
@@ -96,6 +96,7 @@ export default {
     maximize() {
       if (process.env.MODE === "electron") {
         const win = this.$q.electron.remote.BrowserWindow.getFocusedWindow();
+        console.log(`win is maximized ? ${win.isMaximized()}`);
         if (win.isMaximized()) {
           win.unmaximize();
           this.isMaximized = false;

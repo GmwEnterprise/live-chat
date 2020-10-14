@@ -3,7 +3,7 @@ package com.github.mrag.livechat.rest.controller;
 import com.github.mrag.livechat.common.constant.enums.AccountStatus;
 import com.github.mrag.livechat.common.constant.enums.BloodGroup;
 import com.github.mrag.livechat.common.constant.enums.Gender;
-import com.github.mrag.livechat.common.http.HttpResponse;
+import com.github.mrag.livechat.rest.Permission;
 import com.github.mrag.livechat.usermsg.api.UserService;
 import com.github.mrag.livechat.usermsg.vo.UserDetail;
 import io.swagger.annotations.Api;
@@ -13,6 +13,7 @@ import org.apache.dubbo.config.annotation.DubboReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,6 @@ import java.util.Map;
 @Api(tags = "用户信息与用户关系接口")
 @RestController
 @RequestMapping("/user")
-// @AuthRequired
 public class UserController {
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
@@ -44,34 +44,36 @@ public class UserController {
         HttpHeaders headers = new HttpHeaders();
         headers.add("authentication", token);
         return ResponseEntity.ok().headers(headers).build();
-
-        // TODO 状态201携带的头部Location之于axios的特殊处理
     }
 
     @ApiOperation("用户注册")
     @PostMapping("/registry")
-    HttpResponse registry(@RequestBody UserDetail detail) {
+    ResponseEntity<?> registry(@ApiParam(value = "注册信息", required = true)
+                               @RequestBody UserDetail detail) {
         log.debug("注册, msg = {}", detail);
         String token = userService.registry(detail);
-        return HttpResponse.ok(token, "注册成功！");
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("authentication", token);
+        return ResponseEntity.status(HttpStatus.CREATED).headers(headers).build();
     }
 
     @ApiOperation("修改个人信息")
     @PostMapping("/update-msg")
-    HttpResponse updateMsg(@RequestBody UserDetail detail) {
+    @Permission
+    ResponseEntity<?> updateMsg(@ApiParam(value = "需要修改的信息", required = true)
+                                @RequestBody UserDetail detail) {
         log.debug("修改信息，id = {}, unmodified = {}", detail.getId(), detail);
         userService.modify(detail);
-        return HttpResponse.ok(null, "个人信息修改成功！");
+        return ResponseEntity.ok().build();
     }
 
     @ApiOperation("测试接口")
     @GetMapping("/test")
-        // @AuthRequired
-    HttpResponse testInterface(@RequestParam(required = false) Gender gender,
-                               @RequestParam(required = false) BloodGroup bloodGroup,
-                               @RequestParam(required = false) AccountStatus accountStatus,
-                               @RequestParam(required = false) LocalDateTime date) {
-        return HttpResponse.ok(Map.of(
+    ResponseEntity<?> testInterface(@RequestParam(required = false) Gender gender,
+                                    @RequestParam(required = false) BloodGroup bloodGroup,
+                                    @RequestParam(required = false) AccountStatus accountStatus,
+                                    @RequestParam(required = false) LocalDateTime date) {
+        return ResponseEntity.ok(Map.of(
                 "gender", gender,
                 "bloodGroup", bloodGroup,
                 "accountStatus", accountStatus,

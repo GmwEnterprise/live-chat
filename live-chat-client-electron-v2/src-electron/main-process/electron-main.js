@@ -19,19 +19,40 @@ if (process.env.PROD) {
   global.__statics = __dirname;
 }
 
-let mainWindow;
+let windowSignIn, // 登录注册窗口
+  windowMainLayout; // 主窗口
 
-function createWindow() {
-  /**
-   * Initial window options
-   */
-  mainWindow = new BrowserWindow({
+// 创建主窗口
+function createWindowMainLayout() {
+  windowMainLayout = new BrowserWindow({
     width: 1024,
     height: 768,
     minWidth: 800,
     minHeight: 600,
     useContentSize: true,
     frame: false, // 是否显示顶部windows栏
+    webPreferences: {
+      nodeIntegration: process.env.QUASAR_NODE_INTEGRATION,
+      nodeIntegrationInWorker: process.env.QUASAR_NODE_INTEGRATION
+    }
+  });
+  windowMainLayout.on("close", () => {
+    windowMainLayout = null;
+  });
+  windowMainLayout.loadURL(process.env.APP_URL);
+}
+
+// 创建登录窗口
+function createWindowSignIn() {
+  /**
+   * Initial window options
+   */
+  windowSignIn = new BrowserWindow({
+    width: 400,
+    height: 350,
+    useContentSize: true,
+    frame: false, // 是否显示顶部windows栏
+    resizable: false,
     webPreferences: {
       // Change from /quasar.conf.js > electron > nodeIntegration;
       // More info: https://quasar.dev/quasar-cli/developing-electron-apps/node-integration
@@ -42,23 +63,27 @@ function createWindow() {
       // preload: path.resolve(__dirname, 'electron-preload.js')
     }
   });
-  mainWindow.on("close", () => {
-    // closed 改成 close
-    mainWindow = null;
+  windowSignIn.on("close", () => {
+    windowSignIn = null;
   });
-  mainWindow.loadURL(process.env.APP_URL);
+  windowSignIn.loadURL(process.env.APP_URL + "/#/sub-window/sign-in-on");
 }
 
-app.on("ready", createWindow);
+// windows与linux中，ready 事件与 will-finish-launching 事件相同
+// 当应用程序完成基础的启动的时候被触发
+// 通常会在这里启动崩溃报告和自动更新
+app.on("ready", createWindowSignIn);
 
+// 最后一个窗口被关闭时的动作。默认动作是退出应用
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
-    app.quit();
+    app.quit(); // 退出应用
   }
 });
 
-app.on("activate", () => {
-  if (mainWindow === null) {
-    createWindow();
-  }
-});
+// 1）首次启动应用程序；2）尝试在应用程序已运行时或单击应用程序的「坞站」或「任务栏图标」时
+// app.on("activate", () => {
+//   if (windowMainLayout === null) {
+//     createWindowMainLayout();
+//   }
+// });

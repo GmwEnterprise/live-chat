@@ -4,15 +4,17 @@ export function openSubWindow(electron, path, config, whenClose) {
     minWidth: 350,
     height: 350,
     minHeight: 350,
+    useContentSize: true,
+    frame: false,
     webPreferences: {
-      nodeIntegration: true
-    },
-    frame: false
+      nodeIntegration: process.env.QUASAR_NODE_INTEGRATION,
+      nodeIntegrationInWorker: process.env.QUASAR_NODE_INTEGRATION
+    }
   };
   Object.assign(conf, config);
   if (process.env.MODE === "electron") {
     let win = new electron.remote.BrowserWindow(conf);
-    win.on("ready-to-show", () => win.show());
+    win.once("ready-to-show", () => win.show());
     if (whenClose) win.on("close", whenClose);
     win.loadURL(`${process.env.APP_URL}/#/sub-window/${path}`);
     return win;

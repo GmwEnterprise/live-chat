@@ -29,6 +29,12 @@ export default function(/* { store, ssrContext } */) {
         component: () => import("layouts/sub-window/sub-window.vue"),
         children: [
           {
+            // 登录注册
+            path: "sign-in-on",
+            component: () =>
+              import("pages/sub-window/sign-in-on/sign-in-on.vue")
+          },
+          {
             // 保存的聊天记录
             path: "saved-chats",
             meta: {

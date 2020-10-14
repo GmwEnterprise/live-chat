@@ -9,7 +9,8 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum Gender implements DictEnumInterface {
-    MEN(1, "男"), WOMEN(2, "女"),
+    MEN(1, "男"),
+    WOMEN(2, "女"),
     SECRET(3, "保密");
 
     @ApiModelProperty(value = "键")

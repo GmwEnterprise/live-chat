@@ -1,11 +1,8 @@
 .search-item
   box-sizing border-box
   margin 0
-  width calc(100% / 3 - 20px)
-  // height 80px
-  margin-bottom 15px
-  // border 1px solid $gray-3
-  padding 8px
+  width calc(100% / 3)
+  padding 20px
   display flex
   justify-content space-between
   align-items center
@@ -14,32 +11,50 @@
     cursor context-menu
 
   .search-item-text-msg
-    height 70px
     width calc(100% - 70px - 20px)
-    display flex
-    flex-direction column
-    justify-content space-between
 
     .name
-      font-size 15px
+      display flex
+      align-items center
+      width 100%
+      font-size 14px
       line-height 20px
       height 20px
 
+      .name-text
+        max-width calc(100% - 1.2em - 5px)
+        overflow hidden
+        white-space nowrap
+        text-overflow ellipsis
+
+      .gender-icon
+        font-size 1.2em
+        margin-left 5px
+
     .id
-      font-size 10px
-      line-height 13px
-      height 13px
+      display block
+      font-size 12px
+      line-height 18px
+      height 18px
+      color $gray-5
 
     .buttons
-      height calc(100% - 20px - 13px - 10px)
+      margin-top 10px
       display flex
 
       .button
         height 100%
-        color $black-1
-        // background-color $green-1
-        border .5px solid $gray-3
+        color #444
         box-sizing border-box
         display flex
         align-items center
         padding 0 5px
+        background-color $green-1
+        box-sizing border-box
+        border-radius 0.2em
+        color white
+        font-size .8em
+        height 2em
+
+        &:hover
+          background-color $green-2
