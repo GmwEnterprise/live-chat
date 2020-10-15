@@ -4,9 +4,26 @@
       <span>{{ title }}</span>
     </div>
     <!-- <q-separator /> -->
-    <div id="content-input"></div>
-    <div id="content-submit" v-show="mode !== 'quick-sign-in'">
-      <button class="my-btn" @click="submit">{{ title }}</button>
+    <div id="content-input">
+      <template v-if="mode === 'sign-in'">
+        <q-input stack-label label="手机号 / 邮箱 / 微信号"></q-input>
+        <q-input stack-label label="密码"></q-input>
+      </template>
+      <template v-if="mode === 'quick-sign-in'">
+        <div id="qr-code-wrapper">
+          <img v-if="quickSignInQRCode" :src="quickSignInQRCode" />
+          <img v-else src="/images/default-qrcode.png" />
+        </div>
+      </template>
+    </div>
+    <div id="content-submit">
+      <span id="registration-link" @click="toRegistrationMode()">注册</span>
+      <button class="my-btn-text" @click="modeChange()">
+        {{ mode === "quick-sign-in" ? "密码登录" : "快速登录" }}
+      </button>
+      <button class="my-btn" v-show="mode !== 'quick-sign-in'" @click="submit">
+        {{ title }}
+      </button>
     </div>
   </div>
 </template>
@@ -14,14 +31,15 @@
 <script>
 const modeTitle = new Map();
 modeTitle.set("sign-in", "登录");
-modeTitle.set("quick-sign-in", "快速登录");
+modeTitle.set("quick-sign-in", "扫描二维码快速登录");
 modeTitle.set("registration", "注册");
 
 export default {
   name: "SignInOn",
   data() {
     return {
-      mode: "sign-in" // 登录模式 ["sign-in", "quick-sign-in", "registration"];
+      mode: "sign-in",
+      quickSignInQRCode: ""
     };
   },
   computed: {
@@ -30,6 +48,14 @@ export default {
     }
   },
   methods: {
+    // 切换到注册模式
+    toRegistrationMode() {},
+
+    // 快速登录 与 密码登录之间的转换
+    modeChange() {
+      if (this.mode === "sign-in") this.mode = "quick-sign-in";
+      else if (this.mode === "quick-sign-in") this.mode = "sign-in";
+    },
     // 点击提交
     submit() {
       // TODO

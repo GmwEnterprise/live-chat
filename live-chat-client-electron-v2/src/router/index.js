@@ -31,6 +31,10 @@ export default function(/* { store, ssrContext } */) {
           {
             // 登录注册
             path: "sign-in-on",
+            meta: {
+              noMaximize: true,
+              noMinimize: true
+            },
             component: () =>
               import("pages/sub-window/sign-in-on/sign-in-on.vue")
           },

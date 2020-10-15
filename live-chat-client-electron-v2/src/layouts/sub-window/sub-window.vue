@@ -27,8 +27,8 @@ export default {
   },
   created() {
     const routeMeta = this.$route.meta;
-    if (routeMeta && routeMeta.title) {
-      this.title = routeMeta.title;
+    if (routeMeta) {
+      if (routeMeta.title) this.title = routeMeta.title;
       if (routeMeta.noMaximize) this.noMaximize = routeMeta.noMaximize;
       if (routeMeta.noMinimize) this.noMinimize = routeMeta.noMinimize;
     }
