@@ -5,4 +5,4 @@ server:
 
 mybatis:
   mapper-locations: classpath:com/github/mrag/livechat/modules/**/*.xml
-  type-handlers-package:
+  type-handlers-package: com.github.mrag.livechat.enums.typehandler

@@ -74,9 +74,9 @@ public class AppConfig implements WebMvcConfigurer {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("SwaggerUI演示")
-                .description("mall-tiny")
-                .contact("macro")
+                .title("LiveChat API document")
+                .description("...")
+                .contact("Mrag")
                 .version("1.0")
                 .build();
     }

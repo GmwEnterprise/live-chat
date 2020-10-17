@@ -2,31 +2,23 @@ package com.github.mrag.livechat.modules.user.service;
 
 import com.github.mrag.livechat.modules.user.entity.LivechatUser;
 
+/**
+ * 用户相关服务
+ */
 public interface UserService {
+    /**
+     * 注册一个账户
+     *
+     * @param user 注册信息
+     * @return 成功注册后完整信息
+     */
+    String signUp(LivechatUser user);
 
     /**
-     * 修改用户信息
+     * 登陆
+     *
+     * @param user 用户登陆信息
+     * @return
      */
-    void modify(LivechatUser user);
-
-    /**
-     * 用户登陆并返回token
-     */
-    String signInUser(String key, String password);
-
-    /**
-     * 检查数据库中是否有这个手机号的账户存在，返回布尔值
-     */
-    boolean checkPhoneExists(String phone);
-
-    /**
-     * 通过userId获取密码加密哈希
-     */
-    String findUserHashById(long userId);
-
-
-    /**
-     * 注册用户并返回token
-     */
-    String registry(LivechatUser detail);
+    String signIn(LivechatUser user);
 }
