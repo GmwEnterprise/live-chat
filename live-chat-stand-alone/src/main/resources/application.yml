@@ -1,0 +1,8 @@
+server:
+  port: 4200
+  servlet:
+    context-path: /api
+
+mybatis:
+  mapper-locations: classpath:com/github/mrag/livechat/modules/**/*.xml
+  type-handlers-package:

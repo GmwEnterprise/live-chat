@@ -9,8 +9,10 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum BloodGroup implements DictEnumInterface {
-    A(1, "A"), B(2, "B"),
-    O(3, "O"), AB(4, "AB");
+    A(1, "A"),
+    B(2, "B"),
+    O(3, "O"),
+    AB(4, "AB");
 
     @ApiModelProperty(value = "键")
     private final String key;
