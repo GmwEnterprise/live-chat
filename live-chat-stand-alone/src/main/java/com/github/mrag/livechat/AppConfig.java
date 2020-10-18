@@ -14,6 +14,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -21,6 +22,7 @@ import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -28,6 +30,7 @@ import java.util.List;
 
 @Configuration
 @EnableWebMvc
+@EnableSwagger2
 public class AppConfig implements WebMvcConfigurer {
     private static final Logger log = LoggerFactory.getLogger(WebMvcConfigurer.class);
 
@@ -51,10 +54,15 @@ public class AppConfig implements WebMvcConfigurer {
         converters.add(new MappingJackson2HttpMessageConverter(objectMapper()));
     }
 
-    // FIXME 尝试配置 HttpHeaders 来处理跨域
+    /**
+     * 通过在响应头中添加字段也可以实现跨域功能
+     *
+     * @param registry
+     */
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**");
+        registry.addMapping("/**").allowedOrigins("*")
+                .allowedMethods("POST", "GET", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD");
     }
 
     @Bean
@@ -81,4 +89,18 @@ public class AppConfig implements WebMvcConfigurer {
                 .build();
     }
 
+    /**
+     * 静态资源绕行
+     */
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/resources/**")
+                .addResourceLocations("classpath:/static/");
+        // 解决swagger无法访问
+        registry.addResourceHandler("/swagger-ui.html")
+                .addResourceLocations("classpath:/META-INF/resources/");
+        // 解决swagger的js文件无法访问
+        registry.addResourceHandler("/webjars/**")
+                .addResourceLocations("classpath:/META-INF/resources/webjars/");
+    }
 }

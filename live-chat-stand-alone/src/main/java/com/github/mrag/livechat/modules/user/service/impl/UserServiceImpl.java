@@ -1,6 +1,8 @@
 package com.github.mrag.livechat.modules.user.service.impl;
 
 import com.github.mrag.livechat.common.Encryption;
+import com.github.mrag.livechat.modules.user.dto.LivechatUserRegistration;
+import com.github.mrag.livechat.modules.user.entity.LivechatUser;
 import com.github.mrag.livechat.modules.user.service.UserService;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -14,6 +16,21 @@ import java.security.SecureRandom;
 @Service
 public class UserServiceImpl implements UserService {
     private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
+
+    @Override
+    public String signUp(LivechatUserRegistration user) {
+        return null;
+    }
+
+    @Override
+    public String signIn(String verificationText) {
+        return null;
+    }
+
+    @Override
+    public LivechatUser findLivechatUserByToken(String token) {
+        return null;
+    }
 
     /**
      * 对原始密码加盐，并返回哈希加密后的密码与盐值

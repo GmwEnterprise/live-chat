@@ -1,8 +1,15 @@
 server:
   port: 4200
   servlet:
-    context-path: /api
+    context-path: /livechat-api
 
 mybatis:
   mapper-locations: classpath:com/github/mrag/livechat/modules/**/*.xml
   type-handlers-package: com.github.mrag.livechat.enums.typehandler
+
+spring:
+  datasource:
+    url: jdbc:mysql://120.79.155.125:4001/live_chat?useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource

@@ -1,5 +1,6 @@
 package com.github.mrag.livechat.modules.user.service;
 
+import com.github.mrag.livechat.modules.user.dto.LivechatUserRegistration;
 import com.github.mrag.livechat.modules.user.entity.LivechatUser;
 
 /**
@@ -12,13 +13,21 @@ public interface UserService {
      * @param user 注册信息
      * @return 成功注册后完整信息
      */
-    String signUp(LivechatUser user);
+    String signUp(LivechatUserRegistration user);
 
     /**
      * 登陆
      *
-     * @param user 用户登陆信息
+     * @param verificationText 验证信息
      * @return
      */
-    String signIn(LivechatUser user);
+    String signIn(String verificationText);
+
+    /**
+     * 解析token获取个人资料
+     *
+     * @param token 令牌
+     * @return 用户信息
+     */
+    LivechatUser findLivechatUserByToken(String token);
 }
