@@ -1,4 +1,4 @@
-package com.github.mrag.livechat.common;
+package com.github.mrag.livechat.common.web;
 
 import java.lang.annotation.*;
 

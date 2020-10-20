@@ -1,7 +1,7 @@
 package com.github.mrag.livechat.modules.user.controller;
 
-import com.github.mrag.livechat.common.BaseRestController;
-import com.github.mrag.livechat.common.Permission;
+import com.github.mrag.livechat.common.web.BaseRestController;
+import com.github.mrag.livechat.common.web.Permission;
 import com.github.mrag.livechat.modules.user.dto.LivechatUserRegistration;
 import com.github.mrag.livechat.modules.user.entity.LivechatUser;
 import com.github.mrag.livechat.modules.user.service.UserService;
