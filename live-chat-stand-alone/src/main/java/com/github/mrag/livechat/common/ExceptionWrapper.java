@@ -1,7 +1,5 @@
 package com.github.mrag.livechat.common;
 
-import com.github.mrag.livechat.Wrapper;
-
 public interface ExceptionWrapper {
 
     /*

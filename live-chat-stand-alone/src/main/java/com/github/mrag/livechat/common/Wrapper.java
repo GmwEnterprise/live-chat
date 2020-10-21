@@ -1,4 +1,4 @@
-package com.github.mrag.livechat;
+package com.github.mrag.livechat.common;
 
 @FunctionalInterface
 public interface Wrapper {

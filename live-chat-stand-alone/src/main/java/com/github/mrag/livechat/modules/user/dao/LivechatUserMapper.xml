@@ -3,10 +3,10 @@
 <mapper namespace="com.github.mrag.livechat.modules.user.dao.LivechatUserMapper">
   <resultMap id="BaseResultMap" type="com.github.mrag.livechat.modules.user.entity.LivechatUser">
     <id column="id" jdbcType="BIGINT" property="id"/>
-    <result column="wechat_no" jdbcType="VARCHAR" property="wechatNo"/>
     <result column="username" jdbcType="VARCHAR" property="username"/>
     <result column="avatar_id" jdbcType="VARCHAR" property="avatarId"/>
-    <result column="gender" jdbcType="TINYINT" property="gender"/>
+    <result column="gender" jdbcType="TINYINT" property="gender"
+            typeHandler="com.github.mrag.livechat.enums.typehandler.GenderTypeHandler"/>
     <result column="birthday" jdbcType="TIMESTAMP" property="birthday"/>
     <result column="signature" jdbcType="VARCHAR" property="signature"/>
     <result column="company" jdbcType="VARCHAR" property="company"/>
@@ -15,14 +15,16 @@
     <result column="salt" jdbcType="VARCHAR" property="salt"/>
     <result column="phone_number" jdbcType="VARCHAR" property="phoneNumber"/>
     <result column="email" jdbcType="VARCHAR" property="email"/>
-    <result column="blood_group" jdbcType="TINYINT" property="bloodGroup"/>
+    <result column="blood_group" jdbcType="TINYINT" property="bloodGroup"
+            typeHandler="com.github.mrag.livechat.enums.typehandler.BloodGroupTypeHandler"/>
     <result column="occupation" jdbcType="INTEGER" property="occupation"/>
     <result column="location" jdbcType="INTEGER" property="location"/>
     <result column="hometown" jdbcType="INTEGER" property="hometown"/>
-    <result column="account_status" jdbcType="TINYINT" property="accountStatus"/>
+    <result column="account_status" jdbcType="TINYINT" property="accountStatus"
+            typeHandler="com.github.mrag.livechat.enums.typehandler.AccountStatusTypeHandler"/>
   </resultMap>
   <sql id="Base_Column_List">
-    id, wechat_no, username, avatar_id, gender, birthday, signature, company, personal_description, 
+    id, username, avatar_id, gender, birthday, signature, company, personal_description, 
     user_password, salt, phone_number, email, blood_group, occupation, location, hometown, 
     account_status
   </sql>
@@ -32,34 +34,37 @@
     from livechat_user
     where id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="selectPasswordAndSaltByPhoneNumber" resultMap="BaseResultMap">
+    select id, user_password, salt
+    from livechat_user
+    where phone_number = #{phone}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from livechat_user
+    delete
+    from livechat_user
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.github.mrag.livechat.modules.user.entity.LivechatUser">
-    insert into livechat_user (id, wechat_no, username, 
-      avatar_id, gender, birthday, 
-      signature, company, personal_description, 
-      user_password, salt, phone_number, 
-      email, blood_group, occupation, 
-      location, hometown, account_status
-      )
-    values (#{id,jdbcType=BIGINT}, #{wechatNo,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
-      #{avatarId,jdbcType=VARCHAR}, #{gender,jdbcType=TINYINT}, #{birthday,jdbcType=TIMESTAMP}, 
-      #{signature,jdbcType=VARCHAR}, #{company,jdbcType=VARCHAR}, #{personalDescription,jdbcType=VARCHAR}, 
-      #{userPassword,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, 
-      #{email,jdbcType=VARCHAR}, #{bloodGroup,jdbcType=TINYINT}, #{occupation,jdbcType=INTEGER}, 
-      #{location,jdbcType=INTEGER}, #{hometown,jdbcType=INTEGER}, #{accountStatus,jdbcType=TINYINT}
-      )
+    insert into livechat_user (id, username, avatar_id,
+                               gender, birthday, signature,
+                               company, personal_description, user_password,
+                               salt, phone_number, email,
+                               blood_group, occupation, location,
+                               hometown, account_status)
+    values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{avatarId,jdbcType=VARCHAR},
+            #{gender,jdbcType=TINYINT,typeHandler=com.github.mrag.livechat.enums.typehandler.GenderTypeHandler},
+            #{birthday,jdbcType=TIMESTAMP}, #{signature,jdbcType=VARCHAR},
+            #{company,jdbcType=VARCHAR}, #{personalDescription,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR},
+            #{salt,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+            #{bloodGroup,jdbcType=TINYINT,typeHandler=com.github.mrag.livechat.enums.typehandler.BloodGroupTypeHandler},
+            #{occupation,jdbcType=INTEGER}, #{location,jdbcType=INTEGER}, #{hometown,jdbcType=INTEGER},
+            #{accountStatus,jdbcType=TINYINT,typeHandler=com.github.mrag.livechat.enums.typehandler.AccountStatusTypeHandler})
   </insert>
   <insert id="insertSelective" parameterType="com.github.mrag.livechat.modules.user.entity.LivechatUser">
     insert into livechat_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
-      </if>
-      <if test="wechatNo != null">
-        wechat_no,
       </if>
       <if test="username != null">
         username,
@@ -114,9 +119,6 @@
       <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="wechatNo != null">
-        #{wechatNo,jdbcType=VARCHAR},
-      </if>
       <if test="username != null">
         #{username,jdbcType=VARCHAR},
       </if>
@@ -124,7 +126,7 @@
         #{avatarId,jdbcType=VARCHAR},
       </if>
       <if test="gender != null">
-        #{gender,jdbcType=TINYINT},
+        #{gender,jdbcType=TINYINT,typeHandler=com.github.mrag.livechat.enums.typehandler.GenderTypeHandler},
       </if>
       <if test="birthday != null">
         #{birthday,jdbcType=TIMESTAMP},
@@ -151,7 +153,7 @@
         #{email,jdbcType=VARCHAR},
       </if>
       <if test="bloodGroup != null">
-        #{bloodGroup,jdbcType=TINYINT},
+        #{bloodGroup,jdbcType=TINYINT,typeHandler=com.github.mrag.livechat.enums.typehandler.BloodGroupTypeHandler},
       </if>
       <if test="occupation != null">
         #{occupation,jdbcType=INTEGER},
@@ -163,16 +165,13 @@
         #{hometown,jdbcType=INTEGER},
       </if>
       <if test="accountStatus != null">
-        #{accountStatus,jdbcType=TINYINT},
+        #{accountStatus,jdbcType=TINYINT,typeHandler=com.github.mrag.livechat.enums.typehandler.AccountStatusTypeHandler},
       </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.github.mrag.livechat.modules.user.entity.LivechatUser">
     update livechat_user
     <set>
-      <if test="wechatNo != null">
-        wechat_no = #{wechatNo,jdbcType=VARCHAR},
-      </if>
       <if test="username != null">
         username = #{username,jdbcType=VARCHAR},
       </if>
@@ -180,7 +179,7 @@
         avatar_id = #{avatarId,jdbcType=VARCHAR},
       </if>
       <if test="gender != null">
-        gender = #{gender,jdbcType=TINYINT},
+        gender = #{gender,jdbcType=TINYINT,typeHandler=com.github.mrag.livechat.enums.typehandler.GenderTypeHandler},
       </if>
       <if test="birthday != null">
         birthday = #{birthday,jdbcType=TIMESTAMP},
@@ -207,7 +206,8 @@
         email = #{email,jdbcType=VARCHAR},
       </if>
       <if test="bloodGroup != null">
-        blood_group = #{bloodGroup,jdbcType=TINYINT},
+        blood_group =
+        #{bloodGroup,jdbcType=TINYINT,typeHandler=com.github.mrag.livechat.enums.typehandler.BloodGroupTypeHandler},
       </if>
       <if test="occupation != null">
         occupation = #{occupation,jdbcType=INTEGER},
@@ -219,30 +219,30 @@
         hometown = #{hometown,jdbcType=INTEGER},
       </if>
       <if test="accountStatus != null">
-        account_status = #{accountStatus,jdbcType=TINYINT},
+        account_status =
+        #{accountStatus,jdbcType=TINYINT,typeHandler=com.github.mrag.livechat.enums.typehandler.AccountStatusTypeHandler},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.github.mrag.livechat.modules.user.entity.LivechatUser">
     update livechat_user
-    set wechat_no = #{wechatNo,jdbcType=VARCHAR},
-      username = #{username,jdbcType=VARCHAR},
-      avatar_id = #{avatarId,jdbcType=VARCHAR},
-      gender = #{gender,jdbcType=TINYINT},
-      birthday = #{birthday,jdbcType=TIMESTAMP},
-      signature = #{signature,jdbcType=VARCHAR},
-      company = #{company,jdbcType=VARCHAR},
-      personal_description = #{personalDescription,jdbcType=VARCHAR},
-      user_password = #{userPassword,jdbcType=VARCHAR},
-      salt = #{salt,jdbcType=VARCHAR},
-      phone_number = #{phoneNumber,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
-      blood_group = #{bloodGroup,jdbcType=TINYINT},
-      occupation = #{occupation,jdbcType=INTEGER},
-      location = #{location,jdbcType=INTEGER},
-      hometown = #{hometown,jdbcType=INTEGER},
-      account_status = #{accountStatus,jdbcType=TINYINT}
+    set username             = #{username,jdbcType=VARCHAR},
+        avatar_id            = #{avatarId,jdbcType=VARCHAR},
+        gender               = #{gender,jdbcType=TINYINT,typeHandler=com.github.mrag.livechat.enums.typehandler.GenderTypeHandler},
+        birthday             = #{birthday,jdbcType=TIMESTAMP},
+        signature            = #{signature,jdbcType=VARCHAR},
+        company              = #{company,jdbcType=VARCHAR},
+        personal_description = #{personalDescription,jdbcType=VARCHAR},
+        user_password        = #{userPassword,jdbcType=VARCHAR},
+        salt                 = #{salt,jdbcType=VARCHAR},
+        phone_number         = #{phoneNumber,jdbcType=VARCHAR},
+        email                = #{email,jdbcType=VARCHAR},
+        blood_group          = #{bloodGroup,jdbcType=TINYINT,typeHandler=com.github.mrag.livechat.enums.typehandler.BloodGroupTypeHandler},
+        occupation           = #{occupation,jdbcType=INTEGER},
+        location             = #{location,jdbcType=INTEGER},
+        hometown             = #{hometown,jdbcType=INTEGER},
+        account_status       = #{accountStatus,jdbcType=TINYINT,typeHandler=com.github.mrag.livechat.enums.typehandler.AccountStatusTypeHandler}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

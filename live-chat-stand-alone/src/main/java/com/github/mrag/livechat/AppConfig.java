@@ -7,6 +7,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.github.mrag.livechat.web.config.PermissionInterceptor;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -30,6 +31,7 @@ import java.util.List;
 @Configuration
 @EnableWebMvc
 @EnableSwagger2
+@MapperScan(basePackages = "com.github.mrag.livechat.modules.*.dao")
 public class AppConfig implements WebMvcConfigurer {
     private static final Logger log = LoggerFactory.getLogger(WebMvcConfigurer.class);
 
@@ -71,6 +73,7 @@ public class AppConfig implements WebMvcConfigurer {
 
     @Bean
     public Docket createRestApi() {
+        // "/swagger-ui.html"打开界面，"/v2/api-docs"打开JSON配置
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()

@@ -7,7 +7,7 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>live-chat-stand-alone</name>
   <description>Live</description>
-
+  
   <properties>
     <java.version>11</java.version>
     <spring.boot.version>2.3.4.RELEASE</spring.boot.version>
@@ -20,7 +20,7 @@
     <jose.jwt.version>8.2.1</jose.jwt.version>
     <commons.io.version>2.6</commons.io.version>
   </properties>
-
+  
   <dependencyManagement>
     <dependencies>
       <!-- springboot core dependencies -->
@@ -33,7 +33,7 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
+  
   <dependencies>
     <!-- redis cache -->
     <dependency>
@@ -41,7 +41,7 @@
       <artifactId>redisson</artifactId>
       <version>${redisson.version}</version>
     </dependency>
-
+    
     <!-- web -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -61,7 +61,7 @@
       <groupId>javax.xml.bind</groupId>
       <artifactId>jaxb-api</artifactId>
     </dependency>
-
+    
     <!-- data access -->
     <dependency>
       <groupId>org.mybatis.generator</groupId>
@@ -88,7 +88,7 @@
       <artifactId>mysql-connector-java</artifactId>
       <scope>runtime</scope>
     </dependency>
-
+    
     <!-- api-doc -->
     <dependency>
       <groupId>io.springfox</groupId>
@@ -100,7 +100,7 @@
       <artifactId>springfox-swagger-ui</artifactId>
       <version>2.9.2</version>
     </dependency>
-
+    
     <!-- tools -->
     <dependency>
       <groupId>org.apache.commons</groupId>
@@ -115,7 +115,7 @@
       <artifactId>commons-io</artifactId>
       <version>${commons.io.version}</version>
     </dependency>
-
+    
     <!-- testing -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -129,7 +129,7 @@
       </exclusions>
     </dependency>
   </dependencies>
-
+  
   <build>
     <plugins>
       <plugin>

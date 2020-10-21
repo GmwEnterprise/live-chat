@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.mrag.livechat.modules.user.dao.LivechatUserRelationMapper">
+  <resultMap id="BaseResultMap" type="com.github.mrag.livechat.modules.user.entity.LivechatUserRelation">
+    <id column="my_id" jdbcType="BIGINT" property="myId"/>
+    <id column="others_id" jdbcType="BIGINT" property="othersId"/>
+    <result column="relation_state" jdbcType="TINYINT" property="relationState"
+            typeHandler="com.github.mrag.livechat.enums.typehandler.UserRelationStateTypeHandler"/>
+    <result column="relation_create_datetime" jdbcType="TIMESTAMP" property="relationCreateDatetime"/>
+    <result column="relation_last_update_datetime" jdbcType="TIMESTAMP" property="relationLastUpdateDatetime"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    my_id, others_id, relation_state, relation_create_datetime, relation_last_update_datetime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from livechat_user_relation
+    where my_id = #{myId,jdbcType=BIGINT}
+    and others_id = #{othersId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="map">
+    delete
+    from livechat_user_relation
+    where my_id = #{myId,jdbcType=BIGINT}
+      and others_id = #{othersId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.github.mrag.livechat.modules.user.entity.LivechatUserRelation">
+    insert into livechat_user_relation (my_id, others_id, relation_state,
+                                        relation_create_datetime, relation_last_update_datetime)
+    values (#{myId,jdbcType=BIGINT}, #{othersId,jdbcType=BIGINT}, #{relationState,jdbcType=TINYINT},
+            #{relationCreateDatetime,jdbcType=TIMESTAMP},
+            #{relationLastUpdateDatetime,jdbcType=TIMESTAMP,typeHandler=com.github.mrag.livechat.enums.typehandler.UserRelationStateTypeHandler})
+  </insert>
+  <insert id="insertSelective" parameterType="com.github.mrag.livechat.modules.user.entity.LivechatUserRelation">
+    insert into livechat_user_relation
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="myId != null">
+        my_id,
+      </if>
+      <if test="othersId != null">
+        others_id,
+      </if>
+      <if test="relationState != null">
+        relation_state,
+      </if>
+      <if test="relationCreateDatetime != null">
+        relation_create_datetime,
+      </if>
+      <if test="relationLastUpdateDatetime != null">
+        relation_last_update_datetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="myId != null">
+        #{myId,jdbcType=BIGINT},
+      </if>
+      <if test="othersId != null">
+        #{othersId,jdbcType=BIGINT},
+      </if>
+      <if test="relationState != null">
+        #{relationState,jdbcType=TINYINT},
+      </if>
+      <if test="relationCreateDatetime != null">
+        #{relationCreateDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="relationLastUpdateDatetime != null">
+        #{relationLastUpdateDatetime,jdbcType=TIMESTAMP,typeHandler=com.github.mrag.livechat.enums.typehandler.UserRelationStateTypeHandler},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective"
+          parameterType="com.github.mrag.livechat.modules.user.entity.LivechatUserRelation">
+    update livechat_user_relation
+    <set>
+      <if test="relationState != null">
+        relation_state = #{relationState,jdbcType=TINYINT},
+      </if>
+      <if test="relationCreateDatetime != null">
+        relation_create_datetime = #{relationCreateDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="relationLastUpdateDatetime != null">
+        relation_last_update_datetime =
+        #{relationLastUpdateDatetime,jdbcType=TIMESTAMP,typeHandler=com.github.mrag.livechat.enums.typehandler.UserRelationStateTypeHandler},
+      </if>
+    </set>
+    where my_id = #{myId,jdbcType=BIGINT}
+    and others_id = #{othersId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.github.mrag.livechat.modules.user.entity.LivechatUserRelation">
+    update livechat_user_relation
+    set relation_state                = #{relationState,jdbcType=TINYINT},
+        relation_create_datetime      = #{relationCreateDatetime,jdbcType=TIMESTAMP},
+        relation_last_update_datetime = #{relationLastUpdateDatetime,jdbcType=TIMESTAMP,typeHandler=com.github.mrag.livechat.enums.typehandler.UserRelationStateTypeHandler}
+    where my_id = #{myId,jdbcType=BIGINT}
+      and others_id = #{othersId,jdbcType=BIGINT}
+  </update>
+</mapper>

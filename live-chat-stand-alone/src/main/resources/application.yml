@@ -13,3 +13,7 @@ spring:
     username: root
     password: root
     type: com.alibaba.druid.pool.DruidDataSource
+
+logging:
+  level:
+    com.github.mrag.livechat: debug

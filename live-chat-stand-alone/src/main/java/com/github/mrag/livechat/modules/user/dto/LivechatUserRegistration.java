@@ -18,7 +18,7 @@ public class LivechatUserRegistration {
 
     @ApiModelProperty(value = "手机号")
     @NotBlank(message = "手机号不能为空")
-    private String phoneNumber;
+    private String phone;
 
     @ApiModelProperty(value = "邮箱")
     @Email(message = "邮箱地址不合法")
@@ -38,12 +38,12 @@ public class LivechatUserRegistration {
         return this;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getPhone() {
+        return phone;
     }
 
-    public LivechatUserRegistration setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public LivechatUserRegistration setPhone(String phone) {
+        this.phone = phone;
         return this;
     }
 

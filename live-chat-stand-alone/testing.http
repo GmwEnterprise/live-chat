@@ -1,4 +1,21 @@
+### 注册
+
 POST http://localhost:4200/livechat-api/user/sign-up
 Content-Type: application/json
 
-{}
+{
+  "phone": "13320354693",
+  "password": "gan1ming2wei3"
+}
+
+### 登陆
+
+POST http://localhost:4200/livechat-api/user/sign-in
+Content-Type: application/x-www-form-urlencoded
+
+phone=13320354693&password=gan1ming2wei3
+
+### 获取个人信息（token校验）
+
+GET http://localhost:4200/livechat-api/user/my-msg
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJNcmFnLmlvIiwiaWF0IjoxNjAzMjkzMzg2LCJleHAiOjE2MDMzMDA1ODYsImlkIjozMDUyMzM5MDcyMDczNzI4MH0.a_1mF1rLNEjmeNPnZFEthvzGNgIWt3Ayb9TRVu1Z9Ss

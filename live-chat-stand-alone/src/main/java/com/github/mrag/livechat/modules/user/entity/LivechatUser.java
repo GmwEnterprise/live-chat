@@ -1,5 +1,8 @@
 package com.github.mrag.livechat.modules.user.entity;
 
+import com.github.mrag.livechat.enums.AccountStatus;
+import com.github.mrag.livechat.enums.BloodGroup;
+import com.github.mrag.livechat.enums.Gender;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
@@ -13,14 +16,6 @@ public class LivechatUser implements Serializable {
      */
     @ApiModelProperty(value = "主键，64位Long型，JSON传输请使用String")
     private Long id;
-
-    /**
-     * 微信号，长度限制为8-26位，仅限字母与数字
-     *
-     * @mbg.generated
-     */
-    @ApiModelProperty(value = "微信号，长度限制为8-26位，仅限字母与数字")
-    private String wechatNo;
 
     /**
      * 用户名称，支持中文，支持空字符串，最大长度为16
@@ -44,7 +39,7 @@ public class LivechatUser implements Serializable {
      * @mbg.generated
      */
     @ApiModelProperty(value = "性别，枚举数值，男[1]女[2]保密[3]，默认为[3]")
-    private Byte gender;
+    private Gender gender;
 
     /**
      * 出生日期，必须为过去的日期，格式[yyyy-MM-dd HH:mm:ss]
@@ -116,7 +111,7 @@ public class LivechatUser implements Serializable {
      * @mbg.generated
      */
     @ApiModelProperty(value = "血型，枚举数值，A型血[1]B型血[2]O型血[3]AB型血[4]")
-    private Byte bloodGroup;
+    private BloodGroup bloodGroup;
 
     /**
      * 字典-从事行业
@@ -148,7 +143,7 @@ public class LivechatUser implements Serializable {
      * @mbg.generated
      */
     @ApiModelProperty(value = "账户使用状态，枚举数值，使用中[1]禁用[2]已注销[3]，默认为[1]")
-    private Byte accountStatus;
+    private AccountStatus accountStatus;
 
     private static final long serialVersionUID = 1L;
 
@@ -156,143 +151,152 @@ public class LivechatUser implements Serializable {
         return id;
     }
 
-    public void setId(Long id) {
+    public LivechatUser setId(Long id) {
         this.id = id;
-    }
-
-    public String getWechatNo() {
-        return wechatNo;
-    }
-
-    public void setWechatNo(String wechatNo) {
-        this.wechatNo = wechatNo;
+        return this;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
+    public LivechatUser setUsername(String username) {
         this.username = username;
+        return this;
     }
 
     public String getAvatarId() {
         return avatarId;
     }
 
-    public void setAvatarId(String avatarId) {
+    public LivechatUser setAvatarId(String avatarId) {
         this.avatarId = avatarId;
+        return this;
     }
 
-    public Byte getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(Byte gender) {
+    public LivechatUser setGender(Gender gender) {
         this.gender = gender;
+        return this;
     }
 
     public LocalDateTime getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(LocalDateTime birthday) {
+    public LivechatUser setBirthday(LocalDateTime birthday) {
         this.birthday = birthday;
+        return this;
     }
 
     public String getSignature() {
         return signature;
     }
 
-    public void setSignature(String signature) {
+    public LivechatUser setSignature(String signature) {
         this.signature = signature;
+        return this;
     }
 
     public String getCompany() {
         return company;
     }
 
-    public void setCompany(String company) {
+    public LivechatUser setCompany(String company) {
         this.company = company;
+        return this;
     }
 
     public String getPersonalDescription() {
         return personalDescription;
     }
 
-    public void setPersonalDescription(String personalDescription) {
+    public LivechatUser setPersonalDescription(String personalDescription) {
         this.personalDescription = personalDescription;
+        return this;
     }
 
     public String getUserPassword() {
         return userPassword;
     }
 
-    public void setUserPassword(String userPassword) {
+    public LivechatUser setUserPassword(String userPassword) {
         this.userPassword = userPassword;
+        return this;
     }
 
     public String getSalt() {
         return salt;
     }
 
-    public void setSalt(String salt) {
+    public LivechatUser setSalt(String salt) {
         this.salt = salt;
+        return this;
     }
 
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    public LivechatUser setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+        return this;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public LivechatUser setEmail(String email) {
         this.email = email;
+        return this;
     }
 
-    public Byte getBloodGroup() {
+    public BloodGroup getBloodGroup() {
         return bloodGroup;
     }
 
-    public void setBloodGroup(Byte bloodGroup) {
+    public LivechatUser setBloodGroup(BloodGroup bloodGroup) {
         this.bloodGroup = bloodGroup;
+        return this;
     }
 
     public Integer getOccupation() {
         return occupation;
     }
 
-    public void setOccupation(Integer occupation) {
+    public LivechatUser setOccupation(Integer occupation) {
         this.occupation = occupation;
+        return this;
     }
 
     public Integer getLocation() {
         return location;
     }
 
-    public void setLocation(Integer location) {
+    public LivechatUser setLocation(Integer location) {
         this.location = location;
+        return this;
     }
 
     public Integer getHometown() {
         return hometown;
     }
 
-    public void setHometown(Integer hometown) {
+    public LivechatUser setHometown(Integer hometown) {
         this.hometown = hometown;
+        return this;
     }
 
-    public Byte getAccountStatus() {
+    public AccountStatus getAccountStatus() {
         return accountStatus;
     }
 
-    public void setAccountStatus(Byte accountStatus) {
+    public LivechatUser setAccountStatus(AccountStatus accountStatus) {
         this.accountStatus = accountStatus;
+        return this;
     }
 }

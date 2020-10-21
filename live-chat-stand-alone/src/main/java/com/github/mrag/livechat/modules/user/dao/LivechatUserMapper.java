@@ -14,4 +14,6 @@ public interface LivechatUserMapper {
     int updateByPrimaryKeySelective(LivechatUser record);
 
     int updateByPrimaryKey(LivechatUser record);
+
+    LivechatUser selectPasswordAndSaltByPhoneNumber(String phone);
 }
