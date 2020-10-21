@@ -1,10 +1,10 @@
-package com.github.mrag.livechat.modules.user.controller;
+package com.github.mrag.livechat.web;
 
-import com.github.mrag.livechat.common.web.BaseRestController;
-import com.github.mrag.livechat.common.web.Permission;
 import com.github.mrag.livechat.modules.user.dto.LivechatUserRegistration;
 import com.github.mrag.livechat.modules.user.entity.LivechatUser;
 import com.github.mrag.livechat.modules.user.service.UserService;
+import com.github.mrag.livechat.web.config.BaseRestController;
+import com.github.mrag.livechat.web.config.Permission;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
 @Api
 @RestController
@@ -28,7 +29,7 @@ public class UserController implements BaseRestController {
             description = "用于校验身份的token，注册或登陆成功后返回",
             response = String.class)
     @PostMapping("/sign-up")
-    public ResponseEntity<?> signUp(@RequestBody LivechatUserRegistration registrationMsg) {
+    public ResponseEntity<?> signUp(@RequestBody @Valid LivechatUserRegistration registrationMsg) {
         // 响应头中设置token
         String token = userService.signUp(registrationMsg);
         return ResponseEntity.ok().header(HttpHeaders.AUTHORIZATION, token).build();
@@ -48,8 +49,8 @@ public class UserController implements BaseRestController {
     @ApiOperation("个人信息获取")
     @GetMapping("/my-msg")
     @Permission
-    public ResponseEntity<LivechatUser> myMessage(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization) {
-        LivechatUser user = userService.findLivechatUserByToken(authorization);
+    public ResponseEntity<LivechatUser> myMessage(@RequestAttribute("userId") Long userId) {
+        LivechatUser user = userService.findByUserId(userId);
         return ResponseEntity.ok(user);
     }
 }

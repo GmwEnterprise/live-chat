@@ -1,0 +1,4 @@
+POST http://localhost:4200/livechat-api/user/sign-up
+Content-Type: application/json
+
+{}

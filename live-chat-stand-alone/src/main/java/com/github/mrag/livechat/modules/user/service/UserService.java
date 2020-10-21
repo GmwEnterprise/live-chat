@@ -11,7 +11,7 @@ public interface UserService {
      * 注册一个账户
      *
      * @param user 注册信息
-     * @return 成功注册后完整信息
+     * @return token
      */
     String signUp(LivechatUserRegistration user);
 
@@ -19,15 +19,15 @@ public interface UserService {
      * 登陆
      *
      * @param verificationText 验证信息
-     * @return
+     * @return token
      */
     String signIn(String verificationText);
 
     /**
-     * 解析token获取个人资料
+     * 获取用户资料
      *
-     * @param token 令牌
-     * @return 用户信息
+     * @param userId 主键
+     * @return 用户资料
      */
-    LivechatUser findLivechatUserByToken(String token);
+    LivechatUser findByUserId(Long userId);
 }

@@ -1,4 +1,4 @@
-package com.github.mrag.livechat.common.web;
+package com.github.mrag.livechat.web.config;
 
 public interface BaseRestController {
     // 内容待添加
