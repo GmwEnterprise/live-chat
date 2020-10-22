@@ -34,7 +34,7 @@ http.interceptors.response.use(
 );
 
 Vue.http = http;
-Vue.prototype.http = axios;
+Vue.prototype.http = http;
 
 // FIXME：如果写`export default http;`，就会报错: [Quasar] boot error: TypeError: Cannot read property 'protocol' of undefined
 export default { http };

@@ -62,9 +62,6 @@ export default {
       required: false
     }
   },
-  data() {
-    return { isMaximized: false };
-  },
   computed: {
     // 判断是否为electron环境
     electron: {
@@ -95,15 +92,18 @@ export default {
     },
     maximize() {
       if (process.env.MODE === "electron") {
-        const win = this.$q.electron.remote.BrowserWindow.getFocusedWindow();
-        console.log(`win is maximized ? ${win.isMaximized()}`);
-        if (win.isMaximized()) {
-          win.unmaximize();
-          this.isMaximized = false;
-        } else {
-          win.maximize();
-          this.isMaximized = true;
-        }
+        // 登陆窗口最大化之后无法恢复
+        // const win = this.$q.electron.remote.BrowserWindow.getFocusedWindow();
+        // console.debug(`win is maximized ? ${win.isMaximized()}`);
+        // console.debug(win);
+        // if (win.isMaximized()) {
+        //   win.unmaximize();
+        // } else {
+        //   win.maximize();
+        // }
+
+        const ipc = this.$q.electron.ipcRenderer;
+        ipc.send("window-maximize");
       }
     },
     close() {

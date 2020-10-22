@@ -61,14 +61,12 @@ public class AppConfig implements WebMvcConfigurer {
     }
 
     /**
-     * 通过在响应头中添加字段也可以实现跨域功能
+     * 前端在开发模式使用了npm代理；生产模式使用nginx代理，无需配置跨域
      *
      * @param registry
      */
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**").allowedOrigins("*")
-                .allowedMethods("POST", "GET", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD");
     }
 
     @Bean

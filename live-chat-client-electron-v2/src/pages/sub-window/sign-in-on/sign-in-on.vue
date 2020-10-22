@@ -6,8 +6,17 @@
     <!-- <q-separator /> -->
     <div id="content-input">
       <template v-if="mode === 'sign-in'">
-        <q-input stack-label label="手机号 / 邮箱 / 微信号"></q-input>
-        <q-input stack-label label="密码"></q-input>
+        <q-input
+          stack-label
+          label="手机号 / 邮箱"
+          v-model="formData.phoneOrEmail"
+        ></q-input>
+        <q-input
+          stack-label
+          label="密码"
+          type="password"
+          v-model="formData.inputPassword"
+        ></q-input>
       </template>
       <template v-if="mode === 'quick-sign-in'">
         <div id="qr-code-wrapper">
@@ -29,6 +38,9 @@
 </template>
 
 <script>
+import { validPhone, validEmail } from "src/utils/common.util";
+import { stringify as queryStringify } from "qs";
+
 const modeTitle = new Map();
 modeTitle.set("sign-in", "登录");
 modeTitle.set("quick-sign-in", "扫描二维码快速登录");
@@ -38,6 +50,10 @@ export default {
   name: "SignInOn",
   data() {
     return {
+      formData: {
+        phoneOrEmail: "",
+        inputPassword: ""
+      },
       mode: "sign-in",
       quickSignInQRCode: ""
     };
@@ -58,7 +74,24 @@ export default {
     },
     // 点击提交
     submit() {
-      // TODO
+      // 区分mode
+      switch (this.mode) {
+        case "sign-in": {
+          // 提交登陆
+          const data = { password: this.formData.inputPassword };
+          if (validPhone(this.formData.phoneOrEmail))
+            data.phone = this.formData.phoneOrEmail;
+          else data.email = this.formData.phoneOrEmail;
+          this.http
+            .post("/api/user/sign-in", queryStringify(data))
+            .then(response => console.debug(response));
+          break;
+        }
+        case "registration": {
+          // 提交注册
+        }
+        default:
+      }
     },
     // 快速登录，扫二维码提交
     submitWithoutClick() {

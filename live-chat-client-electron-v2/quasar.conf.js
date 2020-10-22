@@ -73,7 +73,14 @@ module.exports = function(/* ctx */) {
     devServer: {
       https: false,
       port: 3000,
-      open: false // opens browser window automatically
+      open: false, // opens browser window automatically
+      proxy: {
+        // 开启webpack提供的npm代理，解决跨域问题
+        "/api": {
+          target: "http://localhost:4200/livechat-api",
+          pathRewrite: { "^/api": "" }
+        }
+      }
     },
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework
