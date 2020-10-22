@@ -7,7 +7,7 @@ import com.github.mrag.livechat.modules.user.dao.LivechatUserMapper;
 import com.github.mrag.livechat.modules.user.dto.LivechatUserRegistration;
 import com.github.mrag.livechat.modules.user.entity.LivechatUser;
 import com.github.mrag.livechat.modules.user.service.UserService;
-import com.github.mrag.livechat.modules.user.vo.MyRelation;
+import com.github.mrag.livechat.modules.user.vo.LivechatUserRelationVO;
 import com.github.mrag.livechat.web.config.PermissionUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
             user.setUsername(user.getPhone());
         }
         LivechatUser record = new LivechatUser()
-                // 雪花算法生成主键
+                // 生成主键
                 .setId(SequenceUtil.nextLong())
                 .setUsername(user.getUsername())
                 .setPhoneNumber(user.getPhone())
@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<MyRelation> findFriendsByUserId(Long userId) {
+    public List<LivechatUserRelationVO> findFriendsByUserId(Long userId) {
         // TODO
         return null;
     }

@@ -2,7 +2,7 @@ package com.github.mrag.livechat.modules.user.service;
 
 import com.github.mrag.livechat.modules.user.dto.LivechatUserRegistration;
 import com.github.mrag.livechat.modules.user.entity.LivechatUser;
-import com.github.mrag.livechat.modules.user.vo.MyRelation;
+import com.github.mrag.livechat.modules.user.vo.LivechatUserRelationVO;
 
 import java.util.List;
 
@@ -41,5 +41,5 @@ public interface UserService {
      * @param userId 主键
      * @return 关系列表
      */
-    List<MyRelation> findFriendsByUserId(Long userId);
+    List<LivechatUserRelationVO> findFriendsByUserId(Long userId);
 }

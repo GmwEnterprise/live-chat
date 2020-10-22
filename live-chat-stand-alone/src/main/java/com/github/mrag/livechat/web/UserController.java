@@ -3,7 +3,7 @@ package com.github.mrag.livechat.web;
 import com.github.mrag.livechat.modules.user.dto.LivechatUserRegistration;
 import com.github.mrag.livechat.modules.user.entity.LivechatUser;
 import com.github.mrag.livechat.modules.user.service.UserService;
-import com.github.mrag.livechat.modules.user.vo.MyRelation;
+import com.github.mrag.livechat.modules.user.vo.LivechatUserRelationVO;
 import com.github.mrag.livechat.web.config.BaseRestController;
 import com.github.mrag.livechat.web.config.Permission;
 import io.swagger.annotations.Api;
@@ -60,8 +60,8 @@ public class UserController implements BaseRestController {
     @ApiOperation("获取用户关系列表")
     @GetMapping("/find-friends")
     @Permission
-    public ResponseEntity<List<MyRelation>> findFriends(@RequestAttribute("userId") Long userId) {
-        List<MyRelation> friends = userService.findFriendsByUserId(userId);
+    public ResponseEntity<List<LivechatUserRelationVO>> findFriends(@RequestAttribute("userId") Long userId) {
+        List<LivechatUserRelationVO> friends = userService.findFriendsByUserId(userId);
         return ResponseEntity.ok(friends);
     }
 }

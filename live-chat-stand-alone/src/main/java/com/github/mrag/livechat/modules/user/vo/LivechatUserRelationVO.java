@@ -2,8 +2,19 @@ package com.github.mrag.livechat.modules.user.vo;
 
 import com.github.mrag.livechat.enums.UserRelationState;
 import io.swagger.annotations.ApiModelProperty;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class MyRelation {
+public class LivechatUserRelationVO {
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("userId", userId)
+                .append("username", username)
+                .append("backupName", backupName)
+                .append("avatarId", avatarId)
+                .append("relationState", relationState)
+                .toString();
+    }
 
     @ApiModelProperty(value = "好友用户主键")
     private Long userId;
@@ -24,7 +35,7 @@ public class MyRelation {
         return userId;
     }
 
-    public MyRelation setUserId(Long userId) {
+    public LivechatUserRelationVO setUserId(Long userId) {
         this.userId = userId;
         return this;
     }
@@ -33,7 +44,7 @@ public class MyRelation {
         return username;
     }
 
-    public MyRelation setUsername(String username) {
+    public LivechatUserRelationVO setUsername(String username) {
         this.username = username;
         return this;
     }
@@ -42,7 +53,7 @@ public class MyRelation {
         return backupName;
     }
 
-    public MyRelation setBackupName(String backupName) {
+    public LivechatUserRelationVO setBackupName(String backupName) {
         this.backupName = backupName;
         return this;
     }
@@ -51,7 +62,7 @@ public class MyRelation {
         return avatarId;
     }
 
-    public MyRelation setAvatarId(String avatarId) {
+    public LivechatUserRelationVO setAvatarId(String avatarId) {
         this.avatarId = avatarId;
         return this;
     }
@@ -60,7 +71,7 @@ public class MyRelation {
         return relationState;
     }
 
-    public MyRelation setRelationState(UserRelationState relationState) {
+    public LivechatUserRelationVO setRelationState(UserRelationState relationState) {
         this.relationState = relationState;
         return this;
     }
