@@ -47,6 +47,8 @@ public class UserServiceImpl implements UserService {
     public String signIn(String phone, String password) {
         // 获取密码
         LivechatUser userMsg = userMapper.selectPasswordAndSaltByPhoneNumber(phone);
+        // 手机号没找到对应的账户
+        if (userMsg == null) throw new LivechatException(LivechatException.CODE_USER_NOT_FOUND, "用户未找到");
         // 比较用户输入的密码
         if (StringUtils.isNotBlank(userMsg.getSalt())) {
             // 需要加密

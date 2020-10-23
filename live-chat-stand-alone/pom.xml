@@ -7,20 +7,17 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>live-chat-stand-alone</name>
   <description>Live</description>
-  
+
   <properties>
     <java.version>11</java.version>
     <spring.boot.version>2.3.4.RELEASE</spring.boot.version>
     <redisson.version>3.13.3</redisson.version>
-    <druid.version>1.1.22</druid.version>
     <mybatis.generator.core.version>1.4.0</mybatis.generator.core.version>
-    <druid.version>1.1.22</druid.version>
     <pagehelper.version>1.2.13</pagehelper.version>
     <druid.version>1.1.22</druid.version>
-    <jose.jwt.version>8.2.1</jose.jwt.version>
     <commons.io.version>2.6</commons.io.version>
   </properties>
-  
+
   <dependencyManagement>
     <dependencies>
       <!-- springboot core dependencies -->
@@ -33,7 +30,7 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-  
+
   <dependencies>
     <!-- redis cache -->
     <dependency>
@@ -41,7 +38,7 @@
       <artifactId>redisson</artifactId>
       <version>${redisson.version}</version>
     </dependency>
-    
+
     <!-- web -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -61,7 +58,7 @@
       <groupId>javax.xml.bind</groupId>
       <artifactId>jaxb-api</artifactId>
     </dependency>
-    
+
     <!-- data access -->
     <dependency>
       <groupId>org.mybatis.generator</groupId>
@@ -73,11 +70,11 @@
       <artifactId>pagehelper-spring-boot-starter</artifactId>
       <version>${pagehelper.version}</version>
     </dependency>
-    <dependency>
-      <groupId>com.alibaba</groupId>
-      <artifactId>druid-spring-boot-starter</artifactId>
-      <version>${druid.version}</version>
-    </dependency>
+    <!--<dependency>-->
+    <!--  <groupId>com.alibaba</groupId>-->
+    <!--  <artifactId>druid-spring-boot-starter</artifactId>-->
+    <!--  <version>${druid.version}</version>-->
+    <!--</dependency>-->
     <dependency>
       <groupId>org.mybatis.spring.boot</groupId>
       <artifactId>mybatis-spring-boot-starter</artifactId>
@@ -88,7 +85,7 @@
       <artifactId>mysql-connector-java</artifactId>
       <scope>runtime</scope>
     </dependency>
-    
+
     <!-- api-doc -->
     <dependency>
       <groupId>io.springfox</groupId>
@@ -100,7 +97,7 @@
       <artifactId>springfox-swagger-ui</artifactId>
       <version>2.9.2</version>
     </dependency>
-    
+
     <!-- tools -->
     <dependency>
       <groupId>org.apache.commons</groupId>
@@ -115,7 +112,7 @@
       <artifactId>commons-io</artifactId>
       <version>${commons.io.version}</version>
     </dependency>
-    
+
     <!-- testing -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -129,7 +126,7 @@
       </exclusions>
     </dependency>
   </dependencies>
-  
+
   <build>
     <plugins>
       <plugin>

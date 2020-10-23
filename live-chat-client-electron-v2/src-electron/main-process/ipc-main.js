@@ -25,3 +25,7 @@ ipc.on("window-maximize", () => {
   }
   // console.debug(maximizedMap);
 });
+
+ipc.on("local-storage", (event, callerName, ...params) => {
+  console.debug(`caller name = ${callerName}, params = ${params}`);
+});

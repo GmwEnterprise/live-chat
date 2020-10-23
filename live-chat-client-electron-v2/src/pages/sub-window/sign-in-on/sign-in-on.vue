@@ -10,12 +10,14 @@
           stack-label
           label="手机号 / 邮箱"
           v-model="formData.phoneOrEmail"
+          :rules="[val => !!val || '必填']"
         ></q-input>
         <q-input
           stack-label
           label="密码"
           type="password"
           v-model="formData.inputPassword"
+          :rules="[val => !!val || '必填']"
         ></q-input>
       </template>
       <template v-if="mode === 'quick-sign-in'">
@@ -79,12 +81,12 @@ export default {
         case "sign-in": {
           // 提交登陆
           const data = { password: this.formData.inputPassword };
-          if (validPhone(this.formData.phoneOrEmail))
-            data.phone = this.formData.phoneOrEmail;
-          else data.email = this.formData.phoneOrEmail;
+          // if (validPhone(this.formData.phoneOrEmail))
+          data.phone = this.formData.phoneOrEmail;
+          // else data.email = this.formData.phoneOrEmail;
           this.http
             .post("/api/user/sign-in", queryStringify(data))
-            .then(response => console.debug(response));
+            .then(response => 1);
           break;
         }
         case "registration": {
