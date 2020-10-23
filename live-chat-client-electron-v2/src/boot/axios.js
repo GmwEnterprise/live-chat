@@ -1,6 +1,6 @@
 import Vue from "vue";
 import axios from "axios";
-import { ipcRenderer as ipc } from "electron";
+import { setItem, getItem } from "src/services/storage.service";
 
 Vue.prototype.$axios = axios;
 
@@ -10,12 +10,15 @@ const http = axios.create({
   // withCredentials: true, // Check cross-site Access-Control
 });
 
+let token = getItem("token");
+
 http.interceptors.request.use(
   config => {
     // Do something before request is sent
     // if (!config.url.includes(systemUrl)) {
     //   config.url = systemUrl + config.url
     // }
+    if (token) config.headers.authorization = token;
     return config;
   },
   error => {
@@ -26,24 +29,15 @@ http.interceptors.request.use(
 http.interceptors.response.use(
   response => {
     // Do something with response data
-    console.debug("response interceptor print: ");
     console.debug(response);
-
     if (response.headers.authorization) {
-      console.debug("保存头部的token");
-      ipc.sendSync(
-        "local-storage",
-        "setItem",
-        "token",
-        response.headers.authorization
-      );
+      token = response.headers.authorization;
+      setItem("token", token);
     }
-    ipc.removeAllListeners();
     return response;
   },
   error => {
     // Do something with response error
-    console.debug("response error interceptor print: ");
     console.debug(error.response);
     if (error.response.data.code) {
       // 有错误码

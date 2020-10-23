@@ -26,6 +26,46 @@ ipc.on("window-maximize", () => {
   // console.debug(maximizedMap);
 });
 
-ipc.on("local-storage", (event, callerName, ...params) => {
-  console.debug(`caller name = ${callerName}, params = ${params}`);
+/**
+ * 类似sessionStorage的使用方式，仅作用于应用启动时
+ */
+const storageMap = new Map();
+
+/**
+ * 监听storage的操作
+ */
+ipc.on("storage", (event, action, ...params) => {
+  switch (action) {
+    case "set":
+      // 存储数据
+      storageMap.set(params[0], params[1]);
+      break;
+    case "get":
+      // 获取数据 发送到渲染进程
+      const val = storageMap.get(params[0]);
+      event.returnValue = val; // 同步返回值
+      break;
+    case "delete":
+      // 删除指定数据
+      storageMap.delete(params[0]);
+      break;
+    case "clear":
+      // 清空数据
+      storageMap.clear();
+      break;
+    case "all":
+      // 返回所有键值对
+      event.returnValue = storageMap;
+      break;
+    default:
+      console.debug(`不支持的操作[${action}]`);
+  }
+  console.debug(storageMap);
+});
+
+/**
+ * 关闭登录窗口，打开主窗口
+ */
+ipc.on("sign-in-success", () => {
+  // 如何实现窗口的切换
 });

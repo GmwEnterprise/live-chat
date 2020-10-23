@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Api
@@ -45,6 +47,8 @@ public class UserController implements BaseRestController {
     @PostMapping("/sign-in")
     public ResponseEntity<?> signIn(@ApiParam(value = "手机号", required = true) @RequestParam String phone,
                                     @ApiParam(value = "密码", required = true) @RequestParam String password) {
+        
+
         String token = userService.signIn(phone, password);
         return ResponseEntity.ok().header(HttpHeaders.AUTHORIZATION, token).body("登陆成功");
     }

@@ -1,18 +1,18 @@
 import { BrowserWindow } from "electron";
 
-let winSignIn; // 登录注册窗口
+let win; // 登录注册窗口
 
 // 创建登录窗口
 export function createSignInWindow() {
   /**
    * Initial window options
    */
-  winSignIn = new BrowserWindow({
+  win = new BrowserWindow({
     width: 400,
     height: 350,
     useContentSize: true,
     frame: false, // 是否显示顶部windows栏
-    resizable: false, // resizable为false时，win.isMaximized始终返回false
+    resizable: true, // resizable为false时，win.isMaximized始终返回false
     webPreferences: {
       // Change from /quasar.conf.js > electron > nodeIntegration;
       // More info: https://quasar.dev/quasar-cli/developing-electron-apps/node-integration
@@ -23,9 +23,9 @@ export function createSignInWindow() {
       // preload: path.resolve(__dirname, 'electron-preload.js')
     }
   });
-  winSignIn.on("close", () => {
-    winSignIn = null;
+  win.on("close", () => {
+    win = null;
   });
-  winSignIn.loadURL(process.env.APP_URL + "/#/sub-window/sign-in-on");
-  return winSignIn;
+  win.loadURL(process.env.APP_URL + "/#/sub-window/sign-in-on");
+  return win;
 }

@@ -79,6 +79,8 @@ export default {
       // 区分mode
       switch (this.mode) {
         case "sign-in": {
+          // 如果300毫秒内就hide，就不显示了
+          this.$q.loading.show({ delay: 300 });
           // 提交登陆
           const data = { password: this.formData.inputPassword };
           // if (validPhone(this.formData.phoneOrEmail))
@@ -86,7 +88,14 @@ export default {
           // else data.email = this.formData.phoneOrEmail;
           this.http
             .post("/api/user/sign-in", queryStringify(data))
-            .then(response => 1);
+            .then(response => {
+              // 提示登录成功信息，关闭登录窗口，打开主窗口
+              this.$q.loading.hide();
+            })
+            .catch(error => {
+              // todo
+              this.$q.loading.hide();
+            });
           break;
         }
         case "registration": {

@@ -150,7 +150,7 @@ import UserAvatar from "components/user-avatar/user-avatar.vue";
 import WindowTopBar from "components/window-top-bar/window-top-bar.vue";
 import WindowFooter from "components/window-footer/window-footer.vue";
 
-import { openSubWindow } from "src/services/open-window.service";
+import { openSubWindow } from "src/services/window.service";
 
 export default {
   name: "MainLayout",
@@ -186,7 +186,7 @@ export default {
       if (this.windows.has(path)) {
         this.windows.get(path).show();
       } else {
-        const win = openSubWindow(this.$q.electron, path, config, () =>
+        const win = openSubWindow(path, config, () =>
           this.windows.delete(path)
         );
         this.windows.set(path, win);
