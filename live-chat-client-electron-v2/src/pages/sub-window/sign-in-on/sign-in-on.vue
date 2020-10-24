@@ -42,6 +42,7 @@
 <script>
 import { validPhone, validEmail } from "src/utils/common.util";
 import { stringify as queryStringify } from "qs";
+import { switchMainWindow } from "src/services/window.service";
 
 const modeTitle = new Map();
 modeTitle.set("sign-in", "登录");
@@ -89,8 +90,10 @@ export default {
           this.http
             .post("/api/user/sign-in", queryStringify(data))
             .then(response => {
-              // 提示登录成功信息，关闭登录窗口，打开主窗口
               this.$q.loading.hide();
+              // this.$q.electron.remote.BrowserWindow.getFocusedWindow().hide();
+              // 隐藏登录窗口, 打开主窗口
+              switchMainWindow();
             })
             .catch(error => {
               // todo

@@ -62,10 +62,3 @@ ipc.on("storage", (event, action, ...params) => {
   }
   console.debug(storageMap);
 });
-
-/**
- * 关闭登录窗口，打开主窗口
- */
-ipc.on("sign-in-success", () => {
-  // 如何实现窗口的切换
-});
