@@ -1,6 +1,6 @@
 import Vue from "vue";
 import axios from "axios";
-import { setItem, getItem } from "src/services/storage.service";
+import { ipcRenderer } from "electron";
 
 Vue.prototype.$axios = axios;
 
@@ -10,14 +10,11 @@ const http = axios.create({
   // withCredentials: true, // Check cross-site Access-Control
 });
 
-let token = getItem("token");
+let token = ipcRenderer.sendSync("storage", "get", "token");
 
 http.interceptors.request.use(
   config => {
     // Do something before request is sent
-    // if (!config.url.includes(systemUrl)) {
-    //   config.url = systemUrl + config.url
-    // }
     if (token) config.headers.authorization = token;
     return config;
   },
@@ -32,7 +29,7 @@ http.interceptors.response.use(
     console.debug(response);
     if (response.headers.authorization) {
       token = response.headers.authorization;
-      setItem("token", token);
+      ipcRenderer.send("storage", "set", "token", token);
     }
     return response;
   },
@@ -54,5 +51,6 @@ http.interceptors.response.use(
 Vue.http = http;
 Vue.prototype.http = http;
 
-// FIXME：如果写`export default http;`，就会报错: [Quasar] boot error: TypeError: Cannot read property 'protocol' of undefined
+// FIXME：如果写`export default http;`，就会报错: [Quasar] boot error:
+// TypeError: Cannot read property 'protocol' of undefined
 export default { http };

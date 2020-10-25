@@ -1,6 +1,5 @@
-import { app, nativeTheme } from "electron";
+import { app, nativeTheme, BrowserWindow, ipcMain as ipc } from "electron";
 import { init as windowInit } from "./windows-control";
-import "./ipc-main";
 
 try {
   if (
@@ -22,6 +21,7 @@ if (process.env.PROD) {
 }
 
 // 我的代码
+import "./storage-main"; // 初始化存储功能
 
 app.on("ready", windowInit);
 
@@ -29,5 +29,24 @@ app.on("window-all-closed", () => {
   console.debug(`process.platform = ${process.platform}`);
   if (process.platform !== "darwin") {
     app.quit();
+  }
+});
+
+// ** 支持正常最大化操作
+const maximizedMap = new Map();
+ipc.on("window-maximize", () => {
+  const win = BrowserWindow.getFocusedWindow();
+  // BrowserWindow.resizable为false时，isMaximized()始终返回false
+  if (win.resizable) {
+    if (win.isMaximized()) win.unmaximize();
+    else win.maximize();
+  } else {
+    if (!maximizedMap.get(win)) {
+      win.maximize();
+      maximizedMap.set(win, true);
+    } else {
+      win.unmaximize();
+      maximizedMap.set(win, false);
+    }
   }
 });
