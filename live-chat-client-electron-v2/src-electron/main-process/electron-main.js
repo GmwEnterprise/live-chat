@@ -1,5 +1,5 @@
 import { app, nativeTheme } from "electron";
-import { createSignInWindow } from "./windows-control";
+import { init as windowInit } from "./windows-control";
 import "./ipc-main";
 
 try {
@@ -21,15 +21,13 @@ if (process.env.PROD) {
   global.__statics = __dirname;
 }
 
-app
-  .on("ready", () => {
-    // 应用启动时首先打开登录窗口
-    // 再由登陆窗口跳转到主窗口
-    createSignInWindow();
-  })
-  .on("window-all-closed", () => {
-    console.debug(`process.platform = ${process.platform}`);
-    if (process.platform !== "darwin") {
-      app.quit();
-    }
-  });
+// 我的代码
+
+app.on("ready", windowInit);
+
+app.on("window-all-closed", () => {
+  console.debug(`process.platform = ${process.platform}`);
+  if (process.platform !== "darwin") {
+    app.quit();
+  }
+});

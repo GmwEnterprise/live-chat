@@ -153,10 +153,11 @@ import UserAvatar from "components/user-avatar/user-avatar.vue";
 import WindowTopBar from "components/window-top-bar/window-top-bar.vue";
 import WindowFooter from "components/window-footer/window-footer.vue";
 
+import { switchSignInWindow } from "src/services/window.service";
 import {
-  switchSignInWindow,
-  settingsWindow
-} from "src/services/window.service";
+  settingsWindow,
+  userSearchWindow
+} from "src/services/sub-window.service";
 
 export default {
   name: "MainLayout",
@@ -193,17 +194,19 @@ export default {
     },
     // 打开设置窗口
     settings() {
-      settingsWindow();
+      settingsWindow(this.$q.electron.remote.BrowserWindow.getFocusedWindow());
     },
     // 打开添加朋友窗口
-    friendSearch() {},
+    friendSearch() {
+      userSearchWindow(
+        this.$q.electron.remote.BrowserWindow.getFocusedWindow()
+      );
+    },
     // 打开/关闭开发者界面
     devtools() {
-      if (process.env.MODE === "electron") {
-        this.$q.electron.remote.BrowserWindow.getFocusedWindow().webContents.openDevTools(
-          { mode: "right" }
-        );
-      }
+      this.$q.electron.remote.BrowserWindow.getFocusedWindow().webContents.openDevTools(
+        { mode: "right" }
+      );
     },
     // 清除搜索
     searchInputClear() {
