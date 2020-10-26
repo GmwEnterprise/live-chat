@@ -8,7 +8,7 @@ export function set(k, v) {
 }
 
 export function get(k) {
-  storageMap.get(k);
+  return storageMap.get(k);
 }
 
 export function del(k) {
@@ -23,8 +23,13 @@ ipc.on("storage", (event, action, ...params) => {
     case "set-local":
       // TODO 本地存储
       break;
+    case "set-sync":
+      set(params[0], params[1]);
+      event.returnValue = 1;
+      break;
     case "get":
-      event.returnValue = get(params[0]);
+      const val = get(params[0]);
+      event.returnValue = val;
       break;
     case "get-local":
       // TODO 本地读取
@@ -36,6 +41,9 @@ ipc.on("storage", (event, action, ...params) => {
       // TODO 本地删除
       break;
     default:
-      console.debug(`不支持的操作[${action}]`);
+      console.debug(`unknown action[${action}]`);
   }
+  console.debug(`=> action: ${action}, params: ${params.toString()}`);
+  console.debug(`=> storageMap:`);
+  console.debug(storageMap);
 });

@@ -11,6 +11,7 @@ const http = axios.create({
 });
 
 let token = ipcRenderer.sendSync("storage", "get", "token");
+console.debug(token);
 
 http.interceptors.request.use(
   config => {
@@ -29,7 +30,7 @@ http.interceptors.response.use(
     console.debug(response);
     if (response.headers.authorization) {
       token = response.headers.authorization;
-      ipcRenderer.send("storage", "set", "token", token);
+      ipcRenderer.sendSync("storage", "set-sync", "token", token);
     }
     return response;
   },
