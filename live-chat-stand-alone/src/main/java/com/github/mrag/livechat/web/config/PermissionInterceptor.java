@@ -16,7 +16,11 @@ public class PermissionInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if (!(handler instanceof HandlerMethod)) return true;
 
-        log.debug("method=" + request.getMethod() + ", router=" + request.getRequestURI());
+        // 打印请求信息
+        log.debug("from[{}:{}]", request.getRemoteHost(), request.getRemotePort());
+        log.debug("  request url[{}]", request.getRequestURI());
+
+        // 权限判断
         boolean permission = ((HandlerMethod) handler).hasMethodAnnotation(Permission.class);
         if (permission) {
             String token  = request.getHeader(HttpHeaders.AUTHORIZATION);
