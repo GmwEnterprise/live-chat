@@ -54,7 +54,7 @@ public class UserController implements BaseRestController {
     @Permission
     public ResponseEntity<LivechatUser> myMessage(@RequestAttribute("userId") Long userId) {
         LivechatUser user = userService.findByUserId(userId);
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(user.setUserPassword(null).setSalt(null));
     }
 
     @ApiOperation("获取用户关系列表")

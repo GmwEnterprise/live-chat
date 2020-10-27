@@ -16,7 +16,7 @@
             <q-icon
               class="icon-button"
               name="person_add_alt_1"
-              @click="addFriend()"
+              @click="friendSearch()"
               ><q-tooltip anchor="center middle" self="bottom middle"
                 >新的朋友</q-tooltip
               ></q-icon
@@ -25,13 +25,16 @@
               ><q-menu>
                 <q-list bordered>
                   <q-item class="q-item-style" clickable v-close-popup>
-                    <q-item-section @click="openSettingsDialog()"
-                      >设置</q-item-section
+                    <q-item-section @click="settings()">设置</q-item-section>
+                  </q-item>
+                  <q-item class="q-item-style" clickable v-close-popup>
+                    <q-item-section @click="accountSwitch()"
+                      >切换账户</q-item-section
                     >
                   </q-item>
                   <q-separator />
                   <q-item class="q-item-style" clickable v-close-popup>
-                    <q-item-section @click="openDevTools()"
+                    <q-item-section @click="devtools()"
                       >开发者工具</q-item-section
                     >
                   </q-item>
@@ -150,7 +153,11 @@ import UserAvatar from "components/user-avatar/user-avatar.vue";
 import WindowTopBar from "components/window-top-bar/window-top-bar.vue";
 import WindowFooter from "components/window-footer/window-footer.vue";
 
-import { openSubWindow } from "src/services/open-window.service";
+import { switchSignInWindow } from "src/services/window.service";
+import {
+  settingsWindow,
+  userSearchWindow
+} from "src/services/sub-window.service";
 
 export default {
   name: "MainLayout",
@@ -165,8 +172,6 @@ export default {
   },
   data() {
     return {
-      // 子窗口管理
-      windows: new Map(),
       // 搜索信息
       searching: false,
       searchInput: "",
@@ -180,40 +185,28 @@ export default {
       }
     };
   },
+  mounted() {
+    this.http.get("/api/user/my-msg");
+  },
   methods: {
-    // 打开指定子窗口
-    openSubWindow(path, config) {
-      if (this.windows.has(path)) {
-        this.windows.get(path).show();
-      } else {
-        const win = openSubWindow(this.$q.electron, path, config, () =>
-          this.windows.delete(path)
-        );
-        this.windows.set(path, win);
-      }
+    accountSwitch() {
+      switchSignInWindow();
     },
     // 打开设置窗口
-    openSettingsDialog() {
-      this.openSubWindow("settings-page", {
-        width: 640,
-        height: 480
-      });
+    settings() {
+      settingsWindow(this.$q.electron.remote.BrowserWindow.getFocusedWindow());
+    },
+    // 打开添加朋友窗口
+    friendSearch() {
+      userSearchWindow(
+        this.$q.electron.remote.BrowserWindow.getFocusedWindow()
+      );
     },
     // 打开/关闭开发者界面
-    openDevTools() {
-      if (process.env.MODE === "electron") {
-        this.$q.electron.remote.BrowserWindow.getFocusedWindow().webContents.openDevTools(
-          { mode: "right" }
-        );
-      }
-    },
-    // 添加朋友
-    addFriend() {
-      this.openSubWindow("user-group-search", {
-        width: 700,
-        height: 600,
-        resizable: false
-      });
+    devtools() {
+      this.$q.electron.remote.BrowserWindow.getFocusedWindow().webContents.openDevTools(
+        { mode: "right" }
+      );
     },
     // 清除搜索
     searchInputClear() {

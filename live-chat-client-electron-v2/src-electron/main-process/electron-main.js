@@ -1,6 +1,5 @@
-import { app, nativeTheme } from "electron";
-import { createSignInWindow } from "./windows/sign-in-window";
-import "./ipc-main";
+import { app, nativeTheme, BrowserWindow, ipcMain as ipc } from "electron";
+import { init as windowInit } from "./windows-control";
 
 try {
   if (
@@ -21,21 +20,33 @@ if (process.env.PROD) {
   global.__statics = __dirname;
 }
 
-let signInWindow;
+// 我的代码
+import "./storage-main"; // 初始化存储功能
 
-// windows与linux中，ready 事件与 will-finish-launching 事件相同
-// 当应用程序完成基础的启动的时候被触发, 通常会在这里启动崩溃报告和自动更新
-// 启动时加载登陆窗口
-app.on("ready", () => {
-  signInWindow = createSignInWindow();
-});
+app.on("ready", windowInit);
 
-// 最后一个窗口被关闭时的动作。默认动作是退出应用
 app.on("window-all-closed", () => {
+  console.debug(`process.platform = ${process.platform}`);
   if (process.platform !== "darwin") {
-    app.quit(); // 退出应用
+    app.quit();
   }
 });
 
-// 1）首次启动应用程序；2）尝试在应用程序已运行时或单击应用程序的「坞站」或「任务栏图标」时
-// app.on("activate", () => {});
+// ** 支持正常最大化操作
+const maximizedMap = new Map();
+ipc.on("window-maximize", () => {
+  const win = BrowserWindow.getFocusedWindow();
+  // BrowserWindow.resizable为false时，isMaximized()始终返回false
+  if (win.resizable) {
+    if (win.isMaximized()) win.unmaximize();
+    else win.maximize();
+  } else {
+    if (!maximizedMap.get(win)) {
+      win.maximize();
+      maximizedMap.set(win, true);
+    } else {
+      win.unmaximize();
+      maximizedMap.set(win, false);
+    }
+  }
+});

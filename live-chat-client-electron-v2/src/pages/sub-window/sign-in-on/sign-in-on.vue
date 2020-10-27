@@ -42,6 +42,7 @@
 <script>
 import { validPhone, validEmail } from "src/utils/common.util";
 import { stringify as queryStringify } from "qs";
+import { switchMainWindow } from "src/services/window.service";
 
 const modeTitle = new Map();
 modeTitle.set("sign-in", "登录");
@@ -79,6 +80,8 @@ export default {
       // 区分mode
       switch (this.mode) {
         case "sign-in": {
+          // 如果300毫秒内就hide，就不显示了
+          this.$q.loading.show({ delay: 300 });
           // 提交登陆
           const data = { password: this.formData.inputPassword };
           // if (validPhone(this.formData.phoneOrEmail))
@@ -86,7 +89,16 @@ export default {
           // else data.email = this.formData.phoneOrEmail;
           this.http
             .post("/api/user/sign-in", queryStringify(data))
-            .then(response => 1);
+            .then(response => {
+              this.$q.loading.hide();
+              // this.$q.electron.remote.BrowserWindow.getFocusedWindow().hide();
+              // 隐藏登录窗口, 打开主窗口
+              switchMainWindow();
+            })
+            .catch(error => {
+              // todo
+              this.$q.loading.hide();
+            });
           break;
         }
         case "registration": {
