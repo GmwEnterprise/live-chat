@@ -8,6 +8,8 @@ mybatis:
   type-handlers-package: com.github.mrag.livechat.enums.typehandler
 
 spring:
+  profiles:
+    active: dev
   datasource:
     url: jdbc:mysql://120.79.155.125:4001/live_chat?useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     username: root

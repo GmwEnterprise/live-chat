@@ -43,9 +43,9 @@ public class AppConfig implements WebMvcConfigurer {
     @Bean
     public ObjectMapper objectMapper() {
         // 注册jackson支持的时间转换模块
-        JavaTimeModule timeModule = new JavaTimeModule();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTimeSerializer serializer = new LocalDateTimeSerializer(formatter);
+        JavaTimeModule            timeModule   = new JavaTimeModule();
+        DateTimeFormatter         formatter    = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTimeSerializer   serializer   = new LocalDateTimeSerializer(formatter);
         LocalDateTimeDeserializer deserializer = new LocalDateTimeDeserializer(formatter);
         timeModule.addSerializer(LocalDateTime.class, serializer).addDeserializer(LocalDateTime.class, deserializer);
 
