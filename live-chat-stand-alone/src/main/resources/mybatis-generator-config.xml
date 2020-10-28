@@ -42,21 +42,21 @@
     </javaTypeResolver>
     
     <!--指定生成model的路径-->
-    <javaModelGenerator targetPackage="com.github.mrag.livechat.modules.user.entity"
+    <javaModelGenerator targetPackage="com.github.mrag.livechat.modules.message.entity"
                         targetProject="D:\.generatedfiles"/>
     
     <!--指定生成mapper.xml的路径-->
-    <sqlMapGenerator targetPackage="com.github.mrag.livechat.modules.user.dao"
+    <sqlMapGenerator targetPackage="com.github.mrag.livechat.modules.message.dao"
                      targetProject="D:\.generatedfiles"/>
     
     <!--指定生成mapper接口的的路径-->
     <javaClientGenerator type="XMLMAPPER"
-                         targetPackage="com.github.mrag.livechat.modules.user.dao"
+                         targetPackage="com.github.mrag.livechat.modules.message.dao"
                          targetProject="D:\.generatedfiles"/>
     
     <!--生成全部表tableName设为%-->
     <!--禁止生成example语法方法-->
-    <table tableName="livechat_user_relation"
+    <table tableName="livechat_message"
            enableCountByExample="false" enableDeleteByExample="false"
            enableSelectByExample="false" enableUpdateByExample="false">
       <!--自增主键配置-->

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.mrag.livechat.modules.message.dao.LivechatMessageMapper">
+  <resultMap id="BaseResultMap" type="com.github.mrag.livechat.modules.message.entity.LivechatMessage">
+    <id column="id" jdbcType="BIGINT" property="id"/>
+    <result column="sender_id" jdbcType="BIGINT" property="senderId"/>
+    <result column="send_time" jdbcType="TIMESTAMP" property="sendTime"/>
+    <result column="receiver_id" jdbcType="BIGINT" property="receiverId"/>
+    <result column="receiver_type" jdbcType="TINYINT" property="receiverType"
+            typeHandler="com.github.mrag.livechat.enums.typehandler.ReceiverTypeHandler"/>
+    <result column="received" jdbcType="BIT" property="received"/>
+    <result column="receive_time" jdbcType="TIMESTAMP" property="receiveTime"/>
+    <result column="message_type" jdbcType="TINYINT" property="messageType"
+            typeHandler="com.github.mrag.livechat.enums.typehandler.MessageTypeHandler"/>
+    <result column="message" jdbcType="VARCHAR" property="message"/>
+    <result column="read_state" jdbcType="BIT" property="readState"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, sender_id, send_time, receiver_id, receiver_type, received, receive_time, message_type, 
+    message, read_state
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from livechat_message
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete
+    from livechat_message
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.github.mrag.livechat.modules.message.entity.LivechatMessage">
+    insert into livechat_message (id, sender_id, send_time,
+                                  receiver_id, receiver_type, received,
+                                  receive_time, message_type, message,
+                                  read_state)
+    values (#{id,jdbcType=BIGINT}, #{senderId,jdbcType=BIGINT},
+            #{sendTime,jdbcType=TIMESTAMP}, #{receiverId,jdbcType=BIGINT},
+            #{receiverType,jdbcType=TINYINT,typeHandler=com.github.mrag.livechat.enums.typehandler.ReceiverTypeHandler},
+            #{received,jdbcType=BIT}, #{receiveTime,jdbcType=TIMESTAMP},
+            #{messageType,jdbcType=TINYINT,typeHandler=com.github.mrag.livechat.enums.typehandler.MessageTypeHandler},
+            #{message,jdbcType=VARCHAR}, #{readState,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.github.mrag.livechat.modules.message.entity.LivechatMessage">
+    insert into livechat_message
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="senderId != null">
+        sender_id,
+      </if>
+      <if test="sendTime != null">
+        send_time,
+      </if>
+      <if test="receiverId != null">
+        receiver_id,
+      </if>
+      <if test="receiverType != null">
+        receiver_type,
+      </if>
+      <if test="received != null">
+        received,
+      </if>
+      <if test="receiveTime != null">
+        receive_time,
+      </if>
+      <if test="messageType != null">
+        message_type,
+      </if>
+      <if test="message != null">
+        message,
+      </if>
+      <if test="readState != null">
+        read_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="senderId != null">
+        #{senderId,jdbcType=BIGINT},
+      </if>
+      <if test="sendTime != null">
+        #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="receiverId != null">
+        #{receiverId,jdbcType=BIGINT},
+      </if>
+      <if test="receiverType != null">
+        #{receiverType,jdbcType=TINYINT,typeHandler=com.github.mrag.livechat.enums.typehandler.ReceiverTypeHandler},
+      </if>
+      <if test="received != null">
+        #{received,jdbcType=BIT},
+      </if>
+      <if test="receiveTime != null">
+        #{receiveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="messageType != null">
+        #{messageType,jdbcType=TINYINT,typeHandler=com.github.mrag.livechat.enums.typehandler.MessageTypeHandler},
+      </if>
+      <if test="message != null">
+        #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="readState != null">
+        #{readState,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective"
+          parameterType="com.github.mrag.livechat.modules.message.entity.LivechatMessage">
+    update livechat_message
+    <set>
+      <if test="senderId != null">
+        sender_id = #{senderId,jdbcType=BIGINT},
+      </if>
+      <if test="sendTime != null">
+        send_time = #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="receiverId != null">
+        receiver_id = #{receiverId,jdbcType=BIGINT},
+      </if>
+      <if test="receiverType != null">
+        receiver_type =
+        #{receiverType,jdbcType=TINYINT,typeHandler=com.github.mrag.livechat.enums.typehandler.ReceiverTypeHandler},
+      </if>
+      <if test="received != null">
+        received = #{received,jdbcType=BIT},
+      </if>
+      <if test="receiveTime != null">
+        receive_time = #{receiveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="messageType != null">
+        message_type =
+        #{messageType,jdbcType=TINYINT,typeHandler=com.github.mrag.livechat.enums.typehandler.MessageTypeHandler},
+      </if>
+      <if test="message != null">
+        message = #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="readState != null">
+        read_state = #{readState,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.github.mrag.livechat.modules.message.entity.LivechatMessage">
+    update livechat_message
+    set sender_id     = #{senderId,jdbcType=BIGINT},
+        send_time     = #{sendTime,jdbcType=TIMESTAMP},
+        receiver_id   = #{receiverId,jdbcType=BIGINT},
+        receiver_type = #{receiverType,jdbcType=TINYINT,typeHandler=com.github.mrag.livechat.enums.typehandler.ReceiverTypeHandler},
+        received      = #{received,jdbcType=BIT},
+        receive_time  = #{receiveTime,jdbcType=TIMESTAMP},
+        message_type  = #{messageType,jdbcType=TINYINT,typeHandler=com.github.mrag.livechat.enums.typehandler.MessageTypeHandler},
+        message       = #{message,jdbcType=VARCHAR},
+        read_state    = #{readState,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
