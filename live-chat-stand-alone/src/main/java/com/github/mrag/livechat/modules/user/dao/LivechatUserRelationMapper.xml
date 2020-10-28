@@ -4,13 +4,14 @@
   <resultMap id="BaseResultMap" type="com.github.mrag.livechat.modules.user.entity.LivechatUserRelation">
     <id column="my_id" jdbcType="BIGINT" property="myId"/>
     <id column="others_id" jdbcType="BIGINT" property="othersId"/>
+    <result column="backup_name" jdbcType="VARCHAR" property="backupName"/>
     <result column="relation_state" jdbcType="TINYINT" property="relationState"
             typeHandler="com.github.mrag.livechat.enums.typehandler.UserRelationStateTypeHandler"/>
     <result column="relation_create_datetime" jdbcType="TIMESTAMP" property="relationCreateDatetime"/>
     <result column="relation_last_update_datetime" jdbcType="TIMESTAMP" property="relationLastUpdateDatetime"/>
   </resultMap>
   <sql id="Base_Column_List">
-    my_id, others_id, relation_state, relation_create_datetime, relation_last_update_datetime
+    my_id, others_id, backup_name, relation_state, relation_create_datetime, relation_last_update_datetime
   </sql>
   <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
     select
@@ -26,11 +27,11 @@
       and others_id = #{othersId,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.github.mrag.livechat.modules.user.entity.LivechatUserRelation">
-    insert into livechat_user_relation (my_id, others_id, relation_state,
+    insert into livechat_user_relation (my_id, others_id, backup_name, relation_state,
                                         relation_create_datetime, relation_last_update_datetime)
-    values (#{myId,jdbcType=BIGINT}, #{othersId,jdbcType=BIGINT}, #{relationState,jdbcType=TINYINT},
-            #{relationCreateDatetime,jdbcType=TIMESTAMP},
-            #{relationLastUpdateDatetime,jdbcType=TIMESTAMP,typeHandler=com.github.mrag.livechat.enums.typehandler.UserRelationStateTypeHandler})
+    values (#{myId,jdbcType=BIGINT}, #{othersId,jdbcType=BIGINT}, #{backupName,jdbcType=VARCHAR},
+            #{relationState,jdbcType=TINYINT,typeHandler=com.github.mrag.livechat.enums.typehandler.UserRelationStateTypeHandler},
+            #{relationCreateDatetime,jdbcType=TIMESTAMP}, #{relationLastUpdateDatetime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.github.mrag.livechat.modules.user.entity.LivechatUserRelation">
     insert into livechat_user_relation
@@ -40,6 +41,9 @@
       </if>
       <if test="othersId != null">
         others_id,
+      </if>
+      <if test="backupName != null">
+        backup_name,
       </if>
       <if test="relationState != null">
         relation_state,
@@ -58,14 +62,17 @@
       <if test="othersId != null">
         #{othersId,jdbcType=BIGINT},
       </if>
+      <if test="backupName != null">
+        #{backupName,jdbcType=VARCHAR},
+      </if>
       <if test="relationState != null">
-        #{relationState,jdbcType=TINYINT},
+        #{relationState,jdbcType=TINYINT,typeHandler=com.github.mrag.livechat.enums.typehandler.UserRelationStateTypeHandler},
       </if>
       <if test="relationCreateDatetime != null">
         #{relationCreateDatetime,jdbcType=TIMESTAMP},
       </if>
       <if test="relationLastUpdateDatetime != null">
-        #{relationLastUpdateDatetime,jdbcType=TIMESTAMP,typeHandler=com.github.mrag.livechat.enums.typehandler.UserRelationStateTypeHandler},
+        #{relationLastUpdateDatetime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -73,15 +80,19 @@
           parameterType="com.github.mrag.livechat.modules.user.entity.LivechatUserRelation">
     update livechat_user_relation
     <set>
+      <if test="backupName != null">
+        backup_name = #{backupName,jdbcType=VARCHAR},
+      </if>
       <if test="relationState != null">
-        relation_state = #{relationState,jdbcType=TINYINT},
+        relation_state =
+        #{relationState,jdbcType=TINYINT,typeHandler=com.github.mrag.livechat.enums.typehandler.UserRelationStateTypeHandler},
       </if>
       <if test="relationCreateDatetime != null">
         relation_create_datetime = #{relationCreateDatetime,jdbcType=TIMESTAMP},
       </if>
       <if test="relationLastUpdateDatetime != null">
         relation_last_update_datetime =
-        #{relationLastUpdateDatetime,jdbcType=TIMESTAMP,typeHandler=com.github.mrag.livechat.enums.typehandler.UserRelationStateTypeHandler},
+        #{relationLastUpdateDatetime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where my_id = #{myId,jdbcType=BIGINT}
@@ -89,9 +100,10 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.github.mrag.livechat.modules.user.entity.LivechatUserRelation">
     update livechat_user_relation
-    set relation_state                = #{relationState,jdbcType=TINYINT},
+    set backup_name                   = #{backupName,jdbcType=VARCHAR},
+        relation_state                = #{relationState,jdbcType=TINYINT,jdbcType=TIMESTAMP,typeHandler=com.github.mrag.livechat.enums.typehandler.UserRelationStateTypeHandler},
         relation_create_datetime      = #{relationCreateDatetime,jdbcType=TIMESTAMP},
-        relation_last_update_datetime = #{relationLastUpdateDatetime,jdbcType=TIMESTAMP,typeHandler=com.github.mrag.livechat.enums.typehandler.UserRelationStateTypeHandler}
+        relation_last_update_datetime = #{relationLastUpdateDatetime}
     where my_id = #{myId,jdbcType=BIGINT}
       and others_id = #{othersId,jdbcType=BIGINT}
   </update>

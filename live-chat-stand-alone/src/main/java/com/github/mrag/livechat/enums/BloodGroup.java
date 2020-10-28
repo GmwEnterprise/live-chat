@@ -13,11 +13,11 @@ public enum BloodGroup {
     O(3, "O"),
     AB(4, "AB");
 
-    private final int key;
+    private final int    key;
     private final String value;
 
     BloodGroup(int key, String value) {
-        this.key = key;
+        this.key   = key;
         this.value = value;
     }
 

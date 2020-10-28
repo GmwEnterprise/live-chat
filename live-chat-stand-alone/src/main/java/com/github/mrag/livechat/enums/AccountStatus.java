@@ -12,11 +12,11 @@ public enum AccountStatus {
     BANNED(2, "禁用ing"),
     WRITTEN_OFF(3, "已注销");
 
-    private final int key;
+    private final int    key;
     private final String value;
 
     AccountStatus(int key, String value) {
-        this.key = key;
+        this.key   = key;
         this.value = value;
     }
 

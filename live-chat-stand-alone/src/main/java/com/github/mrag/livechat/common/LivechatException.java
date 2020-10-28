@@ -38,7 +38,7 @@ public class LivechatException extends RuntimeException {
         return response;
     }
 
-    public static class LivechatExceptionResponse {
+    private static class LivechatExceptionResponse {
         private String code;
         private String message;
 

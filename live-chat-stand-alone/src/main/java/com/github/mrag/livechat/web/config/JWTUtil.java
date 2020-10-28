@@ -1,12 +1,12 @@
 package com.github.mrag.livechat.web.config;
 
-import com.github.mrag.livechat.common.ExceptionWrapper;
+import com.github.mrag.livechat.common.UndoCheckedException;
 import io.jsonwebtoken.*;
 
 import java.util.Date;
 import java.util.Map;
 
-public class JWTUtil implements ExceptionWrapper {
+public class JWTUtil implements UndoCheckedException {
     /*
      * 参考：https://www.cnblogs.com/loveer/p/11429111.html
      */

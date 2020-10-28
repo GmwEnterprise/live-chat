@@ -10,11 +10,11 @@ public enum UserRelationState {
     IGNORE_MESSAGE(3, "屏蔽消息"),
     CARE(4, "关心");
 
-    private final int key;
+    private final int    key;
     private final String value;
 
     UserRelationState(int key, String value) {
-        this.key = key;
+        this.key   = key;
         this.value = value;
     }
 

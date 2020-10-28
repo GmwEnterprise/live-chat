@@ -24,6 +24,14 @@ public class LivechatUserRelation implements Serializable {
     private Long othersId;
 
     /**
+     * 为对方设置的备注
+     *
+     * @mbg.generated
+     */
+    @ApiModelProperty(value = "为对方设置的备注")
+    private String backupName;
+
+    /**
      * 用户关系类型，好友[1]拉黑[2]屏蔽消息[3]关心[4]
      *
      * @mbg.generated
@@ -87,5 +95,13 @@ public class LivechatUserRelation implements Serializable {
 
     public void setRelationLastUpdateDatetime(LocalDateTime relationLastUpdateDatetime) {
         this.relationLastUpdateDatetime = relationLastUpdateDatetime;
+    }
+
+    public String getBackupName() {
+        return backupName;
+    }
+
+    public void setBackupName(String backupName) {
+        this.backupName = backupName;
     }
 }

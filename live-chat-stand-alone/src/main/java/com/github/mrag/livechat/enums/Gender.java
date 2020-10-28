@@ -12,11 +12,11 @@ public enum Gender {
     WOMEN(2, "女"),
     SECRET(3, "保密");
 
-    private final int key;
+    private final int    key;
     private final String value;
 
     Gender(int key, String value) {
-        this.key = key;
+        this.key   = key;
         this.value = value;
     }
 
