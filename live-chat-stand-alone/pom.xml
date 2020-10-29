@@ -32,6 +32,12 @@
   </dependencyManagement>
 
   <dependencies>
+    <!-- tcp -->
+    <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty-all</artifactId>
+    </dependency>
+
     <!-- redis cache -->
     <dependency>
       <groupId>org.redisson</groupId>
