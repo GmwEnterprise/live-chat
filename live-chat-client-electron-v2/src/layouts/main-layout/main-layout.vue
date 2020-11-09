@@ -186,6 +186,9 @@ export default {
     };
   },
   mounted() {
+    // 状态修改为online
+    this.$q.electron.ipcRenderer.send("online")
+    // 获取登录用户信息
     this.http.get("/api/user/my-msg");
   },
   methods: {

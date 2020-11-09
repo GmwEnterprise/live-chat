@@ -43,7 +43,4 @@ ipc.on("storage", (event, action, ...params) => {
     default:
       console.debug(`unknown action[${action}]`);
   }
-  console.debug(`=> action: ${action}, params: ${params.toString()}`);
-  console.debug(`=> storageMap:`);
-  console.debug(storageMap);
 });

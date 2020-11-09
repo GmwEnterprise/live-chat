@@ -22,6 +22,7 @@ if (process.env.PROD) {
 
 // 我的代码
 import "./storage-main"; // 初始化存储功能
+import "./ipc-common";
 
 app.on("ready", windowInit);
 

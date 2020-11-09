@@ -37,6 +37,7 @@ http.interceptors.response.use(
   error => {
     // Do something with response error
     console.debug(error.response);
+    ipcRenderer.send("console", JSON.stringify(error));
     if (error.response.data.code) {
       // 有错误码
       const notification = new Notification("请求异常", {
