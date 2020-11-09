@@ -13,7 +13,9 @@ public class PermissionInterceptor implements HandlerInterceptor {
     private static final Logger log = LoggerFactory.getLogger(PermissionInterceptor.class);
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request,
+                             HttpServletResponse response,
+                             Object handler) throws Exception {
         if (!(handler instanceof HandlerMethod)) return true;
 
         // 打印请求信息
@@ -23,8 +25,8 @@ public class PermissionInterceptor implements HandlerInterceptor {
         // 权限判断
         boolean permission = ((HandlerMethod) handler).hasMethodAnnotation(Permission.class);
         if (permission) {
-            String token  = request.getHeader(HttpHeaders.AUTHORIZATION);
-            Long   userId = PermissionUtil.parseTokenReturnUserId(token);
+            String token = request.getHeader(HttpHeaders.AUTHORIZATION);
+            Long userId = PermissionUtil.parseTokenReturnUserId(token);
             if (userId == null) {
                 return false;
             }

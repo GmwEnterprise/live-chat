@@ -1,0 +1,19 @@
+{
+  "properties": [
+    {
+      "name": "config.servlet.port",
+      "type": "java.lang.Integer",
+      "description": "Servlet默认端口."
+    },
+    {
+      "name": "config.netty.port",
+      "type": "java.lang.Integer",
+      "description": "Netty提供TCP服务默认端口."
+    },
+    {
+      "name": "config.servlet.path",
+      "type": "java.lang.String",
+      "description": "Servlet默认前缀路径."
+    }
+  ]
+}
