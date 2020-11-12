@@ -9,6 +9,7 @@ public class App {
             ctx.refresh();
 
             Object bean = ctx.getBean("square");
+            System.out.println(((Shape) bean).getShapeName());
         }
     }
 }
