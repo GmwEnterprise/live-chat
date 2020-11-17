@@ -43,9 +43,9 @@ public class AppConfig implements WebMvcConfigurer {
     @Bean
     public ObjectMapper objectMapper() {
         // 注册jackson支持的时间转换模块
-        JavaTimeModule            timeModule   = new JavaTimeModule();
-        DateTimeFormatter         formatter    = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTimeSerializer   serializer   = new LocalDateTimeSerializer(formatter);
+        JavaTimeModule timeModule = new JavaTimeModule();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTimeSerializer serializer = new LocalDateTimeSerializer(formatter);
         LocalDateTimeDeserializer deserializer = new LocalDateTimeDeserializer(formatter);
         timeModule.addSerializer(LocalDateTime.class, serializer).addDeserializer(LocalDateTime.class, deserializer);
 
@@ -62,8 +62,6 @@ public class AppConfig implements WebMvcConfigurer {
 
     /**
      * 前端在开发模式使用了npm代理；生产模式使用nginx代理，无需配置跨域
-     *
-     * @param registry
      */
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -71,7 +69,9 @@ public class AppConfig implements WebMvcConfigurer {
 
     @Bean
     public Docket createRestApi() {
-        // "/swagger-ui.html"打开界面，"/v2/api-docs"打开JSON配置
+        /*
+         * => "/swagger-ui.html"打开界面，"/v2/api-docs"打开JSON配置
+         */
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()

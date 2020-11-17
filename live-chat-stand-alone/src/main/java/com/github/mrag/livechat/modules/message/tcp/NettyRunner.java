@@ -15,8 +15,8 @@ import org.springframework.stereotype.Component;
 
 import java.net.InetSocketAddress;
 
-@Component
-@ConfigurationProperties(prefix = "config.netty")
+// @Component
+// @ConfigurationProperties(prefix = "config.netty")
 public final class NettyRunner implements InitializingBean, DisposableBean {
     private static final Logger log = LoggerFactory.getLogger(NettyRunner.class);
 

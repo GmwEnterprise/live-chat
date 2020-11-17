@@ -1,4 +1,6 @@
 import { ipcMain as ipc } from "electron";
+const fs = require("fs");
+const os = require("os");
 
 // ** 类似sessionStorage的使用方式，仅作用于应用启动时
 const storageMap = new Map();
@@ -15,6 +17,7 @@ export function del(k) {
   storageMap.delete(k);
 }
 
+// 提供给渲染进程调用本地存储的api
 ipc.on("storage", (event, action, ...params) => {
   switch (action) {
     case "set":
@@ -44,3 +47,5 @@ ipc.on("storage", (event, action, ...params) => {
       console.debug(`unknown action[${action}]`);
   }
 });
+
+// TODO 初始化本地配置文件，保存在用户文件夹下

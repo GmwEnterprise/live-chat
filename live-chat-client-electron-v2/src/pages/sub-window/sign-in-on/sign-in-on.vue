@@ -66,6 +66,7 @@ export default {
       return modeTitle.get(this.mode);
     }
   },
+  created() {},
   methods: {
     // 切换到注册模式
     toRegistrationMode() {},

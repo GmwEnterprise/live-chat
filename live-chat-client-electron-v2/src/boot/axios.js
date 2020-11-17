@@ -35,14 +35,23 @@ http.interceptors.response.use(
     return response;
   },
   error => {
-    // Do something with response error
+    // 两端打印日志
     console.debug(error.response);
     ipcRenderer.send("console", JSON.stringify(error));
+
+    // 尝试调用win10通知栏
     if (error.response.data.code) {
       // 有错误码
       const notification = new Notification("请求异常", {
         dir: "ltr", // 文字方向
         body: error.response.data.message
+      });
+      notification.onclick = () => console.debug("通知被点击");
+    } else {
+      // 无错误码，可能是后端无法识别的异常
+      const notification = new Notification("网络异常", {
+        dir: "ltr", // 文字方向
+        body: "请查看具体请求"
       });
       notification.onclick = () => console.debug("通知被点击");
     }
