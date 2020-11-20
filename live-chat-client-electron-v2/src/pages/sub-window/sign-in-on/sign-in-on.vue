@@ -58,7 +58,8 @@ export default {
         inputPassword: ""
       },
       mode: "sign-in",
-      quickSignInQRCode: ""
+      quickSignInQRCode: "",
+      savingAccounts: []
     };
   },
   computed: {
@@ -66,7 +67,13 @@ export default {
       return modeTitle.get(this.mode);
     }
   },
-  created() {},
+  created() {
+    // 加载本地已经保存过的账户密码
+    const config = this.$q.electron.ipcRenderer.sendSync("read-settings");
+    if (Array.isArray(config.settings.savingAccounts)) {
+      this.savingAccounts = config.settings.savingAccounts;
+    }
+  },
   methods: {
     // 切换到注册模式
     toRegistrationMode() {},
