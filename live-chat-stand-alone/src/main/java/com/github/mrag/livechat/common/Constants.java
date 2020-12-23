@@ -1,6 +1,6 @@
 package com.github.mrag.livechat.common;
 
-public interface Constants {
+public final class Constants {
 
-    String EMPTY_STRING = "";
+    public static final String EMPTY_STRING = "";
 }
