@@ -1,0 +1,1 @@
+INSERT INTO live_chat.livechat_user (id, username, avatar_id, gender, birthday, signature, company, personal_description, user_password, salt, phone_number, email, blood_group, occupation, location, hometown, account_status) VALUES (30523390720737280, '13320354693', null, 3, null, null, null, null, 'gan1ming2wei3', '', '13320354693', null, null, null, null, null, 1);
